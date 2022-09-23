@@ -26,14 +26,14 @@ public class Controller implements Initializable {
         this.eventHandlerListener = new EventHandlerListener();
         this.engine = new BomanEngine();
         this.renderer = new BomanRenderer(this.canvas);
-        Bomber player = new Bomber();
+        Bomber player = new Bomber(10, 10);
         eventHandlerListener.addListener(player);
         engine.add(player);
 
         GameLoop loop = new GameLoop() {
             @Override
-            public void tick(long elapsed) {
-                engine.update(Duration.ofNanos(elapsed));
+            public void tick(Duration elapsed) {
+                engine.update(elapsed);
                 renderer.render(engine.getEntities());
             }
         };
