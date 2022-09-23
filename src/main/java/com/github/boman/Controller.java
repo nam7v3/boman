@@ -1,6 +1,7 @@
 package com.github.boman;
 
 import com.github.boman.entity.Bomber;
+import com.github.boman.entity.Wall;
 import com.github.boman.event.EventHandlerListener;
 import com.github.boman.game.BomanEngine;
 import com.github.boman.game.BomanRenderer;
@@ -27,8 +28,10 @@ public class Controller implements Initializable {
         this.engine = new BomanEngine();
         this.renderer = new BomanRenderer(this.canvas);
         Bomber player = new Bomber(10, 10);
+        Wall wall = new Wall(20, 20);
         eventHandlerListener.addListener(player);
         engine.add(player);
+        engine.add(wall);
 
         GameLoop loop = new GameLoop() {
             @Override
