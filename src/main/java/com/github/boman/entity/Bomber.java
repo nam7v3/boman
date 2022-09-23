@@ -12,14 +12,13 @@ import java.time.Duration;
 
 public class Bomber extends Entity implements EventListener {
     private static final double BOMBER_MAX_SPEED = 20000;
-    private static final double BOMBER_ACCELERATION =25000;
+    private static final double BOMBER_ACCELERATION = 25000;
     private static final double BOMBER_WIDTH = 20;
     private static final double BOMBER_HEIGHT = 20;
 
-    private MoveableAABB box;
-    private int lives = 3;
-    private int bombs = 1;
-    private BomberState state = BomberState.STANDING;
+    private final MoveableAABB box;
+    private final int lives = 3;
+    private final int bombs = 1;
 
     public Bomber(double x, double y) {
         this.box = new MoveableAABB(x, y, BOMBER_WIDTH, BOMBER_HEIGHT, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
