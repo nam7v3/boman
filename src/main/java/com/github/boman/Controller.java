@@ -27,11 +27,12 @@ public class Controller implements Initializable {
         this.eventHandlerListener = new EventHandlerListener();
         this.engine = new BomanEngine();
         this.renderer = new BomanRenderer(this.canvas);
-        Bomber player = new Bomber(10, 10);
-        Wall wall = new Wall(20, 20);
+        Bomber player = new Bomber(50, 50);
         eventHandlerListener.addListener(player);
         engine.add(player);
-        engine.add(wall);
+        engine.add(new Wall(40, 20));
+        engine.add(new Wall(20, 20));
+        engine.add(new Wall(20, 40));
 
         GameLoop loop = new GameLoop() {
             @Override

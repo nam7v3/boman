@@ -18,4 +18,9 @@ public class Wall extends Entity {
         gc.setFill(Color.BLACK);
         gc.fillRect(box.getX(), box.getY(), box.getW(), box.getH());
     }
+
+    @Override
+    public AABB getBox() {
+        return box;
+    }
 }

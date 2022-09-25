@@ -1,6 +1,7 @@
 package com.github.boman.entity;
 
 import com.github.boman.event.EventListener;
+import com.github.boman.util.AABB;
 import com.github.boman.util.MoveableAABB;
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
@@ -11,7 +12,7 @@ import java.time.Duration;
 
 
 public class Bomber extends Entity implements EventListener {
-    private static final double BOMBER_MAX_SPEED = 20000;
+    private static final double BOMBER_MAX_SPEED = 15000;
     private static final double BOMBER_ACCELERATION = 25000;
     private static final double BOMBER_WIDTH = 20;
     private static final double BOMBER_HEIGHT = 20;
@@ -74,5 +75,17 @@ public class Bomber extends Entity implements EventListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public void interactWith(Entity other) {
+        if (other instanceof Wall){
+            this.box.clip(other.getBox());
+        }
+    }
+
+    @Override
+    public AABB getBox() {
+        return box;
     }
 }

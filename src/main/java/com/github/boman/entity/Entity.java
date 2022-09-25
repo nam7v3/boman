@@ -1,12 +1,14 @@
 package com.github.boman.entity;
 
+import com.github.boman.util.AABB;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.time.Duration;
 
-public class Entity {
+public abstract class Entity {
+    protected AABB box;
     /**
-     * Update Entity theo thoi gian t
+     * Cập nhật thực thể theo thời gian.
      */
     public void update(Duration t) {
     }
@@ -18,4 +20,18 @@ public class Entity {
      */
     public void render(GraphicsContext gc) {
     }
+
+    /**
+     * Xử lý va chạm các đồ vật khác.
+     * @param other Đồ vật khác
+     */
+    public void interactWith(Entity other){
+
+    }
+
+    /**
+     * Lấy box của đồ vật.
+     * @return
+     */
+    public abstract AABB getBox();
 }
