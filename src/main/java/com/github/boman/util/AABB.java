@@ -1,10 +1,10 @@
 package com.github.boman.util;
 
 public class AABB {
-    private double x;
-    private double y;
-    private double w;
-    private double h;
+    protected double x;
+    protected double y;
+    protected double w;
+    protected double h;
 
     public AABB(double x, double y, double w, double h) {
         this.x = x;
