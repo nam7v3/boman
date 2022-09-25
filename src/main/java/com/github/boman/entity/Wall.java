@@ -13,6 +13,7 @@ public class Wall extends Entity {
 
     @Override
     public void render(GraphicsContext gc) {
+        //TODO: render bằng hình ảnh.
         gc.setFill(Color.BLACK);
         gc.fillRect(box.getX(), box.getY(), box.getW(), box.getH());
     }

@@ -39,8 +39,8 @@ public class MoveableAABB extends AABB {
             ax = 0;
             ay = 0;
         } else {
-            vx = Math.min(vx + ax * dt, maxSpeed);
-            vy = Math.min(vy + ay * dt, maxSpeed);
+            vx = Math.max(-maxSpeed, Math.min(vx + ax * dt, maxSpeed));
+            vy = Math.max(-maxSpeed, Math.min(vy + ay * dt, maxSpeed));
         }
     }
 
