@@ -1,7 +1,7 @@
 package com.github.boman.entity;
 
 import com.github.boman.event.EventListener;
-import com.github.boman.util.AABB;
+import com.github.boman.util.MoveableAABB;
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -11,39 +11,22 @@ import java.time.Duration;
 
 
 public class Bomber extends Entity implements EventListener {
-    private AABB box;
-    private int lives = 3;
-    private int bombs = 1;
-    private BomberState state = BomberState.STANDING;
+    private static final double BOMBER_MAX_SPEED = 20000;
+    private static final double BOMBER_ACCELERATION = 25000;
+    private static final double BOMBER_WIDTH = 20;
+    private static final double BOMBER_HEIGHT = 20;
 
-    public Bomber() {
-        this.box = new AABB(10, 10, 20, 20);
-    }
+    private final MoveableAABB box;
+    private final int lives = 3;
+    private final int bombs = 1;
 
-    // Cac ham di chuyen dung MoveableAABB
-    public void moveUp() {
-        this.box.setY(this.box.getY() - 5);
-        System.out.println("move up");
-    }
-
-    public void moveLeft() {
-        this.box.setX(this.box.getX() - 5);
-        System.out.println("move left");
-    }
-
-    public void moveRight() {
-        this.box.setX(this.box.getX() + 5);
-        System.out.println("move right");
-    }
-
-    public void moveDown() {
-        this.box.setY(this.box.getY() + 5);
-        System.out.println("move down");
+    public Bomber(double x, double y) {
+        this.box = new MoveableAABB(x, y, BOMBER_WIDTH, BOMBER_HEIGHT, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
     }
 
     @Override
     public void update(Duration t) {
-
+        box.update(t);
     }
 
     @Override
@@ -58,16 +41,16 @@ public class Bomber extends Entity implements EventListener {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-                    moveUp();
+                    box.moveUp();
                     break;
                 case A:
-                    moveLeft();
+                    box.moveLeft();
                     break;
                 case S:
-                    moveDown();
+                    box.moveDown();
                     break;
                 case D:
-                    moveRight();
+                    box.moveRight();
                     break;
                 case SPACE:
                     break;
@@ -76,16 +59,16 @@ public class Bomber extends Entity implements EventListener {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-
+                    box.stop();
                     break;
                 case A:
-                    moveLeft();
+                    box.stop();
                     break;
                 case S:
-                    moveDown();
+                    box.stop();
                     break;
                 case D:
-                    moveRight();
+                    box.stop();
                     break;
                 case SPACE:
                     break;
