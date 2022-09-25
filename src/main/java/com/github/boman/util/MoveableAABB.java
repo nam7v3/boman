@@ -10,13 +10,21 @@ public class MoveableAABB extends AABB {
     private double ax, ay;
     private double maxSpeed;
     private double acceleration;
+    private enum State{
+        MOVE_UP,
+        MOVE_RIGHT,
+        MOVE_LEFT,
+        MOVE_DOWN,
+        STANDING
+    }
 
-    private boolean stop = true;
+    private State state;
 
     public MoveableAABB(double x, double y, double w, double h, double maxSpeed, double acceleration) {
         super(x, y, w, h);
         this.maxSpeed = maxSpeed;
         this.acceleration = acceleration;
+        this.state = State.STANDING;
     }
 
     public void update(Duration t) {
@@ -25,7 +33,7 @@ public class MoveableAABB extends AABB {
         x = x + vx * dt + ax * dt * dt / 2;
         y = y + vy * dt + ay * dt * dt / 2;
 
-        if (stop) {
+        if (state == State.STANDING) {
             vx = 0;
             vy = 0;
             ax = 0;
@@ -37,7 +45,7 @@ public class MoveableAABB extends AABB {
     }
 
     public void stop() {
-        stop = true;
+        state = State.STANDING;
     }
 
     public void move(double ax, double ay) {
@@ -46,22 +54,48 @@ public class MoveableAABB extends AABB {
     }
 
     public void moveUp() {
-        stop = false;
+        state = State.MOVE_UP;
         move(0, -acceleration);
     }
 
     public void moveDown() {
-        stop = false;
+        state = State.MOVE_DOWN;
         move(0, acceleration);
     }
 
     public void moveLeft() {
-        stop = false;
+        state = State.MOVE_LEFT;
         move(-acceleration, 0);
     }
 
     public void moveRight() {
-        stop = false;
+        state = State.MOVE_RIGHT;
         move(acceleration, 0);
+    }
+
+    @Override
+    public void clip(AABB other) {
+        switch (state) {
+            case MOVE_UP -> {
+                this.y += other.y + other.h - this.y;
+                this.vy = 0;
+                this.ay = 0;
+            }
+            case MOVE_LEFT -> {
+                this.x += other.x + other.w - this.x;
+                this.vx = 0;
+                this.ax = 0;
+            }
+            case MOVE_DOWN -> {
+                this.y -= this.y + this.h - other.y;
+                this.vy = 0;
+                this.ay = 0;
+            }
+            case MOVE_RIGHT -> {
+                this.x -= this.x + this.w - other.x;
+                this.ax = 0;
+                this.vx = 0;
+            }
+        }
     }
 }

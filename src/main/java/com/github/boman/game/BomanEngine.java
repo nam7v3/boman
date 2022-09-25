@@ -21,6 +21,17 @@ public class BomanEngine {
         for(Entity entity: entities){
             entity.update(t);
         }
+
+        for (Entity entity: entities){
+            for (Entity other: entities){
+                if(entity != other){
+                    if(entity.getBox().intersect(other.getBox())){
+                        entity.interactWith(other);
+                        other.interactWith(entity);
+                    }
+                }
+            }
+        }
     }
 
     public void add(Entity e){

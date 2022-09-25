@@ -20,6 +20,19 @@ public class AABB {
                 this.y + this.h > other.y;
     }
 
+    public void clip(AABB other) {
+        if (this.x > other.x && this.x < other.x + other.w) {
+            this.x += other.x + other.w - this.x;
+        } else if (this.x + this.w > other.x && this.x + this.w < other.x + other.w) {
+            this.x -= this.x + this.w - other.x;
+        }
+        if (this.y > other.y && this.y < other.y + other.h) {
+            this.y += other.y + other.h - this.y;
+        } else if (this.y + this.h > other.y && this.y + this.h < other.y + other.h) {
+            this.y -= this.y + this.h - other.h;
+        }
+    }
+
     public double getX() {
         return x;
     }
@@ -50,5 +63,15 @@ public class AABB {
 
     public void setH(double h) {
         this.h = h;
+    }
+
+    @Override
+    public String toString() {
+        return "AABB{" +
+                "x=" + x +
+                ", y=" + y +
+                ", w=" + w +
+                ", h=" + h +
+                '}';
     }
 }
