@@ -6,6 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.time.Duration;
 
 public abstract class Entity {
+    protected static final double ENTITY_WIDTH = 20.0;
+    protected static final double ENTITY_HEIGHT = 20.0;
     protected AABB box;
 
     /**
