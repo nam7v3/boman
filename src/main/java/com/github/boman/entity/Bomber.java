@@ -79,13 +79,23 @@ public class Bomber extends Entity implements EventListener {
 
     @Override
     public void interactWith(Entity other) {
-        if (other instanceof Wall){
+        if (other instanceof Wall) {
             this.box.clip(other.getBox());
+
         }
     }
 
     @Override
     public AABB getBox() {
         return box;
+    }
+
+    @Override
+    public String toString() {
+        return "Bomber{" +
+                "box=" + box +
+                ", lives=" + lives +
+                ", bombs=" + bombs +
+                '}';
     }
 }

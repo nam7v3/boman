@@ -7,6 +7,7 @@ import java.time.Duration;
 
 public abstract class Entity {
     protected AABB box;
+
     /**
      * Cập nhật thực thể theo thời gian.
      */
@@ -23,14 +24,16 @@ public abstract class Entity {
 
     /**
      * Xử lý va chạm các đồ vật khác.
+     *
      * @param other Đồ vật khác
      */
-    public void interactWith(Entity other){
+    public void interactWith(Entity other) {
 
     }
 
     /**
      * Lấy box của đồ vật.
+     *
      * @return
      */
     public abstract AABB getBox();

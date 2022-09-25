@@ -94,7 +94,7 @@ public class MoveableAABB extends AABB {
             case MOVE_RIGHT -> {
                 this.x -= this.x + this.w - other.x;
                 this.ax = 0;
-                this.vy = 0;
+                this.vx = 0;
             }
         }
     }
