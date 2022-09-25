@@ -26,13 +26,19 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.eventHandlerListener = new EventHandlerListener();
         this.engine = new BomanEngine();
-        this.renderer = new BomanRenderer(this.canvas);
-        Bomber player = new Bomber(50, 50);
+        Bomber player = new Bomber(41, 41);
         eventHandlerListener.addListener(player);
         engine.add(player);
-        engine.add(new Wall(40, 20));
-        engine.add(new Wall(20, 20));
-        engine.add(new Wall(20, 40));
+        this.renderer = new BomanRenderer(this.canvas);
+
+        for (int i = 1; i <= 31; i++) {
+            for (int j = 1; j <= 13; j++) {
+                if (i == 1 || j == 1 || i == 31 || j == 13 || (i % 2 == 1 && j % 2 == 1)) {
+                    Wall wall = new Wall(i * 20, j * 20);
+                    engine.add(wall);
+                }
+            }
+        }
 
         GameLoop loop = new GameLoop() {
             @Override
