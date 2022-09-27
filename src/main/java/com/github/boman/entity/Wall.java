@@ -5,12 +5,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Wall extends Entity {
-    private static final double width = 20;
-    private static final double height = 20;
     private final AABB box;
 
     public Wall(double x, double y) {
-        this.box = new AABB(x, y, width, height);
+        this.box = new AABB(x, y, ENTITY_WIDTH, ENTITY_HEIGHT);
     }
 
     @Override
