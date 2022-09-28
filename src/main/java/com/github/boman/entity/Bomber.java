@@ -23,6 +23,10 @@ public class Bomber extends Entity implements EventListener {
         this.box = new MoveableAABB(x, y, ENTITY_WIDTH, ENTITY_HEIGHT, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
     }
 
+    public Bomber(double x, double y, double w, double h) {
+        this.box = new MoveableAABB(x, y, w, h, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
+    }
+
     @Override
     public void update(Duration t) {
         box.update(t);

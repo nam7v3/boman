@@ -26,7 +26,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.eventHandlerListener = new EventHandlerListener();
         this.engine = new BomanEngine();
-        Bomber player = new Bomber(41, 41);
+        Bomber player = new Bomber(40, 40, 18, 18);
         eventHandlerListener.addListener(player);
         engine.add(player);
         this.renderer = new BomanRenderer(this.canvas);

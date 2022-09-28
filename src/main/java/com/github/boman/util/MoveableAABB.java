@@ -10,7 +10,8 @@ public class MoveableAABB extends AABB {
     private double ax, ay;
     private double maxSpeed;
     private double acceleration;
-    private enum State{
+
+    private enum State {
         MOVE_UP,
         MOVE_RIGHT,
         MOVE_LEFT,
@@ -77,24 +78,32 @@ public class MoveableAABB extends AABB {
     public void clip(AABB other) {
         switch (state) {
             case MOVE_UP -> {
-                this.y += other.y + other.h - this.y;
-                this.vy = 0;
-                this.ay = 0;
-            }
-            case MOVE_LEFT -> {
-                this.x += other.x + other.w - this.x;
-                this.vx = 0;
-                this.ax = 0;
+                if (this.y > other.getY() && this.y < other.getY() + other.getH()) {
+                    this.y += other.y + other.h - this.y;
+                    this.vy = 0;
+                    this.ay = 0;
+                }
             }
             case MOVE_DOWN -> {
-                this.y -= this.y + this.h - other.y;
-                this.vy = 0;
-                this.ay = 0;
+                if (this.y + this.h > other.getY() && this.y + this.h < other.getY() + other.getH()) {
+                    this.y -= this.y + this.h - other.y;
+                    this.vy = 0;
+                    this.ay = 0;
+                }
+            }
+            case MOVE_LEFT -> {
+                if (this.x > other.getX() && this.x < other.getX() + other.getW()) {
+                    this.x += other.x + other.w - this.x;
+                    this.vx = 0;
+                    this.ax = 0;
+                }
             }
             case MOVE_RIGHT -> {
-                this.x -= this.x + this.w - other.x;
-                this.ax = 0;
-                this.vx = 0;
+                if (this.x + this.w > other.getX() && this.x + this.w < other.getX() + other.getW()) {
+                    this.x -= this.x + this.w - other.x;
+                    this.ax = 0;
+                    this.vx = 0;
+                }
             }
         }
     }
