@@ -10,7 +10,7 @@ public class BomanApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
-        Scene scene = new Scene(loader.load(), 800, 600);
+        Scene scene = new Scene(loader.load(), 620, 260);
         Controller controller = loader.getController();
         scene.addEventHandler(Event.ANY, controller::onEvent);
         stage.setScene(scene);

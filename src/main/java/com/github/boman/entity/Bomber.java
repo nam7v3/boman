@@ -1,6 +1,7 @@
 package com.github.boman.entity;
 
 import com.github.boman.event.EventListener;
+import com.github.boman.sprites.Sprite;
 import com.github.boman.util.AABB;
 import com.github.boman.util.MoveableAABB;
 import javafx.event.Event;
@@ -14,8 +15,8 @@ import java.time.Duration;
 public class Bomber extends Entity implements EventListener {
     private static final double BOMBER_MAX_SPEED = 1000;
     private static final double BOMBER_ACCELERATION = 25000;
-    private static final double BOMBER_WIDTH = 18;
-    private static final double BOMBER_HEIGHT = 18;
+    public static final double BOMBER_WIDTH = 18;
+    public static final double BOMBER_HEIGHT = 18;
 
     private final MoveableAABB box;
     private final int lives = 3;
@@ -23,6 +24,7 @@ public class Bomber extends Entity implements EventListener {
 
     public Bomber(double x, double y) {
         this.box = new MoveableAABB(x, y, BOMBER_WIDTH, BOMBER_HEIGHT, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
+        img = Sprite.bomberDown;
     }
 
     @Override
@@ -32,8 +34,7 @@ public class Bomber extends Entity implements EventListener {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.setFill(Color.BLUE);
-        gc.fillRect(box.getX(), box.getY(), box.getW(), box.getH());
+        gc.drawImage(img, box.getX(), box.getY(), box.getW(), box.getH());
     }
 
     @Override
