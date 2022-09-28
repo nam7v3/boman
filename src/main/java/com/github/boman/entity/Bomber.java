@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class Bomber extends Entity implements EventListener {
     private static final double BOMBER_MAX_SPEED = 1000;
-    private static final double BOMBER_ACCELERATION = 1000000;
+    private static final double BOMBER_ACCELERATION = 25000;
     private static final double BOMBER_WIDTH = 18;
     private static final double BOMBER_HEIGHT = 18;
 
@@ -32,7 +32,6 @@ public class Bomber extends Entity implements EventListener {
 
     @Override
     public void render(GraphicsContext gc) {
-        //TODO: render bằng hình ảnh.
         gc.setFill(Color.BLUE);
         gc.fillRect(box.getX(), box.getY(), box.getW(), box.getH());
     }

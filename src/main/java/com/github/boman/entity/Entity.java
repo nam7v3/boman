@@ -2,11 +2,15 @@ package com.github.boman.entity;
 
 import com.github.boman.util.AABB;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.time.Duration;
 
 public abstract class Entity {
     protected AABB box;
+    protected Image img;
+    protected ImageView imgView;
 
     /**
      * Cập nhật thực thể theo thời gian.
