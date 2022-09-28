@@ -27,6 +27,10 @@ public class Bomber extends Entity implements EventListener {
         img = Sprite.bomberDown;
     }
 
+    public Bomber(double x, double y, double w, double h) {
+        this.box = new MoveableAABB(x, y, w, h, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
+    }
+
     @Override
     public void update(Duration t) {
         box.update(t);

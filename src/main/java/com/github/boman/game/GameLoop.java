@@ -5,6 +5,7 @@ import javafx.animation.AnimationTimer;
 import java.time.Duration;
 
 public abstract class GameLoop extends AnimationTimer {
+    private static final long nsPerFrame = 1_000_000;
     private long lastTime;
     private boolean init = true;
 
@@ -15,8 +16,12 @@ public abstract class GameLoop extends AnimationTimer {
             init = false;
         }
         long elapsed = l - lastTime;
-        lastTime = l;
-        tick(Duration.ofNanos(elapsed));
+        if(elapsed > nsPerFrame){
+            for(int i = 0; i < (int) elapsed / nsPerFrame; ++i){
+                tick(Duration.ofNanos(nsPerFrame));
+            }
+            lastTime = l;
+        }
     }
 
     public abstract void tick(Duration elapsed);
