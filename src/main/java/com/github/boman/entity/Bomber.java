@@ -1,44 +1,34 @@
 package com.github.boman.entity;
 
 import com.github.boman.event.EventListener;
+import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
-import com.github.boman.util.AABB;
-import com.github.boman.util.MoveableAABB;
+import com.github.boman.util.Box;
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-
-import java.time.Duration;
 
 
-public class Bomber extends Entity implements EventListener {
-    private static final double BOMBER_MAX_SPEED = 1000;
-    private static final double BOMBER_ACCELERATION = 25000;
-    public static final double BOMBER_WIDTH = 18;
-    public static final double BOMBER_HEIGHT = 18;
-
-    private final MoveableAABB box;
+public class Bomber extends MoveableEntity implements EventListener {
+    private static final double BOMBER_SPEED = 2.3;
+    public static final double BOMBER_WIDTH = 16;
+    public static final double BOMBER_HEIGHT = 16;
     private final int lives = 3;
     private final int bombs = 1;
 
-    public Bomber(double x, double y) {
-        this.box = new MoveableAABB(x, y, BOMBER_WIDTH, BOMBER_HEIGHT, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
+    public Bomber(Engine engine,double x, double y) {
+        super(engine, new Box(x, y, BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         img = Sprite.bomberDown;
     }
 
-    public Bomber(double x, double y, double w, double h) {
-        this.box = new MoveableAABB(x, y, w, h, BOMBER_MAX_SPEED, BOMBER_ACCELERATION);
-    }
-
-    @Override
-    public void update(Duration t) {
-        box.update(t);
+    public Bomber(Engine engine, double x, double y, double w, double h) {
+        super(engine, new Box(x, y, w, h), BOMBER_SPEED);
+        img = Sprite.bomberDown;
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, box.getX(), box.getY(), box.getW(), box.getH());
+        gc.drawImage(img, pos.getX(), pos.getY(), pos.getW(), pos.getH());
     }
 
     @Override
@@ -47,16 +37,16 @@ public class Bomber extends Entity implements EventListener {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-                    box.moveUp();
+                    moveUp();
                     break;
                 case A:
-                    box.moveLeft();
+                    moveLeft();
                     break;
                 case S:
-                    box.moveDown();
+                    moveDown();
                     break;
                 case D:
-                    box.moveRight();
+                    moveRight();
                     break;
                 case SPACE:
                     break;
@@ -65,42 +55,20 @@ public class Bomber extends Entity implements EventListener {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-                    box.stop();
+                    stop();
                     break;
                 case A:
-                    box.stop();
+                    stop();
                     break;
                 case S:
-                    box.stop();
+                    stop();
                     break;
                 case D:
-                    box.stop();
+                    stop();
                     break;
                 case SPACE:
                     break;
             }
         }
-    }
-
-    @Override
-    public void interactWith(Entity other) {
-        if (other instanceof Wall) {
-            this.box.clip(other.getBox());
-
-        }
-    }
-
-    @Override
-    public AABB getBox() {
-        return box;
-    }
-
-    @Override
-    public String toString() {
-        return "Bomber{" +
-                "box=" + box +
-                ", lives=" + lives +
-                ", bombs=" + bombs +
-                '}';
     }
 }

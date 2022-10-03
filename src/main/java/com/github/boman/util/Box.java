@@ -1,36 +1,30 @@
 package com.github.boman.util;
 
-public class AABB {
+public class Box {
     protected double x;
     protected double y;
     protected double w;
     protected double h;
 
-    public AABB(double x, double y, double w, double h) {
+    public Box(double x, double y, double w, double h) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
     }
 
-    public boolean intersect(AABB other) {
+    public Box(Box other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.w = other.w;
+        this.h = other.h;
+    }
+
+    public boolean intersect(Box other) {
         return this.x < other.x + other.w &&
                 this.x + this.w > other.x &&
                 this.y < other.y + other.h &&
                 this.y + this.h > other.y;
-    }
-
-    public void clip(AABB other) {
-        if (this.x > other.x && this.x < other.x + other.w) {
-            this.x += other.x + other.w - this.x;
-        } else if (this.x + this.w > other.x && this.x + this.w < other.x + other.w) {
-            this.x -= this.x + this.w - other.x;
-        }
-        if (this.y > other.y && this.y < other.y + other.h) {
-            this.y += other.y + other.h - this.y;
-        } else if (this.y + this.h > other.y && this.y + this.h < other.y + other.h) {
-            this.y -= this.y + this.h - other.h;
-        }
     }
 
     public double getX() {

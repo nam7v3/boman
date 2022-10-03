@@ -1,18 +1,19 @@
 package com.github.boman.entity;
 
-import com.github.boman.util.AABB;
+import com.github.boman.game.Engine;
+import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.time.Duration;
 
 public abstract class Entity {
-    protected static final double ENTITY_WIDTH = 20.0;
-    protected static final double ENTITY_HEIGHT = 20.0;
-    protected AABB box;
     protected Image img;
-    protected ImageView imgView;
+    protected Engine engine;
+
+    public Entity(Engine engine) {
+        this.engine = engine;
+    }
 
     /**
      * Cập nhật thực thể theo thời gian.
@@ -42,5 +43,5 @@ public abstract class Entity {
      *
      * @return
      */
-    public abstract AABB getBox();
+    public abstract Box getBox();
 }
