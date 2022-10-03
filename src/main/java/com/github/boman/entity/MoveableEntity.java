@@ -6,7 +6,6 @@ import com.github.boman.util.Box;
 import java.time.Duration;
 
 public class MoveableEntity extends Entity {
-    private static double DIS = 0.001;
     protected Box pos;
     private Box futurePos;
     private double speed;
@@ -29,31 +28,24 @@ public class MoveableEntity extends Entity {
         this.state = State.Standing;
     }
 
-
     public void moveUp() {
         state = State.Up;
-        futurePos.setY(futurePos.getY() - speed);
     }
 
     public void moveDown() {
         state = State.Down;
-        futurePos.setY(futurePos.getY() + speed);
     }
 
     public void moveLeft() {
         state = State.Left;
-        futurePos.setX(futurePos.getX() - speed);
     }
 
     public void moveRight() {
         state = State.Right;
-        futurePos.setX(futurePos.getX() + speed);
     }
 
     public void stop() {
         state = State.Standing;
-        futurePos.setX(pos.getX());
-        futurePos.setY(pos.getY());
     }
 
     @Override
@@ -61,6 +53,7 @@ public class MoveableEntity extends Entity {
         TileType[][] map = engine.getBoard();
         switch (state) {
             case Up -> {
+                futurePos.setY(futurePos.getY() - speed);
                 int lower = (int) (futurePos.getY() / engine.getTileHeight());
                 int upper = (int) (pos.getY() / engine.getTileHeight());
                 int left = (int) (pos.getX() / engine.getTileWidth());
@@ -77,6 +70,7 @@ public class MoveableEntity extends Entity {
                 }
             }
             case Down -> {
+                futurePos.setY(futurePos.getY() + speed);
                 int lower = (int) ((pos.getY() + pos.getH()) / engine.getTileHeight());
                 int upper = (int) ((futurePos.getY() + futurePos.getH()) / engine.getTileHeight());
                 int left = (int) (pos.getX() / engine.getTileWidth());
@@ -93,6 +87,7 @@ public class MoveableEntity extends Entity {
                 }
             }
             case Left -> {
+                futurePos.setX(futurePos.getX() - speed);
                 int lower = (int) (pos.getY() / engine.getTileHeight());
                 int upper = (int) Math.ceil((pos.getY() + pos.getH()) / engine.getTileHeight()) - 1;
                 int left = (int) (futurePos.getX() / engine.getTileWidth());
@@ -109,6 +104,7 @@ public class MoveableEntity extends Entity {
                 }
             }
             case Right -> {
+                futurePos.setX(futurePos.getX() + speed);
                 int lower = (int) (pos.getY() / engine.getTileHeight());
                 int upper = (int) Math.ceil((pos.getY() + pos.getW()) / engine.getTileHeight()) - 1;
                 int left = (int) (pos.getX() / engine.getTileWidth());
@@ -123,6 +119,10 @@ public class MoveableEntity extends Entity {
                         }
                     }
                 }
+            }
+            case Standing -> {
+                futurePos.setX(pos.getX());
+                futurePos.setY(pos.getY());
             }
         }
         pos = new Box(futurePos);

@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 
 public class Bomber extends MoveableEntity implements EventListener {
-    private static final double BOMBER_SPEED = 2.3;
+    private static final double BOMBER_SPEED = 0.08;
     public static final double BOMBER_WIDTH = 16;
     public static final double BOMBER_HEIGHT = 16;
     private final int lives = 3;
