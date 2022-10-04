@@ -11,12 +11,14 @@ import javafx.scene.input.KeyEvent;
 
 public class Bomber extends MoveableEntity implements EventListener {
     private static final double BOMBER_SPEED = 0.08;
-    public static final double BOMBER_WIDTH = 16;
-    public static final double BOMBER_HEIGHT = 16;
+    public static final double BOMBER_WIDTH = 11;
+    public static final double BOMBER_HEIGHT = 11;
+    public static final double SPRITE_HEIGHT = 22;
+    public static final double SPRITE_WIDTH = 22;
     private final int lives = 3;
     private final int bombs = 1;
 
-    public Bomber(Engine engine,double x, double y) {
+    public Bomber(Engine engine, double x, double y) {
         super(engine, new Box(x, y, BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         img = Sprite.bomberDown;
     }
@@ -28,7 +30,7 @@ public class Bomber extends MoveableEntity implements EventListener {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, pos.getX(), pos.getY(), pos.getW(), pos.getH());
+        gc.drawImage(img, pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2, pos.getY() - (SPRITE_HEIGHT - pos.getH()), SPRITE_WIDTH, SPRITE_HEIGHT);
     }
 
     @Override
