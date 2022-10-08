@@ -57,16 +57,16 @@ public class Bomber extends MoveableEntity implements EventListener {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-                    stop();
+                    if (state == State.Up) stop();
                     break;
                 case A:
-                    stop();
+                    if (state == State.Left) stop();
                     break;
                 case S:
-                    stop();
+                    if (state == State.Down) stop();
                     break;
                 case D:
-                    stop();
+                    if (state == State.Right) stop();
                     break;
                 case SPACE:
                     break;

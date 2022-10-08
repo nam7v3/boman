@@ -10,7 +10,7 @@ public class MoveableEntity extends Entity {
     private Box futurePos;
     private double speed;
 
-    private enum State {
+    enum State {
         Up,
         Down,
         Left,
@@ -18,7 +18,7 @@ public class MoveableEntity extends Entity {
         Standing,
     }
 
-    private State state;
+    protected State state;
 
     public MoveableEntity(Engine engine, Box curPos, double speed) {
         super(engine);
