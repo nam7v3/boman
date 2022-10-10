@@ -95,6 +95,11 @@ public class BomanEngine implements Engine {
                         handler.addListener(player);
                         add(player);
                     }
+                    case '1' ->{
+                        board[i][j] = new Grass(this);
+                        Enemy enemy = new Enemy(this, j, i);
+                        add(enemy);
+                    }
                     case '*' -> board[i][j] = new Brick(this);
                     default -> board[i][j] = new Grass(this);
                 }
