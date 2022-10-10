@@ -1,7 +1,6 @@
 package com.github.boman.entity;
 
 import com.github.boman.game.Engine;
-import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -37,11 +36,4 @@ public abstract class Entity {
     public void interactWith(Entity other) {
 
     }
-
-    /**
-     * Lấy box của đồ vật.
-     *
-     * @return
-     */
-    public abstract Box getBox();
 }

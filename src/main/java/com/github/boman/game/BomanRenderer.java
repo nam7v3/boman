@@ -1,7 +1,7 @@
 package com.github.boman.game;
 
 import com.github.boman.entity.Entity;
-import com.github.boman.entity.TileType;
+import com.github.boman.entity.TileEntity;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,19 +17,19 @@ public class BomanRenderer {
         this.gc = canvas.getGraphicsContext2D();
     }
 
-    public void render(TileType[][] map, List<Entity> entities) {
+    public void render(TileEntity[][] map, List<Entity> entities) {
         this.gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        this.gc.setFill(Color.LIME);
+        this.gc.setFill(Color.GREEN);
         this.gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         for (int i = 0; i < map.length; ++i) {
             for (int j = 0; j < map[0].length; ++j) {
-                map[i][j].render(gc, j * Engine.TILE_WIDTH, i * Engine.TILE_HEIGHT, Engine.TILE_WIDTH, Engine.TILE_HEIGHT);
+                map[i][j].render(gc, j, i);
             }
         }
 
         for (Entity entity : entities) {
-            entity.render(this.gc);
+            entity.render(gc);
         }
     }
 }

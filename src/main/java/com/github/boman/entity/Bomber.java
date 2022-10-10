@@ -10,16 +10,18 @@ import javafx.scene.input.KeyEvent;
 
 
 public class Bomber extends MoveableEntity implements EventListener {
-    private static final double BOMBER_SPEED = 0.08;
     public static final double BOMBER_WIDTH = 11;
     public static final double BOMBER_HEIGHT = 11;
     public static final double SPRITE_HEIGHT = 22;
     public static final double SPRITE_WIDTH = 22;
+    private static final double BOMBER_SPEED = 0.08;
     private final int lives = 3;
-    private final int bombs = 1;
+    private final int maxBomb = 1;
+    private final int power = 1;
+    private int curBomb = 0;
 
-    public Bomber(Engine engine, double x, double y) {
-        super(engine, new Box(x, y, BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
+    public Bomber(Engine engine, int x, int y) {
+        super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         img = Sprite.bomberDown;
     }
 
@@ -38,20 +40,11 @@ public class Bomber extends MoveableEntity implements EventListener {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
-                case W:
-                    moveUp();
-                    break;
-                case A:
-                    moveLeft();
-                    break;
-                case S:
-                    moveDown();
-                    break;
-                case D:
-                    moveRight();
-                    break;
-                case SPACE:
-                    break;
+                case W -> moveUp();
+                case A -> moveLeft();
+                case S -> moveDown();
+                case D -> moveRight();
+                case SPACE -> placeBomb();
             }
         } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent keyEvent = (KeyEvent) event;
@@ -68,9 +61,30 @@ public class Bomber extends MoveableEntity implements EventListener {
                 case D:
                     if (state == State.Right) stop();
                     break;
-                case SPACE:
-                    break;
             }
         }
+    }
+
+    public void placeBomb() {
+        if (curBomb >= maxBomb) return;
+        if (engine.spawnBomb(this, getTileX(), getTileY(), power)) {
+            curBomb++;
+        }
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int getCurBomb() {
+        return curBomb;
+    }
+
+    public void setCurBomb(int curBomb) {
+        this.curBomb = curBomb;
+    }
+
+    public int getPower() {
+        return power;
     }
 }

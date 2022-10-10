@@ -32,7 +32,7 @@ public class Controller implements Initializable {
             @Override
             public void tick(Duration elapsed) {
                 engine.update(elapsed);
-                renderer.render(engine.getBoard(), engine.getEntities());
+                renderer.render(engine.getBoard(), engine.getUpdateableEntity());
             }
         };
         loop.start();

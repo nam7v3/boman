@@ -1,24 +1,28 @@
 package com.github.boman.game;
 
+import com.github.boman.entity.Bomb;
+import com.github.boman.entity.Bomber;
 import com.github.boman.entity.Entity;
-import com.github.boman.entity.TileType;
+import com.github.boman.entity.TileEntity;
 
 import java.time.Duration;
 import java.util.List;
 
 public interface Engine {
-    double TILE_HEIGHT = 20;
-    double TILE_WIDTH = 20;
-
     void add(Entity entity);
 
     void update(Duration duration);
 
-    List<Entity> getEntities();
+    List<Entity> getUpdateableEntity();
 
-    TileType[][] getBoard();
+    TileEntity[][] getBoard();
+
+    void explode(Bomb bomb);
+
+    boolean spawnBomb(Bomber player, int x, int y, int power);
 
     double getTileHeight();
 
     double getTileWidth();
+
 }
