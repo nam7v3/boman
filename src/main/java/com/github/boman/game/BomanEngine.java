@@ -20,6 +20,8 @@ public class BomanEngine implements Engine {
     // Danh sách các Entity xóa đi sau khi cập nhật xong. Được gọi sau khi đã cập nhật hết trong
     // updateableEntity, Engine sẽ duyệt qua các Entity cần xóa và bỏ nó ra khỏi updateableEntity.
     private List<Entity> scheduleRemoveEntity;
+    // Tương tự scheduleRemoveEntity, nhưng cần add vào.
+    private List<Entity> scheduleAddEntity;
     // Bảng chơi của game.
     private TileEntity[][] board;
     // Truyền input cho các Object đã được thêm vào.
@@ -29,6 +31,7 @@ public class BomanEngine implements Engine {
     public BomanEngine(EventHandlerListener handler) {
         this.updateableEntity = new LinkedList<>();
         this.scheduleRemoveEntity = new ArrayList<>();
+        this.scheduleAddEntity = new ArrayList<>();
         this.handler = handler;
     }
 
@@ -38,15 +41,20 @@ public class BomanEngine implements Engine {
      * @param t Thời gian.
      */
     public void update(Duration t) {
-        // Cập nhật các Entity đã được thêm vào bằng add.
-        for (Entity entity : updateableEntity) {
-            entity.update(t);
-        }
         // Xóa các Entity
-        for (Entity entity : scheduleRemoveEntity) {
+        for (Entity entity: scheduleRemoveEntity) {
+            //Entity entity = scheduleRemoveEntity.get(i);
             updateableEntity.remove(entity);
         }
         scheduleRemoveEntity.clear();
+        // Thêm các Entity cần cập nhật
+        updateableEntity.addAll(scheduleAddEntity);
+        scheduleAddEntity.clear();
+        // Cập nhật các Entity đã được thêm vào bằng add.
+        for (Entity entity: updateableEntity) {
+            //Entity entity = updateableEntity.get(i);
+            entity.update(t);
+        }
     }
 
     /**
@@ -55,7 +63,7 @@ public class BomanEngine implements Engine {
      * @param e Entity.
      */
     public void add(Entity e) {
-        updateableEntity.add(e);
+        scheduleAddEntity.add(e);
     }
 
     /**
@@ -115,7 +123,7 @@ public class BomanEngine implements Engine {
             return false;
         }
         Bomb bomb = new Bomb(this, player, x, y, power);
-        updateableEntity.add(bomb);
+        add(bomb);
         board[y][x] = bomb;
         return true;
     }
@@ -127,7 +135,25 @@ public class BomanEngine implements Engine {
      */
     public void explode(Bomb bomb) {
         board[bomb.getY()][bomb.getX()] = new Grass(this);
+        // Spawn fire
+        int x = bomb.getX();
+        int y = bomb.getY();
+        int power = bomb.getPower();
         remove(bomb);
+        Fire fire = new Fire(this, x, y, Fire.State.Middle);
+        add(fire);
+        board[y][x] = fire;
+
+    }
+
+    /**
+     * Hết lửa.
+     *
+     * @param fire fire.
+     */
+    public void endFire(Fire fire) {
+        board[fire.getY()][fire.getX()] = new Grass(this);
+        remove(fire);
     }
 
     public TileEntity[][] getBoard() {

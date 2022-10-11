@@ -11,4 +11,11 @@ public class Sprite {
     public static Image bomberRight = new Image(Sprite.class.getResource("bomberRight.png").toString());
     public static Image bomb = new Image(Sprite.class.getResource("bomb.png").toString());
     public static Image brick = new Image(Sprite.class.getResource("brick.png").toString());
+    public static Image fireMiddle = new Image(Sprite.class.getResource("fireMiddle.png").toString());
+    public static Image fireHorizontal = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
+    public static Image fireVertical = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
+    public static Image fireHLeft = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
+    public static Image fireHRight = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
+    public static Image fireVUp = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
+    public static Image fireVDown = new Image(Sprite.class.getResource("fireHorizontal.png").toString());
 }
