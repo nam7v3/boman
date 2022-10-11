@@ -6,15 +6,14 @@ import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.time.Duration;
-import java.util.Random;
 
 public class Enemy extends MoveableEntity {
-    public static double ENEMY_WIDTH = 15;
-    public static double ENEMY_HEIGHT = 15;
+    public static double ENEMY_WIDTH = 17;
+    public static double ENEMY_HEIGHT = 17;
     public static double SPRITE_WIDTH = 20;
     public static double SPRITE_HEIGHT = 20;
     public static double ENEMY_SPEED = 0.05;
-    Random rng = new Random();
+    private int state = 0;
 
     public Enemy(Engine engine, int x, int y) {
         super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), ENEMY_WIDTH, ENEMY_HEIGHT), ENEMY_SPEED);
@@ -28,12 +27,17 @@ public class Enemy extends MoveableEntity {
 
     @Override
     public void update(Duration t) {
-        // TODO
-        switch (rng.nextInt() % 3) {
-            case 0 -> stop();
-            case 1 -> moveRight();
-            case 2 -> moveLeft();
+        TileEntity[][] board = engine.getBoard();
+        if (state == 0 && !board[getTileY()][(int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1].block()) {
+            moveLeft();
+        } else {
+            state = 1;
+        }
 
+        if (state == 1 && !board[getTileY()][(int) (pos.getX() / engine.getTileWidth()) + 1].block()) {
+            moveRight();
+        } else {
+            state = 0;
         }
         super.update(t);
     }
