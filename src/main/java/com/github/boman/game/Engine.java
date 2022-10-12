@@ -23,4 +23,6 @@ public interface Engine {
     double getTileWidth();
 
     void endFire(Fire fire);
+
+    void breakBrick(Brick brick);
 }

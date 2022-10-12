@@ -103,7 +103,11 @@ public class BomanEngine implements Engine {
                         handler.addListener(player);
                         add(player);
                     }
-                    case '*' -> board[i][j] = new Brick(this);
+                    case '*' -> {
+                        Brick brick = new Brick(this, j, i);
+                        board[i][j] = brick;
+                        add(brick);
+                    }
                     default -> board[i][j] = new Grass(this);
                 }
             }
@@ -134,8 +138,6 @@ public class BomanEngine implements Engine {
      * @param bomb Bomb.
      */
     public void explode(Bomb bomb) {
-        board[bomb.getY()][bomb.getX()] = new Grass(this);
-        // Spawn fire
         int x = bomb.getX();
         int y = bomb.getY();
         int power = bomb.getPower();
@@ -143,7 +145,90 @@ public class BomanEngine implements Engine {
         Fire fire = new Fire(this, x, y, Fire.State.Middle);
         add(fire);
         board[y][x] = fire;
-
+        // Lửa trái
+        for (int left = 1; left <= power; left++) {
+            int newX = x - left;
+            if (board[y][newX] instanceof Wall) {
+                break;
+            }
+            if (board[y][newX] instanceof Brick) {
+                // TODO: Phá gạch có cơ hội cho powerups
+                Brick brick = new Brick(this, newX, y);
+                brick.setBreaking(true);
+                add(brick);
+                break;
+            }
+            if (left == power) {
+                fire = new Fire(this, newX, y, Fire.State.HLeft);
+            } else {
+                fire = new Fire(this, newX, y, Fire.State.Horizontal);
+            }
+            add(fire);
+            board[y][newX] = fire;
+        }
+        // Lửa phải
+        for (int right = 1; right <= power; right++) {
+            int newX = x + right;
+            if (board[y][newX] instanceof Wall) {
+                break;
+            }
+            if (board[y][newX] instanceof Brick) {
+                // TODO: Phá gạch có cơ hội cho powerups
+                Brick brick = new Brick(this, newX, y);
+                brick.setBreaking(true);
+                add(brick);
+                break;
+            }
+            if (right == power) {
+                fire = new Fire(this, newX, y, Fire.State.HRight);
+            } else {
+                fire = new Fire(this, newX, y, Fire.State.Horizontal);
+            }
+            add(fire);
+            board[y][newX] = fire;
+        }
+        // Lửa trên
+        for (int up = 1; up <= power; up++) {
+            int newY = y - up;
+            if (board[newY][x] instanceof Wall) {
+                break;
+            }
+            if (board[newY][x] instanceof Brick) {
+                // TODO: Phá gạch có cơ hội cho powerups
+                Brick brick = new Brick(this, x, newY);
+                brick.setBreaking(true);
+                add(brick);
+                break;
+            }
+            if (up == power) {
+                fire = new Fire(this, x, newY, Fire.State.VUp);
+            } else {
+                fire = new Fire(this, x, newY, Fire.State.Vertical);
+            }
+            add(fire);
+            board[newY][x] = fire;
+        }
+        // Lửa dưới
+        for (int down = 1; down <= power; down++) {
+            int newY = y + down;
+            if (board[newY][x] instanceof Wall) {
+                break;
+            }
+            if (board[newY][x] instanceof Brick) {
+                // TODO: Phá gạch có cơ hội cho powerups
+                Brick brick = new Brick(this, x, newY);
+                brick.setBreaking(true);
+                add(brick);
+                break;
+            }
+            if (down == power) {
+                fire = new Fire(this, x, newY, Fire.State.VDown);
+            } else {
+                fire = new Fire(this, x, newY, Fire.State.Vertical);
+            }
+            add(fire);
+            board[newY][x] = fire;
+        }
     }
 
     /**
@@ -154,6 +239,11 @@ public class BomanEngine implements Engine {
     public void endFire(Fire fire) {
         board[fire.getY()][fire.getX()] = new Grass(this);
         remove(fire);
+    }
+
+    public void breakBrick(Brick brick) {
+        board[brick.getY()][brick.getX()] = new Grass(this);
+        remove(brick);
     }
 
     public TileEntity[][] getBoard() {
