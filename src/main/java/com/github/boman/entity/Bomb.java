@@ -33,7 +33,7 @@ public class Bomb extends TileEntity {
 
     @Override
     public boolean block() {
-        return false;
+        return true;
     }
 
     public Duration getTimeLeft() {

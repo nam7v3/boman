@@ -63,7 +63,7 @@ public class MoveableEntity extends Entity {
             case Up -> {
                 futurePos.setY(futurePos.getY() - speed);
                 int lower = (int) (futurePos.getY() / engine.getTileHeight());
-                int upper = (int) (pos.getY() / engine.getTileHeight());
+                int upper = (int) (pos.getY() / engine.getTileHeight()) - 1;
                 int left = (int) (pos.getX() / engine.getTileWidth());
                 int right = (int) Math.ceil((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1;
 
@@ -80,7 +80,7 @@ public class MoveableEntity extends Entity {
             // Xử lý va chạm khi đi xuống
             case Down -> {
                 futurePos.setY(futurePos.getY() + speed);
-                int lower = (int) ((pos.getY() + pos.getH()) / engine.getTileHeight());
+                int lower = (int) Math.ceil((pos.getY() + pos.getH()) / engine.getTileHeight());
                 int upper = (int) ((futurePos.getY() + futurePos.getH()) / engine.getTileHeight());
                 int left = (int) (pos.getX() / engine.getTileWidth());
                 int right = (int) Math.ceil((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1;
@@ -101,7 +101,7 @@ public class MoveableEntity extends Entity {
                 int lower = (int) (pos.getY() / engine.getTileHeight());
                 int upper = (int) Math.ceil((pos.getY() + pos.getH()) / engine.getTileHeight()) - 1;
                 int left = (int) (futurePos.getX() / engine.getTileWidth());
-                int right = (int) (pos.getX() / engine.getTileWidth());
+                int right = (int) (pos.getX() / engine.getTileWidth()) - 1;
 
                 loop:
                 for (int i = lower; i <= upper; ++i) {
@@ -118,7 +118,7 @@ public class MoveableEntity extends Entity {
                 futurePos.setX(futurePos.getX() + speed);
                 int lower = (int) (pos.getY() / engine.getTileHeight());
                 int upper = (int) Math.ceil((pos.getY() + pos.getW()) / engine.getTileHeight()) - 1;
-                int left = (int) (pos.getX() / engine.getTileWidth());
+                int left = (int) Math.ceil((pos.getX() + pos.getW())/ engine.getTileWidth());
                 int right = (int) ((futurePos.getX() + futurePos.getW()) / engine.getTileWidth());
 
                 loop:
@@ -167,5 +167,14 @@ public class MoveableEntity extends Entity {
         Left,
         Right,
         Standing,
+    }
+
+    private int getTileMiddleX(Box box) {
+        return (int) ((box.getX() + box.getW() / 2) / engine.getTileWidth());
+    }
+
+
+    private int getTileMiddleY(Box box) {
+        return (int) ((box.getY() + box.getH() / 2) / engine.getTileHeight());
     }
 }
