@@ -1,9 +1,6 @@
 package com.github.boman.game;
 
-import com.github.boman.entity.Bomb;
-import com.github.boman.entity.Bomber;
-import com.github.boman.entity.Entity;
-import com.github.boman.entity.TileEntity;
+import com.github.boman.entity.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -25,4 +22,7 @@ public interface Engine {
 
     double getTileWidth();
 
+    void endFire(Fire fire);
+
+    void breakBrick(Brick brick);
 }
