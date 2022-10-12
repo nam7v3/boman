@@ -142,91 +142,10 @@ public class BomanEngine implements Engine {
      * @param bomb Bomb.
      */
     public void explode(Bomb bomb) {
-        int x = bomb.getX();
-        int y = bomb.getY();
-        int power = bomb.getPower();
-        remove(bomb);
-        Fire fire = new Fire(this, x, y, Fire.State.Middle);
-        add(fire);
-        board[y][x] = fire;
-        // Lửa trái
-        for (int left = 1; left <= power; left++) {
-            int newX = x - left;
-            if (board[y][newX] instanceof Wall) {
-                break;
-            }
-            if (board[y][newX] instanceof Brick) {
-                breakBrick((Brick) board[y][newX]);
-                break;
-            }
-            if (left == power) {
-                fire = new Fire(this, newX, y, Fire.State.HLeft);
-            } else {
-                fire = new Fire(this, newX, y, Fire.State.Horizontal);
-            }
-            add(fire);
-            board[y][newX] = fire;
-        }
-        // Lửa phải
-        for (int right = 1; right <= power; right++) {
-            int newX = x + right;
-            if (board[y][newX] instanceof Wall) {
-                break;
-            }
-            if (board[y][newX] instanceof Brick) {
-                breakBrick((Brick) board[y][newX]);
-                break;
-            }
-            if (right == power) {
-                fire = new Fire(this, newX, y, Fire.State.HRight);
-            } else {
-                fire = new Fire(this, newX, y, Fire.State.Horizontal);
-            }
-            add(fire);
-            board[y][newX] = fire;
-        }
-        // Lửa trên
-        for (int up = 1; up <= power; up++) {
-            int newY = y - up;
-            if (board[newY][x] instanceof Wall) {
-                break;
-            }
-            if (board[newY][x] instanceof Brick) {
-                breakBrick((Brick) board[newY][x]);
-                break;
-            }
-            if (up == power) {
-                fire = new Fire(this, x, newY, Fire.State.VUp);
-            } else {
-                fire = new Fire(this, x, newY, Fire.State.Vertical);
-            }
-            add(fire);
-            board[newY][x] = fire;
-        }
-        // Lửa dưới
-        for (int down = 1; down <= power; down++) {
-            int newY = y + down;
-            if (board[newY][x] instanceof Wall) {
-                break;
-            }
-            if (board[newY][x] instanceof Brick) {
-                breakBrick((Brick) board[newY][x]);
-                break;
-            }
-            if (down == power) {
-                fire = new Fire(this, x, newY, Fire.State.VDown);
-            } else {
-                fire = new Fire(this, x, newY, Fire.State.Vertical);
-            }
-            add(fire);
-            board[newY][x] = fire;
-        }
+
     }
 
     public void breakBrick(Brick brick) {
-        // TODO: Phá gạch có cơ hội cho powerups
-        brick.setBreaking(true);
-        add(brick);
     }
 
     public TileEntity[][] getBoard() {

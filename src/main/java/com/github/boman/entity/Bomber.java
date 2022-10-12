@@ -98,7 +98,7 @@ public class Bomber extends MoveableEntity implements EventListener {
 
     @Override
     public void update(Duration t) {
-        System.out.println(bomberState);
+        //System.out.println(bomberState);
         switch (bomberState) {
             case Normal -> super.update(t);
             case Invincible -> {

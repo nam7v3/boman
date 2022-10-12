@@ -14,8 +14,6 @@ public interface Engine {
 
     TileEntity[][] getBoard();
 
-    void explode(Bomb bomb);
-
     boolean spawnBomb(Bomber player, int x, int y, int power);
 
     double getTileHeight();
@@ -27,6 +25,4 @@ public interface Engine {
     TileEntity getEntity(int x, int y);
 
     void setEntity(TileEntity e, int x, int y);
-
-    void breakBrick(Brick brick);
 }
