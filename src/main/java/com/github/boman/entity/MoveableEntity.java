@@ -57,7 +57,7 @@ public class MoveableEntity extends Entity {
 
     @Override
     public void update(Duration t) {
-        TileEntity[][] map = engine.getBoard();
+        interactWith(engine.getEntity(getTileX(), getTileY()));
         switch (state) {
             // Xử lý va chạm khi đi lên
             case Up -> {
@@ -74,7 +74,7 @@ public class MoveableEntity extends Entity {
                             futurePos.setY(engine.getTileHeight() * (j + 1));
                             break loop;
                         } else {
-                            engine.getEntity(i, j).interactWith(this);
+                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -94,7 +94,7 @@ public class MoveableEntity extends Entity {
                             futurePos.setY(engine.getTileHeight() * j - pos.getW());
                             break loop;
                         } else {
-                            engine.getEntity(i, j).interactWith(this);
+                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -114,7 +114,7 @@ public class MoveableEntity extends Entity {
                             futurePos.setX(engine.getTileWidth() * (i + 1));
                             break loop;
                         } else {
-                            engine.getEntity(i, j).interactWith(this);
+                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -134,7 +134,7 @@ public class MoveableEntity extends Entity {
                             futurePos.setX(engine.getTileWidth() * i - pos.getW());
                             break loop;
                         } else {
-                            engine.getEntity(i, j).interactWith(this);
+                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }

@@ -46,4 +46,11 @@ public class Enemy extends MoveableEntity {
     public void render(GraphicsContext gc) {
         super.render(gc);
     }
+
+    @Override
+    public void interactWith(Entity other) {
+        if (other instanceof Fire) {
+            engine.remove(this);
+        }
+    }
 }

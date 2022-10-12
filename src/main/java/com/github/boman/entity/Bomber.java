@@ -8,6 +8,8 @@ import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
+import java.time.Duration;
+
 
 public class Bomber extends MoveableEntity implements EventListener {
     public static final double BOMBER_WIDTH = 11;
@@ -15,10 +17,19 @@ public class Bomber extends MoveableEntity implements EventListener {
     public static final double SPRITE_HEIGHT = 22;
     public static final double SPRITE_WIDTH = 22;
     private static final double BOMBER_SPEED = 0.08;
-    private final int lives = 3;
+    private static final int INVINCIBLE_SECOND = 2;
+    private Duration invincibleTime = Duration.ofSeconds(INVINCIBLE_SECOND);
+    private int lives = 3;
     private final int maxBomb = 1;
-    private final int power = 1;
+    private int power = 1;
     private int curBomb = 0;
+
+    private enum BomberState {
+        Invincible,
+        Normal,
+    }
+
+    private BomberState bomberState = BomberState.Normal;
 
     public Bomber(Engine engine, int x, int y) {
         super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
@@ -69,6 +80,40 @@ public class Bomber extends MoveableEntity implements EventListener {
         if (curBomb >= maxBomb) return;
         if (engine.spawnBomb(this, getTileX(), getTileY(), power)) {
             curBomb++;
+        }
+    }
+
+    @Override
+    public void interactWith(Entity other) {
+        if (other instanceof Fire) {
+            if (bomberState == BomberState.Normal && lives > 0) {
+                bomberState = BomberState.Invincible;
+                lives--;
+            }
+            if (lives <= 0) {
+                engine.remove(this);
+            }
+        }
+    }
+
+    @Override
+    public void update(Duration t) {
+        System.out.println(bomberState);
+        switch (bomberState) {
+            case Normal -> super.update(t);
+            case Invincible -> {
+                if (invincibleTime == null) {
+                    invincibleTime = Duration.ofSeconds(INVINCIBLE_SECOND);
+                    super.update(t);
+                    return;
+                }
+                invincibleTime = invincibleTime.minus(t);
+                if (invincibleTime.isNegative()) {
+                    invincibleTime = null;
+                    bomberState = BomberState.Normal;
+                }
+                super.update(t);
+            }
         }
     }
 
