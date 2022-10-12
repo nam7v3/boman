@@ -11,6 +11,7 @@ public class Brick extends TileEntity {
     private int y;
     private boolean breaking;
     private Duration timeLeft;
+
     public Brick(Engine engine, int x, int y) {
         super(engine);
         this.x = x;
@@ -64,7 +65,8 @@ public class Brick extends TileEntity {
         }
         timeLeft = timeLeft.minus(t);
         if (timeLeft.isNegative()) {
-            engine.breakBrick(this);
+            engine.getBoard()[getY()][getX()] = new Grass(engine);
+            engine.remove(this);
         }
     }
 

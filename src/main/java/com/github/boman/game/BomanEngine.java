@@ -50,7 +50,7 @@ public class BomanEngine implements Engine {
         updateableEntity.addAll(scheduleAddEntity);
         scheduleAddEntity.clear();
         // Cập nhật các Entity đã được thêm vào bằng add.
-        for (Entity entity: updateableEntity) {
+        for (Entity entity : updateableEntity) {
             //Entity entity = updateableEntity.get(i);
             entity.update(t);
         }
@@ -102,7 +102,7 @@ public class BomanEngine implements Engine {
                         handler.addListener(player);
                         add(player);
                     }
-                    case '1' ->{
+                    case '1' -> {
                         board[i][j] = new Grass(this);
                         Enemy enemy = new Enemy(this, j, i);
                         add(enemy);
@@ -156,10 +156,7 @@ public class BomanEngine implements Engine {
                 break;
             }
             if (board[y][newX] instanceof Brick) {
-                // TODO: Phá gạch có cơ hội cho powerups
-                Brick brick = new Brick(this, newX, y);
-                brick.setBreaking(true);
-                add(brick);
+                breakBrick((Brick) board[y][newX]);
                 break;
             }
             if (left == power) {
@@ -177,10 +174,7 @@ public class BomanEngine implements Engine {
                 break;
             }
             if (board[y][newX] instanceof Brick) {
-                // TODO: Phá gạch có cơ hội cho powerups
-                Brick brick = new Brick(this, newX, y);
-                brick.setBreaking(true);
-                add(brick);
+                breakBrick((Brick) board[y][newX]);
                 break;
             }
             if (right == power) {
@@ -198,10 +192,7 @@ public class BomanEngine implements Engine {
                 break;
             }
             if (board[newY][x] instanceof Brick) {
-                // TODO: Phá gạch có cơ hội cho powerups
-                Brick brick = new Brick(this, x, newY);
-                brick.setBreaking(true);
-                add(brick);
+                breakBrick((Brick) board[newY][x]);
                 break;
             }
             if (up == power) {
@@ -219,10 +210,7 @@ public class BomanEngine implements Engine {
                 break;
             }
             if (board[newY][x] instanceof Brick) {
-                // TODO: Phá gạch có cơ hội cho powerups
-                Brick brick = new Brick(this, x, newY);
-                brick.setBreaking(true);
-                add(brick);
+                breakBrick((Brick) board[newY][x]);
                 break;
             }
             if (down == power) {
@@ -235,19 +223,10 @@ public class BomanEngine implements Engine {
         }
     }
 
-    /**
-     * Hết lửa.
-     *
-     * @param fire fire.
-     */
-    public void endFire(Fire fire) {
-        board[fire.getY()][fire.getX()] = new Grass(this);
-        remove(fire);
-    }
-
     public void breakBrick(Brick brick) {
-        board[brick.getY()][brick.getX()] = new Grass(this);
-        remove(brick);
+        // TODO: Phá gạch có cơ hội cho powerups
+        brick.setBreaking(true);
+        add(brick);
     }
 
     public TileEntity[][] getBoard() {
@@ -264,6 +243,16 @@ public class BomanEngine implements Engine {
         return tileWidth;
     }
 
+    @Override
+    public TileEntity getEntity(int x, int y) {
+        return board[y][x];
+    }
+
+    @Override
+    public void setEntity(TileEntity e, int x, int y) {
+        board[y][x] = e;
+    }
+
     public boolean isStarted() {
         return started;
     }
@@ -271,4 +260,6 @@ public class BomanEngine implements Engine {
     public void setStarted(boolean started) {
         this.started = started;
     }
+
+
 }

@@ -42,7 +42,8 @@ public class Fire extends TileEntity {
     public void update(Duration t) {
         timeLeft = timeLeft.minus(t);
         if (timeLeft.isNegative()) {
-            engine.endFire(this);
+            engine.setEntity(new Grass(engine), x, y);
+            engine.remove(this);
         }
     }
 

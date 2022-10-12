@@ -22,7 +22,11 @@ public interface Engine {
 
     double getTileWidth();
 
-    void endFire(Fire fire);
+    void remove(Entity e);
+
+    TileEntity getEntity(int x, int y);
+
+    void setEntity(TileEntity e, int x, int y);
 
     void breakBrick(Brick brick);
 }
