@@ -22,12 +22,74 @@ public class Bomb extends TileEntity {
         this.power = power;
     }
 
+    public void explode(Bomb bomb) {
+        int x = bomb.getX();
+        int y = bomb.getY();
+        int power = bomb.getPower();
+        engine.remove(bomb);
+        Fire fire = new Fire(engine, x, y, Fire.State.Middle);
+        engine.add(fire);
+        engine.getBoard()[y][x] = fire;
+        // Lửa trái
+        for (int left = 1; left <= power; left++) {
+            int newX = x - left;
+            Fire.State state = (left < power ? Fire.State.Horizontal : Fire.State.HLeft);
+            if (!canSpawnFire(newX, y, state)) {
+                break;
+            }
+            
+        }
+        // Lửa phải
+        for (int right = 1; right <= power; right++) {
+            int newX = x + right;
+            Fire.State state = (right < power ? Fire.State.Horizontal : Fire.State.HRight);
+            if (!canSpawnFire(newX, y, state)) {
+                break;
+            }
+        }
+        // Lửa trên
+        for (int up = 1; up <= power; up++) {
+            int newY = y - up;
+            Fire.State state = (up < power ? Fire.State.Vertical : Fire.State.VUp);
+            if (!canSpawnFire(x, newY, state)) {
+                break;
+            }
+        }
+        // Lửa dưới
+        for (int down = 1; down <= power; down++) {
+            int newY = y + down;
+            Fire.State state = (down < power ? Fire.State.Vertical : Fire.State.VDown);
+            if (!canSpawnFire(x, newY, state)) {
+                break;
+            }
+        }
+    }
+    
+    public void breakBrick(Brick brick) {
+        brick.setBreaking(true);
+        engine.add(brick);
+    }
+    
+    public boolean canSpawnFire(int x, int y, Fire.State state) {
+        if (engine.getBoard()[y][x] instanceof Wall) {
+            return false;
+        }
+        if (engine.getBoard()[y][x] instanceof Brick) {
+            breakBrick((Brick) engine.getBoard()[y][x]);
+            return false;
+        }
+        Fire fire = new Fire(engine, x, y, state);
+        engine.add(fire);
+        engine.getBoard()[y][x] = fire;
+        return true;
+    }
+
     @Override
     public void update(Duration t) {
         timeLeft = timeLeft.minus(t);
         if (timeLeft.isNegative()) {
             player.setCurBomb(player.getCurBomb() - 1);
-            engine.explode(this);
+            explode(this);
         }
     }
 

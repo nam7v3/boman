@@ -4,6 +4,7 @@ import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class Brick extends TileEntity {
     public static int DEFAULT_SECOND_WAIT = 1;
@@ -65,8 +66,15 @@ public class Brick extends TileEntity {
         }
         timeLeft = timeLeft.minus(t);
         if (timeLeft.isNegative()) {
-            engine.getBoard()[getY()][getX()] = new Grass(engine);
+            Random rand = new Random();
+            int key = rand.nextInt(100);
+            if (key < 10) {
+                engine.getBoard()[getY()][getX()] = new BombPowerup(engine);
+            } else {
+                engine.getBoard()[getY()][getX()] = new Grass(engine);
+            }
             engine.remove(this);
+
         }
     }
 
