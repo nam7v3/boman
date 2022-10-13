@@ -3,16 +3,14 @@ package com.github.boman.entity;
 import com.github.boman.game.Engine;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.time.Duration;
-
 public abstract class TileEntity extends Entity {
     public TileEntity(Engine engine) {
         super(engine);
     }
 
     @Override
-    public void update(Duration t) {
-        super.update(t);
+    public void update() {
+        super.update();
     }
 
     /**

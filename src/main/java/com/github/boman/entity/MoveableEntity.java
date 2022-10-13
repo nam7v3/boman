@@ -4,8 +4,6 @@ import com.github.boman.game.Engine;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.time.Duration;
-
 public class MoveableEntity extends Entity {
     protected Box pos;
     protected State state;
@@ -56,7 +54,7 @@ public class MoveableEntity extends Entity {
     }
 
     @Override
-    public void update(Duration t) {
+    public void update() {
         interactWith(engine.getEntity(getTileX(), getTileY()));
         switch (state) {
             // Xử lý va chạm khi đi lên

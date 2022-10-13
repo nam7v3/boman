@@ -1,13 +1,13 @@
 package com.github.boman.entity;
 
+import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
-import java.time.Duration;
 import java.util.Random;
 
 public class Brick extends TileEntity {
-    public static int DEFAULT_SECOND_WAIT = 1;
+    public static int DEFAULT_FRAME_WAIT = 30;
     private int x;
     private int y;
     private boolean breaking;
@@ -17,7 +17,7 @@ public class Brick extends TileEntity {
         super(engine);
         this.x = x;
         this.y = y;
-        this.timeLeft = Duration.ofSeconds(DEFAULT_SECOND_WAIT);
+        this.timeLeft = Duration.of(DEFAULT_FRAME_WAIT);
         this.breaking = false;
         this.img = Sprite.brick;
     }
@@ -60,21 +60,20 @@ public class Brick extends TileEntity {
     }
 
     @Override
-    public void update(Duration t) {
+    public void update() {
         if (!breaking) {
             return;
         }
-        timeLeft = timeLeft.minus(t);
+        timeLeft.minus();
         if (timeLeft.isNegative()) {
             Random rand = new Random();
             int key = rand.nextInt(100);
             if (key < 10) {
-                engine.getBoard()[getY()][getX()] = new BombPowerup(engine);
+                engine.setEntity(new BombPowerup(engine), x, y);
             } else {
-                engine.getBoard()[getY()][getX()] = new Grass(engine);
+                engine.setEntity(new Grass(engine), x, y);
             }
             engine.remove(this);
-
         }
     }
 

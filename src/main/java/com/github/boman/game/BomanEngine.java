@@ -3,7 +3,6 @@ package com.github.boman.game;
 import com.github.boman.entity.*;
 import com.github.boman.event.EventHandlerListener;
 
-import java.time.Duration;
 import java.util.*;
 
 /**
@@ -37,10 +36,8 @@ public class BomanEngine implements Engine {
 
     /**
      * Cập nhật danh sách các Entity đang đợi được update.
-     *
-     * @param t Thời gian.
      */
-    public void update(Duration t) {
+    public void update() {
         // Xóa các Entity
         for (Entity entity : scheduleRemoveEntity) {
             updateableEntity.remove(entity);
@@ -52,7 +49,7 @@ public class BomanEngine implements Engine {
         // Cập nhật các Entity đã được thêm vào bằng add.
         for (Entity entity : updateableEntity) {
             //Entity entity = updateableEntity.get(i);
-            entity.update(t);
+            entity.update();
         }
     }
 
@@ -110,7 +107,6 @@ public class BomanEngine implements Engine {
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
                         board[i][j] = brick;
-                        add(brick);
                     }
                     default -> board[i][j] = new Grass(this);
                 }
@@ -133,6 +129,21 @@ public class BomanEngine implements Engine {
         Bomb bomb = new Bomb(this, player, x, y, power);
         add(bomb);
         board[y][x] = bomb;
+        return true;
+    }
+
+    public boolean spawnFire(int x, int y, Fire.State state) {
+        if (getEntity(x, y) instanceof Wall) {
+            return false;
+        }
+        if (getEntity(x, y) instanceof Brick brick) {
+            brick.setBreaking(true);
+            add(brick);
+            return false;
+        }
+        Fire fire = new Fire(this, x, y, state);
+        add(fire);
+        setEntity(fire, x, y);
         return true;
     }
 

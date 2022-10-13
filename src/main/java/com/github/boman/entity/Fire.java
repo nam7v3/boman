@@ -1,18 +1,18 @@
 package com.github.boman.entity;
 
+import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
-import java.time.Duration;
-
 public class Fire extends TileEntity {
-    public static int DEFAULT_SECOND_WAIT = 1;
-    Duration timeLeft;
+    public static int DEFAULT_FRAME_WAIT = 30;
+    private Duration timeLeft;
     private int x;
     private int y;
+
     public Fire(Engine engine, int x, int y, State state) {
         super(engine);
-        this.timeLeft = Duration.ofSeconds(DEFAULT_SECOND_WAIT);
+        this.timeLeft = Duration.of(DEFAULT_FRAME_WAIT);
         this.x = x;
         this.y = y;
         switch (state) {
@@ -27,8 +27,8 @@ public class Fire extends TileEntity {
     }
 
     @Override
-    public void update(Duration t) {
-        timeLeft = timeLeft.minus(t);
+    public void update() {
+        timeLeft.minus();
         if (timeLeft.isNegative()) {
             engine.setEntity(new Grass(engine), x, y);
             engine.remove(this);

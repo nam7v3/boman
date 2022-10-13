@@ -2,22 +2,27 @@ package com.github.boman.sprites;
 
 import com.github.boman.entity.Bomber.Atrribute;
 import com.github.boman.entity.MoveableEntity.State;
+import com.github.boman.game.Duration;
 import javafx.scene.image.Image;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Animation {
     private Map<Object, Image[]> state;
-    private Iterator<Image> iterator;
     private Object curState;
+    private int index;
+
+    private Image[] curImages;
     private Object defaultState;
+    private final Duration waitTime;
+    private Duration curWait;
     private static Animation playerAnimation;
 
-    public Animation() {
+    public Animation(Duration waitTime) {
         state = new HashMap<>();
+        this.waitTime = waitTime;
+        curWait = Duration.of(waitTime);
     }
 
     public Animation addState(Object key, Image[] images) {
@@ -28,10 +33,13 @@ public class Animation {
     public void setState(Object key) {
         if (!state.containsKey(key)) {
             curState = defaultState;
+        } else if (curState == key) {
+            return;
         } else {
             curState = key;
         }
-        iterator = Arrays.stream(state.get(key)).iterator();
+        curImages = state.get(curState);
+        index = 0;
     }
 
     public void setDefaultState(Object defaultState) {
@@ -39,15 +47,20 @@ public class Animation {
     }
 
     public Image getImage() {
-        if (curState == null || !iterator.hasNext()) {
-            setState(curState);
+        curWait.minus();
+        if (curWait.isNegative()) {
+            curWait = Duration.of(waitTime);
+            index++;
+            if (index >= curImages.length) {
+                index = 0;
+            }
         }
-        return iterator.next();
+        return curImages[index];
     }
 
     public static Animation getPlayerAnimation() {
         if (playerAnimation != null) return playerAnimation;
-        playerAnimation = new Animation()
+        playerAnimation = new Animation(Duration.of(5))
                 .addState(
                         State.Up, new Image[]{
                                 Sprite.playerUp,
@@ -87,8 +100,8 @@ public class Animation {
                                 Sprite.playerDead3,
                         }
                 );
-        playerAnimation.setState(State.Standing);
-        playerAnimation.setDefaultState(State.Standing);
+        playerAnimation.setState(State.Down);
+        playerAnimation.setDefaultState(State.Down);
         return playerAnimation;
     }
 }

@@ -3,15 +3,13 @@ package com.github.boman.entity;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
-import java.time.Duration;
-
 public class BombPowerup extends TileEntity {
     private boolean picked;
 
     public BombPowerup(Engine engine) {
         super(engine);
         picked = false;
-        this.img = Sprite.bombPowerup;
+        this.img = Sprite.powerupBombs;
     }
 
     public boolean isPicked() {
@@ -27,7 +25,7 @@ public class BombPowerup extends TileEntity {
     }
 
     @Override
-    public void update(Duration t) {
+    public void update() {
         if (picked) {
             engine.remove(this);
         }

@@ -4,8 +4,6 @@ import com.github.boman.game.Engine;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.time.Duration;
-
 public abstract class Entity {
     protected Image img;
     protected Engine engine;
@@ -17,7 +15,7 @@ public abstract class Entity {
     /**
      * Cập nhật thực thể theo thời gian.
      */
-    public void update(Duration t) {
+    public void update() {
     }
 
     /**

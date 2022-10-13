@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -30,8 +29,8 @@ public class Controller implements Initializable {
 
         GameLoop loop = new GameLoop() {
             @Override
-            public void tick(Duration elapsed) {
-                engine.update(elapsed);
+            public void tick() {
+                engine.update();
                 renderer.render(engine.getBoard(), engine.getUpdateableEntity());
             }
         };

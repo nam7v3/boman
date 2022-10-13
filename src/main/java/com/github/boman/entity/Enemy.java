@@ -5,14 +5,12 @@ import com.github.boman.sprites.Sprite;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.time.Duration;
-
 public class Enemy extends MoveableEntity {
     public static double ENEMY_WIDTH = 17;
     public static double ENEMY_HEIGHT = 17;
     public static double SPRITE_WIDTH = 20;
     public static double SPRITE_HEIGHT = 20;
-    public static double ENEMY_SPEED = 0.05;
+    public static double ENEMY_SPEED = 1;
     private int state = 0;
 
     public Enemy(Engine engine, int x, int y) {
@@ -26,7 +24,7 @@ public class Enemy extends MoveableEntity {
     }
 
     @Override
-    public void update(Duration t) {
+    public void update() {
         TileEntity[][] board = engine.getBoard();
         if (state == 0 && !board[getTileY()][(int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1].block()) {
             moveLeft();
@@ -39,7 +37,7 @@ public class Enemy extends MoveableEntity {
         } else {
             state = 0;
         }
-        super.update(t);
+        super.update();
     }
 
     @Override

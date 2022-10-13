@@ -3,8 +3,6 @@ package com.github.boman.entity;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
-import java.time.Duration;
-
 public class Wall extends TileEntity {
     public Wall(Engine engine) {
         super(engine);
@@ -12,8 +10,8 @@ public class Wall extends TileEntity {
     }
 
     @Override
-    public void update(Duration t) {
-        super.update(t);
+    public void update() {
+        super.update();
     }
 
     @Override

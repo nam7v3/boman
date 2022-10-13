@@ -2,10 +2,8 @@ package com.github.boman.game;
 
 import javafx.animation.AnimationTimer;
 
-import java.time.Duration;
-
 public abstract class GameLoop extends AnimationTimer {
-    private static final long nsPerFrame = 1_000_000;
+    private static final long nsPerFrame = 1_000_000_000 / 60;
     private long lastTime;
     private boolean init = true;
 
@@ -16,13 +14,13 @@ public abstract class GameLoop extends AnimationTimer {
             init = false;
         }
         long elapsed = l - lastTime;
-        if(elapsed > nsPerFrame){
-            for(int i = 0; i < (int) elapsed / nsPerFrame; ++i){
-                tick(Duration.ofNanos(nsPerFrame));
+        if (elapsed > nsPerFrame) {
+            for (int i = 0; i < (int) (elapsed / nsPerFrame); ++i) {
+                tick();
             }
             lastTime = l;
         }
     }
 
-    public abstract void tick(Duration elapsed);
+    public abstract void tick();
 }
