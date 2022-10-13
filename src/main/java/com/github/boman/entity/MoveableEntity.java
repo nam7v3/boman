@@ -169,7 +169,7 @@ public class MoveableEntity extends Entity {
         return (int) ((pos.getY() + pos.getH() / 2) / engine.getTileHeight());
     }
 
-    enum State {
+    public enum State {
         Up,
         Down,
         Left,

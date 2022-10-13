@@ -2,7 +2,7 @@ package com.github.boman.entity;
 
 import com.github.boman.event.EventListener;
 import com.github.boman.game.Engine;
-import com.github.boman.sprites.Sprite;
+import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,27 +23,33 @@ public class Bomber extends MoveableEntity implements EventListener {
     private final int maxBomb = 1;
     private int power = 1;
     private int curBomb = 0;
+    private Animation animation = Animation.getPlayerAnimation();
 
-    private enum BomberState {
+    public enum Atrribute {
         Invincible,
         Normal,
+        Dead,
     }
 
-    private BomberState bomberState = BomberState.Normal;
+    private Atrribute bomberState = Atrribute.Normal;
 
     public Bomber(Engine engine, int x, int y) {
         super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
-        img = Sprite.bomberDown;
     }
 
     public Bomber(Engine engine, double x, double y, double w, double h) {
         super(engine, new Box(x, y, w, h), BOMBER_SPEED);
-        img = Sprite.bomberDown;
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2, pos.getY() - (SPRITE_HEIGHT - pos.getH()), SPRITE_WIDTH, SPRITE_HEIGHT);
+        gc.drawImage(
+                animation.getImage(),
+                pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2,
+                pos.getY() - (SPRITE_HEIGHT - pos.getH()),
+                SPRITE_WIDTH,
+                SPRITE_HEIGHT
+        );
     }
 
     @Override
@@ -51,26 +57,50 @@ public class Bomber extends MoveableEntity implements EventListener {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
-                case W -> moveUp();
-                case A -> moveLeft();
-                case S -> moveDown();
-                case D -> moveRight();
+                case W -> {
+                    moveUp();
+                    animation.setState(state);
+                }
+                case A -> {
+                    moveLeft();
+                    animation.setState(state);
+                }
+                case S -> {
+                    moveDown();
+                    animation.setState(state);
+                }
+                case D -> {
+                    moveRight();
+                    animation.setState(state);
+                }
                 case SPACE -> placeBomb();
             }
         } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent keyEvent = (KeyEvent) event;
             switch (keyEvent.getCode()) {
                 case W:
-                    if (state == State.Up) stop();
+                    if (state == State.Up) {
+                        stop();
+                        animation.setState(state);
+                    }
                     break;
                 case A:
-                    if (state == State.Left) stop();
+                    if (state == State.Left) {
+                        stop();
+                        animation.setState(state);
+                    }
                     break;
                 case S:
-                    if (state == State.Down) stop();
+                    if (state == State.Down) {
+                        stop();
+                        animation.setState(state);
+                    }
                     break;
                 case D:
-                    if (state == State.Right) stop();
+                    if (state == State.Right) {
+                        stop();
+                        animation.setState(state);
+                    }
                     break;
             }
         }
@@ -86,8 +116,8 @@ public class Bomber extends MoveableEntity implements EventListener {
     @Override
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
-            if (bomberState == BomberState.Normal && lives > 0) {
-                bomberState = BomberState.Invincible;
+            if (bomberState == Atrribute.Normal && lives > 0) {
+                bomberState = Atrribute.Invincible;
                 lives--;
             }
             if (lives <= 0) {
@@ -96,9 +126,9 @@ public class Bomber extends MoveableEntity implements EventListener {
         }
     }
 
+
     @Override
     public void update(Duration t) {
-        System.out.println(bomberState);
         switch (bomberState) {
             case Normal -> super.update(t);
             case Invincible -> {
@@ -110,7 +140,7 @@ public class Bomber extends MoveableEntity implements EventListener {
                 invincibleTime = invincibleTime.minus(t);
                 if (invincibleTime.isNegative()) {
                     invincibleTime = null;
-                    bomberState = BomberState.Normal;
+                    bomberState = Atrribute.Normal;
                 }
                 super.update(t);
             }

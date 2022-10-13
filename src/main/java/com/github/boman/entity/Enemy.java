@@ -17,12 +17,12 @@ public class Enemy extends MoveableEntity {
 
     public Enemy(Engine engine, int x, int y) {
         super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), ENEMY_WIDTH, ENEMY_HEIGHT), ENEMY_SPEED);
-        img = Sprite.enemy;
+        img = Sprite.balloomLeft1;
     }
 
     public Enemy(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
-        img = Sprite.enemy;
+        img = Sprite.balloomLeft1;
     }
 
     @Override
