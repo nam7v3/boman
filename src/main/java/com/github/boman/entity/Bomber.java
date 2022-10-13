@@ -20,7 +20,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     private static final int INVINCIBLE_SECOND = 2;
     private Duration invincibleTime = Duration.ofSeconds(INVINCIBLE_SECOND);
     private int lives = 3;
-    private final int maxBomb = 1;
+    private int maxBomb = 1;
     private int power = 1;
     private int curBomb = 0;
 
@@ -131,5 +131,13 @@ public class Bomber extends MoveableEntity implements EventListener {
 
     public int getPower() {
         return power;
+    }
+
+    public int getMaxBomb() {
+        return maxBomb;
+    }
+
+    public void setMaxBomb(int maxBomb) {
+        this.maxBomb = maxBomb;
     }
 }

@@ -20,4 +20,6 @@ public class Sprite {
     public static Image fireVDown = new Image(Sprite.class.getResource("fireVDown.png").toString());
     public static Image enemy = new Image(Sprite.class.getResource("enemy.png").toString());
 
+    public static Image bombPowerup = new Image(Sprite.class.getResource("bombPowerup.png").toString());
+
 }

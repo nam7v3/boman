@@ -136,18 +136,6 @@ public class BomanEngine implements Engine {
         return true;
     }
 
-    /**
-     * Nổ bomb.
-     *
-     * @param bomb Bomb.
-     */
-    public void explode(Bomb bomb) {
-
-    }
-
-    public void breakBrick(Brick brick) {
-    }
-
     public TileEntity[][] getBoard() {
         return board;
     }
