@@ -34,13 +34,14 @@ public class Bomb extends TileEntity {
     }
 
     public void explode() {
+        player.setCurBomb(player.getCurBomb() - 1);
         engine.remove(this);
-        engine.spawnFire(x, y, Fire.State.Middle);
+        engine.spawnFire(this, x, y, Fire.State.Middle);
         // Lửa trái
         for (int left = 1; left <= power; left++) {
             int newX = x - left;
             Fire.State state = (left < power ? Fire.State.Horizontal : Fire.State.HLeft);
-            if (!engine.spawnFire(newX, y, state)) {
+            if (!engine.spawnFire(this, newX, y, state)) {
                 break;
             }
         }
@@ -48,7 +49,7 @@ public class Bomb extends TileEntity {
         for (int right = 1; right <= power; right++) {
             int newX = x + right;
             Fire.State state = (right < power ? Fire.State.Horizontal : Fire.State.HRight);
-            if (!engine.spawnFire(newX, y, state)) {
+            if (!engine.spawnFire(this, newX, y, state)) {
                 break;
             }
         }
@@ -56,7 +57,7 @@ public class Bomb extends TileEntity {
         for (int up = 1; up <= power; up++) {
             int newY = y - up;
             Fire.State state = (up < power ? Fire.State.Vertical : Fire.State.VUp);
-            if (!engine.spawnFire(x, newY, state)) {
+            if (!engine.spawnFire(this, x, newY, state)) {
                 break;
             }
         }
@@ -64,7 +65,7 @@ public class Bomb extends TileEntity {
         for (int down = 1; down <= power; down++) {
             int newY = y + down;
             Fire.State state = (down < power ? Fire.State.Vertical : Fire.State.VDown);
-            if (!engine.spawnFire(x, newY, state)) {
+            if (!engine.spawnFire(this, x, newY, state)) {
                 break;
             }
         }
@@ -76,7 +77,6 @@ public class Bomb extends TileEntity {
         timeLeft.minus();
         if (timeLeft.isNegative()) {
             animation.setState(Attribute.Exploded);
-            player.setCurBomb(player.getCurBomb() - 1);
             explode();
         }
     }

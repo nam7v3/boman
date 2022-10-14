@@ -5,6 +5,8 @@ import com.github.boman.event.EventHandlerListener;
 
 import java.util.*;
 
+// TODO: Thêm một danh sách thực thể để kiểm tra va chạm
+// TODO: Sửa lại fire. Lỗi do fire kết thúc thì nó set Grass.
 /**
  * Handle game logic.
  */
@@ -123,7 +125,7 @@ public class BomanEngine implements Engine {
      * @return true nếu đặt được, false nếu
      */
     public boolean spawnBomb(Bomber player, int x, int y, int power) {
-        if (getEntity(x, y).block() || getEntity(x, y) instanceof Bomb) {
+        if (getEntity(x, y).block() || getEntity(x, y) instanceof Bomb || getEntity(x, y) instanceof Fire) {
             return false;
         }
         Bomb bomb = new Bomb(this, player, x, y, power);
@@ -132,15 +134,54 @@ public class BomanEngine implements Engine {
         return true;
     }
 
-    public boolean spawnFire(int x, int y, Fire.State state) {
+    public boolean spawnFire(Bomb bomb, int x, int y, Fire.State state) {
         if (getEntity(x, y) instanceof Wall) {
             return false;
+        }
+        if (getEntity(x, y) instanceof Bomb otherBomb) {
+            if (bomb != otherBomb) {
+                otherBomb.explode();
+            }
+        }
+        if (getEntity(x, y) instanceof Fire otherFire) {
+            state = switch (state) {
+                case VDown -> switch (otherFire.getState()){
+                    case Horizontal, HLeft, HRight, Middle -> Fire.State.Middle;
+                    case Vertical, VUp -> Fire.State.Vertical;
+                    case VDown -> Fire.State.VDown;
+                };
+                case VUp -> switch (otherFire.getState()){
+                    case Horizontal, HLeft, HRight, Middle -> Fire.State.Middle;
+                    case Vertical, VDown -> Fire.State.Vertical;
+                    case VUp -> Fire.State.VUp;
+                };
+                case HRight -> switch (otherFire.getState()){
+                    case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
+                    case Horizontal, HLeft -> Fire.State.Horizontal;
+                    case  HRight -> Fire.State.HRight;
+                };
+                case HLeft -> switch (otherFire.getState()){
+                    case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
+                    case Horizontal, HRight -> Fire.State.Horizontal;
+                    case  HLeft -> Fire.State.HLeft;
+                };
+                case Horizontal -> switch (otherFire.getState()){
+                    case HLeft, Horizontal, HRight -> Fire.State.Horizontal;
+                    case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
+                };
+                case Vertical -> switch (otherFire.getState()){
+                    case VDown, Vertical, VUp  -> Fire.State.Vertical;
+                    case HLeft, Horizontal, HRight, Middle -> Fire.State.Middle;
+                };
+                case Middle -> Fire.State.Middle;
+            };
         }
         if (getEntity(x, y) instanceof Brick brick) {
             brick.breakBrick();
             add(brick);
             return false;
         }
+
         Fire fire = new Fire(this, x, y, state);
         add(fire);
         setEntity(fire, x, y);

@@ -1,9 +1,6 @@
 package com.github.boman.game;
 
-import com.github.boman.entity.Bomber;
-import com.github.boman.entity.Entity;
-import com.github.boman.entity.Fire;
-import com.github.boman.entity.TileEntity;
+import com.github.boman.entity.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ public interface Engine {
 
     boolean spawnBomb(Bomber player, int x, int y, int power);
 
-    boolean spawnFire(int x, int y, Fire.State state);
+    boolean spawnFire(Bomb bomb, int x, int y, Fire.State state);
 
     double getTileHeight();
 

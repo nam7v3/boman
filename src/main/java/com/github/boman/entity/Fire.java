@@ -11,6 +11,8 @@ public class Fire extends TileEntity {
     private int x;
     private int y;
 
+    private State state;
+
     private Animation animation = Animation.getFireAnimation();
 
     public Fire(Engine engine, int x, int y, State state) {
@@ -18,6 +20,7 @@ public class Fire extends TileEntity {
         this.timeLeft = Duration.of(DEFAULT_FRAME_WAIT);
         this.x = x;
         this.y = y;
+        this.state = state;
         animation.setState(state);
     }
 
@@ -25,7 +28,9 @@ public class Fire extends TileEntity {
     public void update() {
         timeLeft.minus();
         if (timeLeft.isNegative()) {
-            engine.setEntity(new Grass(engine), x, y);
+            if (engine.getEntity(x, y) == this) {
+                engine.setEntity(new Grass(engine), x, y);
+            }
             engine.remove(this);
         }
     }
@@ -78,5 +83,13 @@ public class Fire extends TileEntity {
         HRight,
         VUp,
         VDown,
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }
