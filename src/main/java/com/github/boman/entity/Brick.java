@@ -80,6 +80,10 @@ public class Brick extends TileEntity {
             int key = rand.nextInt(100);
             if (key < 10) {
                 engine.setEntity(new BombPowerup(engine), x, y);
+            } else if (key < 20) {
+                engine.setEntity(new FlamePowerup(engine), x, y);
+            } else if (key < 30) {
+                engine.setEntity(new SpeedPowerup(engine), x, y);
             } else {
                 engine.setEntity(new Grass(engine), x, y);
             }

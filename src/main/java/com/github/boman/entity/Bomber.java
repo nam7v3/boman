@@ -119,6 +119,9 @@ public class Bomber extends MoveableEntity implements EventListener {
                 lives--;
             }
         }
+        if (other instanceof PowerupTile powerupTile) {
+            powerupTile.apply(this);
+        }
     }
 
 
@@ -177,5 +180,9 @@ public class Bomber extends MoveableEntity implements EventListener {
 
     public void setMaxBomb(int maxBomb) {
         this.maxBomb = maxBomb;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 }

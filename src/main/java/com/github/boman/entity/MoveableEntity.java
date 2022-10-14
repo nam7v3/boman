@@ -5,10 +5,11 @@ import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
 public class MoveableEntity extends Entity {
+    public static final double BASE_SPEED = 0.5;
     protected Box pos;
     protected State state;
     private final Box futurePos;
-    private final double speed;
+    private double speed;
 
     public MoveableEntity(Engine engine, Box curPos, double speed) {
         super(engine);
@@ -16,6 +17,14 @@ public class MoveableEntity extends Entity {
         this.futurePos = new Box(curPos);
         this.speed = speed;
         this.state = State.Standing;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     /**
@@ -71,8 +80,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * (j + 1));
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -91,8 +98,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * j - pos.getW());
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -111,8 +116,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * (i + 1));
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -131,8 +134,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * i - pos.getW());
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -173,14 +174,5 @@ public class MoveableEntity extends Entity {
         Left,
         Right,
         Standing,
-    }
-
-    private int getTileMiddleX(Box box) {
-        return (int) ((box.getX() + box.getW() / 2) / engine.getTileWidth());
-    }
-
-
-    private int getTileMiddleY(Box box) {
-        return (int) ((box.getY() + box.getH() / 2) / engine.getTileHeight());
     }
 }
