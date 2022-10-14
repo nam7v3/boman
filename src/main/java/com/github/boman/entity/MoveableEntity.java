@@ -80,8 +80,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * (j + 1));
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -100,8 +98,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * j - pos.getW());
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -120,8 +116,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * (i + 1));
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
@@ -140,8 +134,6 @@ public class MoveableEntity extends Entity {
                         if (engine.getEntity(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * i - pos.getW());
                             break loop;
-                        } else {
-                            interactWith(engine.getEntity(i, j));
                         }
                     }
                 }
