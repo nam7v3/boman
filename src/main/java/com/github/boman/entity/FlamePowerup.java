@@ -3,10 +3,10 @@ package com.github.boman.entity;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Sprite;
 
-public class BombPowerup extends PowerupTile {
-    public BombPowerup(Engine engine) {
+public class FlamePowerup extends PowerupTile {
+    public FlamePowerup(Engine engine) {
         super(engine);
-        this.img = Sprite.powerupBombs;
+        this.img = Sprite.powerupFlames;
     }
 
     @Override
@@ -16,7 +16,7 @@ public class BombPowerup extends PowerupTile {
 
     @Override
     public void apply(Bomber bomber) {
-        bomber.setMaxBomb(bomber.getMaxBomb() + 1);
+        bomber.setPower(bomber.getPower() + 1);
         engine.setEntity(new Grass(engine), bomber.getTileX(), bomber.getTileY());
     }
 }

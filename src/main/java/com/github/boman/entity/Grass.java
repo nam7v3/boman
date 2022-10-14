@@ -8,16 +8,6 @@ public class Grass extends TileEntity {
     }
 
     @Override
-    public void update() {
-        super.update();
-    }
-
-    @Override
-    public void interactWith(Entity other) {
-        super.interactWith(other);
-    }
-
-    @Override
     public boolean block() {
         return false;
     }

@@ -22,7 +22,6 @@ public class Bomb extends TileEntity {
     }
 
     public void explode() {
-        engine.remove(this);
         Fire fire = new Fire(engine, x, y, Fire.State.Middle);
         engine.add(fire);
         engine.setEntity(fire, x, y);
@@ -58,6 +57,7 @@ public class Bomb extends TileEntity {
                 break;
             }
         }
+        engine.remove(this);
     }
 
     @Override
