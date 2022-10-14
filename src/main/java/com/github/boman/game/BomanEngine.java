@@ -123,12 +123,12 @@ public class BomanEngine implements Engine {
      * @return true nếu đặt được, false nếu
      */
     public boolean spawnBomb(Bomber player, int x, int y, int power) {
-        if (board[y][x].block() || board[y][x] instanceof Bomb) {
+        if (getEntity(x, y).block() || getEntity(x, y) instanceof Bomb) {
             return false;
         }
         Bomb bomb = new Bomb(this, player, x, y, power);
         add(bomb);
-        board[y][x] = bomb;
+        setEntity(bomb, x, y);
         return true;
     }
 
@@ -137,7 +137,7 @@ public class BomanEngine implements Engine {
             return false;
         }
         if (getEntity(x, y) instanceof Brick brick) {
-            brick.setBreaking(true);
+            brick.breakBrick();
             add(brick);
             return false;
         }

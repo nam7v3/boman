@@ -2,7 +2,9 @@ package com.github.boman.entity;
 
 import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
+import com.github.boman.sprites.Animation;
 import com.github.boman.sprites.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Bomb extends TileEntity {
     public static int DEFAULT_FRAME_WAIT = 120;
@@ -10,6 +12,15 @@ public class Bomb extends TileEntity {
     private Bomber player;
     private int x, y;
     private int power;
+    private Animation animation = Animation.getBombAnimation();
+
+    public enum Attribute {
+        Pending,
+        Exploded,
+    }
+
+    private Attribute attribute;
+
 
     public Bomb(Engine engine, Bomber player, int x, int y, int power) {
         super(engine);
@@ -19,13 +30,12 @@ public class Bomb extends TileEntity {
         this.x = x;
         this.y = y;
         this.power = power;
+        this.attribute = Attribute.Pending;
     }
 
     public void explode() {
         engine.remove(this);
-        Fire fire = new Fire(engine, x, y, Fire.State.Middle);
-        engine.add(fire);
-        engine.setEntity(fire, x, y);
+        engine.spawnFire(x, y, Fire.State.Middle);
         // Lửa trái
         for (int left = 1; left <= power; left++) {
             int newX = x - left;
@@ -62,11 +72,19 @@ public class Bomb extends TileEntity {
 
     @Override
     public void update() {
+        animation.setState(Attribute.Pending);
         timeLeft.minus();
         if (timeLeft.isNegative()) {
+            animation.setState(Attribute.Exploded);
             player.setCurBomb(player.getCurBomb() - 1);
             explode();
         }
+    }
+
+    @Override
+    public void render(GraphicsContext gc, int x, int y) {
+        super.img = animation.getImage();
+        super.render(gc, x, y);
     }
 
     @Override

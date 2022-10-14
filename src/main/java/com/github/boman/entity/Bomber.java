@@ -118,15 +118,15 @@ public class Bomber extends MoveableEntity implements EventListener {
                 bomberState = Atrribute.Invincible;
                 lives--;
             }
-            if (lives <= 0) {
-                engine.remove(this);
-            }
         }
     }
 
 
     @Override
     public void update() {
+        if (isDead()) {
+            bomberState = Atrribute.Dead;
+        }
         switch (bomberState) {
             case Normal -> super.update();
             case Invincible -> {
@@ -142,7 +142,17 @@ public class Bomber extends MoveableEntity implements EventListener {
                 }
                 super.update();
             }
+            case Dead -> {
+                animation.setState(Bomber.Atrribute.Dead);
+                if (animation.animationDone()) {
+                    engine.remove(this);
+                }
+            }
         }
+    }
+
+    public boolean isDead() {
+        return lives <= 0;
     }
 
     public int getLives() {

@@ -2,7 +2,8 @@ package com.github.boman.entity;
 
 import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
-import com.github.boman.sprites.Sprite;
+import com.github.boman.sprites.Animation;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Fire extends TileEntity {
     public static int DEFAULT_FRAME_WAIT = 30;
@@ -10,20 +11,14 @@ public class Fire extends TileEntity {
     private int x;
     private int y;
 
+    private Animation animation = Animation.getFireAnimation();
+
     public Fire(Engine engine, int x, int y, State state) {
         super(engine);
         this.timeLeft = Duration.of(DEFAULT_FRAME_WAIT);
         this.x = x;
         this.y = y;
-        switch (state) {
-            case Middle -> this.img = Sprite.bombExploded;
-            case Horizontal -> this.img = Sprite.explosionHorizontal;
-            case Vertical -> this.img = Sprite.explosionVertical;
-            case HLeft -> this.img = Sprite.explosionHorizontalLeftLast;
-            case HRight -> this.img = Sprite.explosionHorizontalRightLast;
-            case VUp -> this.img = Sprite.explosionVerticalTopLast;
-            case VDown -> this.img = Sprite.explosionVerticalDownLast;
-        }
+        animation.setState(state);
     }
 
     @Override
@@ -43,6 +38,12 @@ public class Fire extends TileEntity {
     @Override
     public boolean block() {
         return false;
+    }
+
+    @Override
+    public void render(GraphicsContext gc, int x, int y) {
+        super.img = animation.getImage();
+        super.render(gc, x, y);
     }
 
     public Duration getTimeLeft() {

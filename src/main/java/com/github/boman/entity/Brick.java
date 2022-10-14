@@ -2,15 +2,24 @@ package com.github.boman.entity;
 
 import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
+import com.github.boman.sprites.Animation;
 import com.github.boman.sprites.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Random;
 
 public class Brick extends TileEntity {
     public static int DEFAULT_FRAME_WAIT = 30;
+    private Animation animation = Animation.getBrickAnimation();
     private int x;
     private int y;
-    private boolean breaking;
+
+    public enum Attribute {
+        Normal,
+        Breaking,
+    }
+
+    public Attribute attribute;
     private Duration timeLeft;
 
     public Brick(Engine engine, int x, int y) {
@@ -18,7 +27,7 @@ public class Brick extends TileEntity {
         this.x = x;
         this.y = y;
         this.timeLeft = Duration.of(DEFAULT_FRAME_WAIT);
-        this.breaking = false;
+        this.attribute = Attribute.Normal;
         this.img = Sprite.brick;
     }
 
@@ -47,11 +56,11 @@ public class Brick extends TileEntity {
     }
 
     public boolean isBreaking() {
-        return breaking;
+        return attribute == Attribute.Breaking;
     }
 
-    public void setBreaking(boolean breaking) {
-        this.breaking = breaking;
+    public void breakBrick() {
+        this.attribute = Attribute.Breaking;
     }
 
     @Override
@@ -61,9 +70,10 @@ public class Brick extends TileEntity {
 
     @Override
     public void update() {
-        if (!breaking) {
+        if (!isBreaking()) {
             return;
         }
+        animation.setState(Attribute.Breaking);
         timeLeft.minus();
         if (timeLeft.isNegative()) {
             Random rand = new Random();
@@ -75,6 +85,12 @@ public class Brick extends TileEntity {
             }
             engine.remove(this);
         }
+    }
+
+    @Override
+    public void render(GraphicsContext gc, int x, int y) {
+        super.img = animation.getImage();
+        super.render(gc, x, y);
     }
 
     @Override
