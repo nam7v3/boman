@@ -19,7 +19,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     private Duration invincibleTime = Duration.of(INVINCIBLE_FRAME);
     private int lives = 3;
     private int maxBomb = 1;
-    private int power = 3;
+    private int power = 1;
     private int curBomb = 0;
     private Animation animation = Animation.getPlayerAnimation();
 

@@ -16,7 +16,7 @@ public class SpeedPowerup extends PowerupTile {
 
     @Override
     public void apply(Bomber bomber) {
-        bomber.setSpeed(bomber.getPower() + MoveableEntity.BASE_SPEED);
+        bomber.setSpeed(bomber.getSpeed() + MoveableEntity.BASE_SPEED);
         engine.setEntity(new Grass(engine), bomber.getTileX(), bomber.getTileY());
     }
 }
