@@ -103,8 +103,13 @@ public class BomanEngine implements Engine {
                     }
                     case '1' -> {
                         board[i][j] = new Grass(this);
-                        Enemy enemy = new Enemy(this, j, i);
-                        add(enemy);
+                        Balloom balloom = new Balloom(this, j, i);
+                        add(balloom);
+                    }
+                    case '2' -> {
+                        board[i][j] = new Grass(this);
+                        Oneal oneal = new Oneal(this, j, i);
+                        add(oneal);
                     }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);

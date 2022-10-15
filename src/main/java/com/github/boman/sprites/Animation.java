@@ -125,7 +125,7 @@ public class Animation {
         return playerAnimation;
     }
 
-    public static Animation getEnemyAnimation() {
+    public static Animation getBalloomAnimation() {
         Animation enemyAnimation = new Animation(Duration.of(20))
                 .addState(
                         State.Left, new Image[]{
@@ -148,6 +148,49 @@ public class Animation {
                 )
                 .addState(Enemy.Attribute.Dead, new Image[]{
                         Sprite.balloomDead,
+                });
+        enemyAnimation.setDefaultState(State.Left);
+        enemyAnimation.setState(State.Left);
+        return enemyAnimation;
+    }
+
+    public static Animation getOnealAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Left, new Image[]{
+                                Sprite.onealLeft1,
+                                Sprite.onealLeft2,
+                                Sprite.onealLeft3,
+                        }
+                )
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.onealLeft1
+                        }
+                )
+                .addState(
+                        State.Right, new Image[]{
+                                Sprite.onealRight1,
+                                Sprite.onealRight2,
+                                Sprite.onealRight3,
+                        }
+                )
+                .addState(
+                        State.Up, new Image[]{
+                                Sprite.onealLeft1,
+                                Sprite.onealLeft2,
+                                Sprite.onealLeft3,
+                        }
+                )
+                .addState(
+                        State.Down, new Image[]{
+                                Sprite.onealLeft1,
+                                Sprite.onealLeft2,
+                                Sprite.onealLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.onealDead,
                 });
         enemyAnimation.setDefaultState(State.Left);
         enemyAnimation.setState(State.Left);
