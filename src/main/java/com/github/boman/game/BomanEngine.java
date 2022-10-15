@@ -7,6 +7,7 @@ import java.util.*;
 
 // TODO: Thêm một danh sách thực thể để kiểm tra va chạm
 // TODO: Sửa lại fire. Lỗi do fire kết thúc thì nó set Grass.
+
 /**
  * Handle game logic.
  */
@@ -25,6 +26,8 @@ public class BomanEngine implements Engine {
     private List<Entity> scheduleAddEntity;
     // Bảng chơi của game.
     private TileEntity[][] board;
+    // Những thực thể ở trên bảng chơi.
+    private List<Entity> entities;
     // Truyền input cho các Object đã được thêm vào.
     private EventHandlerListener handler;
     private boolean started;
@@ -33,6 +36,7 @@ public class BomanEngine implements Engine {
         this.updateableEntity = new LinkedList<>();
         this.scheduleRemoveEntity = new ArrayList<>();
         this.scheduleAddEntity = new ArrayList<>();
+        this.entities = new LinkedList<>();
         this.handler = handler;
     }
 
@@ -53,6 +57,15 @@ public class BomanEngine implements Engine {
             //Entity entity = updateableEntity.get(i);
             entity.update();
         }
+
+        for (Entity e : entities) {
+            for (Entity other : entities) {
+                if (e != other) {
+                    e.interactWith(other);
+                    other.interactWith(e);
+                }
+            }
+        }
     }
 
     /**
@@ -60,7 +73,7 @@ public class BomanEngine implements Engine {
      *
      * @param e Entity.
      */
-    public void add(Entity e) {
+    public void addUpdateEntity(Entity e) {
         scheduleAddEntity.add(e);
     }
 
@@ -69,7 +82,7 @@ public class BomanEngine implements Engine {
      *
      * @param e Entity cần xóa.
      */
-    public void remove(Entity e) {
+    public void removeUpdateEntity(Entity e) {
         scheduleRemoveEntity.add(e);
     }
 
@@ -97,14 +110,11 @@ public class BomanEngine implements Engine {
                     case '#' -> board[i][j] = new Wall(this);
                     case 'p' -> {
                         board[i][j] = new Grass(this);
-                        Bomber player = new Bomber(this, j, i);
-                        handler.addListener(player);
-                        add(player);
+                        spawnBomber(new Bomber(this, j, i));
                     }
                     case '1' -> {
                         board[i][j] = new Grass(this);
-                        Enemy enemy = new Enemy(this, j, i);
-                        add(enemy);
+                        spawnEnemy(new Enemy(this, j, i));
                     }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
@@ -125,67 +135,94 @@ public class BomanEngine implements Engine {
      * @return true nếu đặt được, false nếu
      */
     public boolean spawnBomb(Bomber player, int x, int y, int power) {
-        if (getEntity(x, y).block() || getEntity(x, y) instanceof Bomb || getEntity(x, y) instanceof Fire) {
+        if (getTile(x, y).block() || getTile(x, y) instanceof Bomb || getTile(x, y) instanceof Fire) {
             return false;
         }
         Bomb bomb = new Bomb(this, player, x, y, power);
-        add(bomb);
-        setEntity(bomb, x, y);
+        addUpdateEntity(bomb);
+        setTile(bomb, x, y);
         return true;
     }
 
     public boolean spawnFire(Bomb bomb, int x, int y, Fire.State state) {
-        if (getEntity(x, y) instanceof Wall) {
+        if (getTile(x, y) instanceof Wall) {
             return false;
         }
-        if (getEntity(x, y) instanceof Bomb otherBomb) {
+        if (getTile(x, y) instanceof Bomb otherBomb) {
             if (bomb != otherBomb) {
                 otherBomb.explode();
             }
         }
-        if (getEntity(x, y) instanceof Fire otherFire) {
+        if (getTile(x, y) instanceof Fire otherFire) {
             state = switch (state) {
-                case VDown -> switch (otherFire.getState()){
+                case VDown -> switch (otherFire.getState()) {
                     case Horizontal, HLeft, HRight, Middle -> Fire.State.Middle;
                     case Vertical, VUp -> Fire.State.Vertical;
                     case VDown -> Fire.State.VDown;
                 };
-                case VUp -> switch (otherFire.getState()){
+                case VUp -> switch (otherFire.getState()) {
                     case Horizontal, HLeft, HRight, Middle -> Fire.State.Middle;
                     case Vertical, VDown -> Fire.State.Vertical;
                     case VUp -> Fire.State.VUp;
                 };
-                case HRight -> switch (otherFire.getState()){
+                case HRight -> switch (otherFire.getState()) {
                     case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
                     case Horizontal, HLeft -> Fire.State.Horizontal;
-                    case  HRight -> Fire.State.HRight;
+                    case HRight -> Fire.State.HRight;
                 };
-                case HLeft -> switch (otherFire.getState()){
+                case HLeft -> switch (otherFire.getState()) {
                     case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
                     case Horizontal, HRight -> Fire.State.Horizontal;
-                    case  HLeft -> Fire.State.HLeft;
+                    case HLeft -> Fire.State.HLeft;
                 };
-                case Horizontal -> switch (otherFire.getState()){
+                case Horizontal -> switch (otherFire.getState()) {
                     case HLeft, Horizontal, HRight -> Fire.State.Horizontal;
                     case VDown, Vertical, VUp, Middle -> Fire.State.Middle;
                 };
-                case Vertical -> switch (otherFire.getState()){
-                    case VDown, Vertical, VUp  -> Fire.State.Vertical;
+                case Vertical -> switch (otherFire.getState()) {
+                    case VDown, Vertical, VUp -> Fire.State.Vertical;
                     case HLeft, Horizontal, HRight, Middle -> Fire.State.Middle;
                 };
                 case Middle -> Fire.State.Middle;
             };
         }
-        if (getEntity(x, y) instanceof Brick brick) {
+        if (getTile(x, y) instanceof Brick brick) {
             brick.breakBrick();
-            add(brick);
+            addUpdateEntity(brick);
             return false;
         }
 
         Fire fire = new Fire(this, x, y, state);
-        add(fire);
-        setEntity(fire, x, y);
+        addUpdateEntity(fire);
+        setTile(fire, x, y);
         return true;
+    }
+
+    @Override
+    public void spawnBomber(Bomber bomber) {
+        handler.addListener(bomber);
+        addEntity(bomber);
+        addUpdateEntity(bomber);
+    }
+
+    @Override
+    public void spawnEnemy(Enemy enemy) {
+        addEntity(enemy);
+        addUpdateEntity(enemy);
+    }
+
+    @Override
+    public void addEntity(Entity e) {
+        entities.add(e);
+    }
+
+    @Override
+    public void removeEntity(Entity e) {
+        entities.remove(e);
+    }
+
+    public List<Entity> getEntity() {
+        return entities;
     }
 
     public TileEntity[][] getBoard() {
@@ -203,12 +240,12 @@ public class BomanEngine implements Engine {
     }
 
     @Override
-    public TileEntity getEntity(int x, int y) {
+    public TileEntity getTile(int x, int y) {
         return board[y][x];
     }
 
     @Override
-    public void setEntity(TileEntity e, int x, int y) {
+    public void setTile(TileEntity e, int x, int y) {
         board[y][x] = e;
     }
 

@@ -32,12 +32,12 @@ public class Enemy extends MoveableEntity {
     public void update() {
 
         super.update();
-        if (super.state == State.Left && engine.getEntity((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
+        if (super.state == State.Left && engine.getTile((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
             moveRight();
             animation.setState(State.Right);
         }
 
-        if (super.state == State.Right && engine.getEntity((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
+        if (super.state == State.Right && engine.getTile((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
             moveLeft();
             animation.setState(State.Left);
         }
@@ -58,7 +58,8 @@ public class Enemy extends MoveableEntity {
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
             animation.setState(Attribute.Dead);
-            engine.remove(this);
+            engine.removeUpdateEntity(this);
+            engine.removeEntity(this);
         }
     }
 }

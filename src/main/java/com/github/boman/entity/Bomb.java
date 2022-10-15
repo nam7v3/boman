@@ -35,7 +35,7 @@ public class Bomb extends TileEntity {
 
     public void explode() {
         player.setCurBomb(player.getCurBomb() - 1);
-        engine.remove(this);
+        engine.removeUpdateEntity(this);
         engine.spawnFire(this, x, y, Fire.State.Middle);
         // Lửa trái
         for (int left = 1; left <= power; left++) {

@@ -17,6 +17,6 @@ public class FlamePowerup extends PowerupTile {
     @Override
     public void apply(Bomber bomber) {
         bomber.setPower(bomber.getPower() + 1);
-        engine.setEntity(new Grass(engine), bomber.getTileX(), bomber.getTileY());
+        engine.setTile(new Grass(engine), bomber.getTileX(), bomber.getTileY());
     }
 }
