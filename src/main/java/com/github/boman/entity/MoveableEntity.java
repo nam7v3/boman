@@ -172,6 +172,14 @@ public class MoveableEntity extends Entity {
         return this.pos.intersect(other.pos);
     }
 
+    public Box getPos() {
+        return pos;
+    }
+
+    public void setPos(Box pos) {
+        this.pos = pos;
+    }
+
     public enum State {
         Up,
         Down,
