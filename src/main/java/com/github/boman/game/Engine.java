@@ -35,5 +35,6 @@ public interface Engine {
 
     void removeEntity(Entity e);
 
-
+    Bomber getPlayer();
+    void setPlayer(Bomber player);
 }

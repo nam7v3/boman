@@ -30,6 +30,7 @@ public class BomanEngine implements Engine {
     private List<Entity> entities;
     // Truyền input cho các Object đã được thêm vào.
     private EventHandlerListener handler;
+    private Bomber player;
     private boolean started;
 
     public BomanEngine(EventHandlerListener handler) {
@@ -56,6 +57,9 @@ public class BomanEngine implements Engine {
         for (Entity entity : updateableEntity) {
             //Entity entity = updateableEntity.get(i);
             entity.update();
+            if (entity instanceof Bomber player) {
+                this.player = player;
+            }
         }
 
         for (Entity e : entities) {
@@ -110,11 +114,16 @@ public class BomanEngine implements Engine {
                     case '#' -> board[i][j] = new Wall(this);
                     case 'p' -> {
                         board[i][j] = new Grass(this);
-                        spawnBomber(new Bomber(this, j, i));
+                        player = new Bomber(this, j, i);
+                        spawnBomber(player);
                     }
                     case '1' -> {
                         board[i][j] = new Grass(this);
-                        spawnEnemy(new Enemy(this, j, i));
+                        spawnEnemy(new Balloom(this, j, i));
+                    }
+                    case '2' -> {
+                        board[i][j] = new Grass(this);
+                        spawnEnemy(new Oneal(this, j, i));
                     }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
@@ -257,5 +266,13 @@ public class BomanEngine implements Engine {
         this.started = started;
     }
 
+    @Override
+    public Bomber getPlayer() {
+        return player;
+    }
 
+    @Override
+    public void setPlayer(Bomber player) {
+        this.player = player;
+    }
 }

@@ -11,7 +11,7 @@ public class Enemy extends MoveableEntity {
     public static double SPRITE_WIDTH = 20;
     public static double SPRITE_HEIGHT = 20;
     public static double ENEMY_SPEED = 1;
-    private Animation animation = Animation.getEnemyAnimation();
+    protected Animation animation;
 
     public enum Attribute {
         Alive,
@@ -30,36 +30,16 @@ public class Enemy extends MoveableEntity {
 
     @Override
     public void update() {
-
         super.update();
-        if (super.state == State.Left && engine.getTile((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
-            moveRight();
-            animation.setState(State.Right);
-        }
-
-        if (super.state == State.Right && engine.getTile((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
-            moveLeft();
-            animation.setState(State.Left);
-        }
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(
-                animation.getImage(),
-                pos.getX(),
-                pos.getY(),
-                ENEMY_WIDTH,
-                ENEMY_HEIGHT
-        );
+        super.render(gc);
     }
 
     @Override
     public void interactWith(Entity other) {
-        if (other instanceof Fire) {
-            animation.setState(Attribute.Dead);
-            engine.removeUpdateEntity(this);
-            engine.removeEntity(this);
-        }
+        super.interactWith(other);
     }
 }
