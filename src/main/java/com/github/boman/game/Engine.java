@@ -37,4 +37,10 @@ public interface Engine {
 
     Bomber getPlayer();
     void setPlayer(Bomber player);
+
+    int getMapHeight();
+    void setMapHeight(int mapHeight);
+
+    int getMapWidth();
+    void setMapWidth(int mapWidth);
 }

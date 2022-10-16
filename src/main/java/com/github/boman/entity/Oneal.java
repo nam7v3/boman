@@ -28,9 +28,9 @@ public class Oneal extends Enemy {
         // TODO: Thuật toán tìm đường cho Oneal (BFS)
         TileEntity[][] board = engine.getBoard();
         LinkedList<Integer> queue = new LinkedList<>();
-        queue.add(this.getTileX() - 1);
-        queue.add(this.getTileY() - 1);
-        State[][] trace = new State[13][31];
+        queue.add(this.getTileX());
+        queue.add(this.getTileY());
+        State[][] trace = new State[engine.getMapHeight()][engine.getMapWidth()];
         trace[this.getTileY()][this.getTileX()] = State.Standing;
 
         while (!queue.isEmpty()) {
@@ -57,10 +57,10 @@ public class Oneal extends Enemy {
                 trace[y - 1][x] = State.Up;
             }
         }
-
+        /*
         State lastState = State.Left;
-        int curX = engine.getPlayer().getTileX() - 1;
-        int curY = engine.getPlayer().getTileY() - 1;
+        int curX = engine.getPlayer().getTileX();
+        int curY = engine.getPlayer().getTileY();
         while (true) {
             if (curX == this.getTileX() && curY == this.getTileY()) {
                 break;
@@ -73,6 +73,7 @@ public class Oneal extends Enemy {
                 case Down -> curY--;
             }
         }
+        */
 
         // TODO: Moving, Speed up khi gặp Bomber
         //super.state = lastState;

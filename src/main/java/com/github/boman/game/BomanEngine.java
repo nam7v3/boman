@@ -31,6 +31,8 @@ public class BomanEngine implements Engine {
     // Truyền input cho các Object đã được thêm vào.
     private EventHandlerListener handler;
     private Bomber player;
+    private int mapWidth;
+    private int mapHeight;
     private boolean started;
 
     public BomanEngine(EventHandlerListener handler) {
@@ -104,6 +106,8 @@ public class BomanEngine implements Engine {
         int level = scanner.nextInt();
         int height = scanner.nextInt();
         int width = scanner.nextInt();
+        mapWidth = width;
+        mapHeight = height;
 
         board = new TileEntity[height][width];
         scanner.nextLine();
@@ -266,13 +270,27 @@ public class BomanEngine implements Engine {
         this.started = started;
     }
 
-    @Override
     public Bomber getPlayer() {
         return player;
     }
 
-    @Override
     public void setPlayer(Bomber player) {
         this.player = player;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+
+    public void setMapHeight(int mapHeight) {
+        this.mapHeight = mapHeight;
     }
 }
