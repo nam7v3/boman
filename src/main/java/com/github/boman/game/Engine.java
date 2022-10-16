@@ -5,7 +5,7 @@ import com.github.boman.entity.*;
 import java.util.List;
 
 public interface Engine {
-    void add(Entity entity);
+    void addUpdateEntity(Entity entity);
 
     void update();
 
@@ -17,13 +17,23 @@ public interface Engine {
 
     boolean spawnFire(Bomb bomb, int x, int y, Fire.State state);
 
+    void spawnBomber(Bomber bomber);
+
+    void spawnEnemy(Enemy enemy);
+
     double getTileHeight();
 
     double getTileWidth();
 
-    void remove(Entity e);
+    void removeUpdateEntity(Entity e);
 
-    TileEntity getEntity(int x, int y);
+    TileEntity getTile(int x, int y);
 
-    void setEntity(TileEntity e, int x, int y);
+    void setTile(TileEntity e, int x, int y);
+
+    void addEntity(Entity e);
+
+    void removeEntity(Entity e);
+
+
 }

@@ -41,6 +41,18 @@ public class Bomber extends MoveableEntity implements EventListener {
 
     @Override
     public void render(GraphicsContext gc) {
+        if (bomberState == Atrribute.Invincible) {
+            gc.setGlobalAlpha(0.7);
+            gc.drawImage(
+                    animation.getImage(),
+                    pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2,
+                    pos.getY() - (SPRITE_HEIGHT - pos.getH()),
+                    SPRITE_WIDTH,
+                    SPRITE_HEIGHT
+            );
+            gc.setGlobalAlpha(1);
+            return;
+        }
         gc.drawImage(
                 animation.getImage(),
                 pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2,
@@ -114,22 +126,30 @@ public class Bomber extends MoveableEntity implements EventListener {
     @Override
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
-            if (bomberState == Atrribute.Normal && lives > 0) {
-                bomberState = Atrribute.Invincible;
-                lives--;
-            }
+            damage();
         }
         if (other instanceof PowerupTile powerupTile) {
             powerupTile.apply(this);
         }
+        if (other instanceof Enemy) {
+            if (collision((MoveableEntity) other)) {
+                damage();
+            }
+        }
     }
 
+    public void damage() {
+        if (bomberState == Atrribute.Normal && lives > 0) {
+            bomberState = Atrribute.Invincible;
+            lives--;
+        }
+        if (lives <= 0) {
+            bomberState = Atrribute.Dead;
+        }
+    }
 
     @Override
     public void update() {
-        if (isDead()) {
-            bomberState = Atrribute.Dead;
-        }
         switch (bomberState) {
             case Normal -> super.update();
             case Invincible -> {
@@ -148,7 +168,8 @@ public class Bomber extends MoveableEntity implements EventListener {
             case Dead -> {
                 animation.setState(Bomber.Atrribute.Dead);
                 if (animation.animationDone()) {
-                    engine.remove(this);
+                    engine.removeUpdateEntity(this);
+                    engine.removeEntity(this);
                 }
             }
         }

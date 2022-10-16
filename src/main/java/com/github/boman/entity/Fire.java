@@ -28,10 +28,10 @@ public class Fire extends TileEntity {
     public void update() {
         timeLeft.minus();
         if (timeLeft.isNegative()) {
-            if (engine.getEntity(x, y) == this) {
-                engine.setEntity(new Grass(engine), x, y);
+            if (engine.getTile(x, y) == this) {
+                engine.setTile(new Grass(engine), x, y);
             }
-            engine.remove(this);
+            engine.removeUpdateEntity(this);
         }
     }
 

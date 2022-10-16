@@ -31,7 +31,7 @@ public class Controller implements Initializable {
             @Override
             public void tick() {
                 engine.update();
-                renderer.render(engine.getBoard(), engine.getUpdateableEntity());
+                renderer.render(engine.getBoard(), engine.getEntity());
             }
         };
         loop.start();

@@ -64,7 +64,7 @@ public class MoveableEntity extends Entity {
 
     @Override
     public void update() {
-        interactWith(engine.getEntity(getTileX(), getTileY()));
+        interactWith(engine.getTile(getTileX(), getTileY()));
         switch (state) {
             // Xử lý va chạm khi đi lên
             case Up -> {
@@ -77,7 +77,7 @@ public class MoveableEntity extends Entity {
                 loop:
                 for (int i = left; i <= right; ++i) {
                     for (int j = upper; j >= lower; --j) {
-                        if (engine.getEntity(i, j).block()) {
+                        if (engine.getTile(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * (j + 1));
                             break loop;
                         }
@@ -95,7 +95,7 @@ public class MoveableEntity extends Entity {
                 loop:
                 for (int i = left; i <= right; ++i) {
                     for (int j = lower; j <= upper; ++j) {
-                        if (engine.getEntity(i, j).block()) {
+                        if (engine.getTile(i, j).block()) {
                             futurePos.setY(engine.getTileHeight() * j - pos.getW());
                             break loop;
                         }
@@ -113,7 +113,7 @@ public class MoveableEntity extends Entity {
                 loop:
                 for (int j = lower; j <= upper; ++j) {
                     for (int i = right; i >= left; --i) {
-                        if (engine.getEntity(i, j).block()) {
+                        if (engine.getTile(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * (i + 1));
                             break loop;
                         }
@@ -131,7 +131,7 @@ public class MoveableEntity extends Entity {
                 loop:
                 for (int j = lower; j <= upper; ++j) {
                     for (int i = left; i <= right; ++i) {
-                        if (engine.getEntity(i, j).block()) {
+                        if (engine.getTile(i, j).block()) {
                             futurePos.setX(engine.getTileWidth() * i - pos.getW());
                             break loop;
                         }
@@ -166,6 +166,10 @@ public class MoveableEntity extends Entity {
      */
     public int getTileY() {
         return (int) ((pos.getY() + pos.getH() / 2) / engine.getTileHeight());
+    }
+
+    public boolean collision(MoveableEntity other) {
+        return this.pos.intersect(other.pos);
     }
 
     public enum State {
