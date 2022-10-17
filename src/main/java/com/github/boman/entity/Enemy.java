@@ -6,6 +6,7 @@ import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Enemy extends MoveableEntity {
+    public static final double IN_RANGE = 200;
     public static double ENEMY_WIDTH = 17;
     public static double ENEMY_HEIGHT = 17;
     public static double SPRITE_WIDTH = 20;
