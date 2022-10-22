@@ -7,6 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.LinkedList;
 
 public class Oneal extends Enemy {
+    LinkedList<Integer> queue = new LinkedList<>();
+    State[][] trace = new State[engine.getMapHeight()][engine.getMapWidth()];
     public Oneal(Engine engine, int x, int y) {
         super(engine, x, y);
         animation = Animation.getOnealAnimation();
@@ -21,16 +23,21 @@ public class Oneal extends Enemy {
         return (x >= 0 && x <= 30 && y >= 0 && y <= 12);
     }
 
+    public boolean outOfRange() {
+        return Math.abs(pos.getX() - engine.getPlayer().getPos().getX())
+                + Math.abs(pos.getY() - engine.getPlayer().getPos().getY()) > Enemy.IN_RANGE;
+    }
+
     @Override
     public void update() {
-        super.update();
-
         // TODO: Thuật toán tìm đường cho Oneal (BFS)
-        TileEntity[][] board = engine.getBoard();
-        LinkedList<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < engine.getMapHeight(); i++) {
+            for (int j = 0; j < engine.getMapWidth(); j++) {
+                trace[i][j] = null;
+            }
+        }
         queue.add(this.getTileX());
         queue.add(this.getTileY());
-        State[][] trace = new State[engine.getMapHeight()][engine.getMapWidth()];
         trace[this.getTileY()][this.getTileX()] = State.Standing;
 
         while (!queue.isEmpty()) {
@@ -57,7 +64,8 @@ public class Oneal extends Enemy {
                 trace[y - 1][x] = State.Up;
             }
         }
-        /*
+
+        /* Debug
         for (int i = 0; i < engine.getMapHeight(); i++) {
             for (int j = 0; j < engine.getTileWidth(); j++) {
                 System.out.print(trace[i][j]);
@@ -67,51 +75,71 @@ public class Oneal extends Enemy {
         }
         */
 
-        State lastState = State.Left;
-        int curX = engine.getPlayer().getTileX();
-        int curY = engine.getPlayer().getTileY();
-        if (trace[curY][curX] != null) {
-            while (true) {
-                if (curX == this.getTileX() && curY == this.getTileY()) {
-                    break;
-                }
-                lastState = trace[curY][curX];
-                switch (lastState) {
-                    case Left -> curX++;
-                    case Right -> curX--;
-                    case Up -> curY++;
-                    case Down -> curY--;
-                }
-            }
-        }
-
-        // TODO: Moving, Speed up khi gặp Bomber
-        super.state = lastState;
-        if (pos.getY() % engine.getTileHeight() != 0) {
-            if (getTileY() * engine.getTileHeight() < engine.getPlayer().getTileY() * engine.getTileHeight()) {
+        if (outOfRange() || trace[engine.getPlayer().getTileY()][engine.getPlayer().getTileX()] == null) {
+            if (pos.getY() % engine.getTileHeight() != 0) {
                 moveDown();
                 animation.setState(State.Down);
             } else {
-                moveUp();
-                animation.setState(State.Up);
-            }
-        } else if (pos.getX() % engine.getTileWidth() != 0) {
-            if (getTileX() * engine.getTileWidth() < engine.getPlayer().getTileX() * engine.getTileWidth()) {
-                moveRight();
-                animation.setState(State.Right);
-            } else {
-                moveLeft();
-                animation.setState(State.Left);
+                if (super.state == State.Left && engine.getTile((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
+                    moveRight();
+                    animation.setState(State.Right);
+                }
+
+                if (super.state == State.Right && engine.getTile((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
+                    moveLeft();
+                    animation.setState(State.Left);
+                }
             }
         } else {
-            switch (super.state) {
-                case Left -> moveLeft();
-                case Right -> moveRight();
-                case Up -> moveUp();
-                case Down -> moveDown();
+
+            State lastState = State.Left;
+            int curX = engine.getPlayer().getTileX();
+            int curY = engine.getPlayer().getTileY();
+            if (trace[curY][curX] != null) {
+                while (true) {
+                    if (curX == this.getTileX() && curY == this.getTileY()) {
+                        break;
+                    }
+                    lastState = trace[curY][curX];
+                    switch (lastState) {
+                        case Left -> curX++;
+                        case Right -> curX--;
+                        case Up -> curY++;
+                        case Down -> curY--;
+                    }
+                }
             }
-            animation.setState(super.state);
+
+            // TODO: Moving, Speed up khi gặp Bomber
+            Box other = new Box(getTileX() * engine.getTileWidth(), getTileY() * engine.getTileHeight(), engine.getTileWidth(), engine.getTileHeight());
+            //System.out.println(pos);
+            //System.out.println(other);
+            if (!pos.inside(other)) {
+                if (pos.getY() <= other.getY()) {
+                    moveDown();
+                    animation.setState(State.Down);
+                } else if (pos.getY() >= other.getY()) {
+                    moveUp();
+                    animation.setState(State.Up);
+                } else if (pos.getX() <= other.getX()) {
+                    moveRight();
+                    animation.setState(State.Right);
+                } else {
+                    moveLeft();
+                    animation.setState(State.Left);
+                }
+            } else {
+                switch (lastState) {
+                    case Left -> moveLeft();
+                    case Right -> moveRight();
+                    case Up -> moveUp();
+                    case Down -> moveDown();
+                }
+                animation.setState(super.state);
+            }
         }
+
+        super.update();
     }
 
     @Override
