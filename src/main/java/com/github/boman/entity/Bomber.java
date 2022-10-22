@@ -10,10 +10,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
 public class Bomber extends MoveableEntity implements EventListener {
-    public static final double BOMBER_WIDTH = 11;
-    public static final double BOMBER_HEIGHT = 11;
-    public static final double SPRITE_HEIGHT = 22;
-    public static final double SPRITE_WIDTH = 22;
+    public static final double BOMBER_WIDTH = 16;
+    public static final double BOMBER_HEIGHT = 16;
+    public static final double SPRITE_HEIGHT = 16;
+    public static final double SPRITE_WIDTH = 16;
     private static final double BOMBER_SPEED = 1.5;
     private static final int INVINCIBLE_FRAME = 120;
     private Duration invincibleTime = Duration.of(INVINCIBLE_FRAME);

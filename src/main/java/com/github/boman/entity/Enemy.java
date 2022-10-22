@@ -12,6 +12,7 @@ public class Enemy extends MoveableEntity {
     public static double SPRITE_WIDTH = 20;
     public static double SPRITE_HEIGHT = 20;
     public static double ENEMY_SPEED = 1;
+    public static final double IN_RANGE = 200;
     protected Animation animation;
 
     public enum Attribute {
