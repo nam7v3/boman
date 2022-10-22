@@ -14,6 +14,7 @@ import java.util.*;
 public class BomanEngine implements Engine {
     public double tileHeight = 20;
     public double tileWidth = 20;
+    public int enemyCount = 0;
     // Danh sách các Entity cần phải cập nhật. Gọi add để thêm Entity vào danh sách cần cập nhật.
     // Dùng cho các Entity cần phải truyền thời gian vào để cập nhật, xử lí trong hàm update
     // (animation, logic,...).
@@ -124,13 +125,20 @@ public class BomanEngine implements Engine {
                     case '1' -> {
                         board[i][j] = new Grass(this);
                         spawnEnemy(new Balloom(this, j, i));
+                        ++enemyCount;
                     }
                     case '2' -> {
                         board[i][j] = new Grass(this);
                         spawnEnemy(new Oneal(this, j, i));
+                        ++enemyCount;
                     }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
+                        board[i][j] = brick;
+                    }
+                    case 'x' -> {
+                        Brick brick = new Brick(this, j, i);
+                        brick.setContainsPortal(true);
                         board[i][j] = brick;
                     }
                     default -> board[i][j] = new Grass(this);
@@ -148,7 +156,8 @@ public class BomanEngine implements Engine {
      * @return true nếu đặt được, false nếu
      */
     public boolean spawnBomb(Bomber player, int x, int y, int power) {
-        if (getTile(x, y).block() || getTile(x, y) instanceof Bomb || getTile(x, y) instanceof Fire) {
+        if (getTile(x, y).block() || getTile(x, y) instanceof Bomb
+                || getTile(x, y) instanceof Fire || getTile(x, y) instanceof Portal) {
             return false;
         }
         Bomb bomb = new Bomb(this, player, x, y, power);
@@ -158,7 +167,7 @@ public class BomanEngine implements Engine {
     }
 
     public boolean spawnFire(Bomb bomb, int x, int y, Fire.State state) {
-        if (getTile(x, y) instanceof Wall) {
+        if (getTile(x, y) instanceof Wall || getTile(x, y) instanceof Portal) {
             return false;
         }
         if (getTile(x, y) instanceof Bomb otherBomb) {
