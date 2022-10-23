@@ -80,7 +80,7 @@ public class Animation {
     }
 
     public static Animation getPlayerAnimation() {
-        Animation playerAnimation = new Animation(Duration.of(5))
+        Animation playerAnimation = new Animation(Duration.of(3))
                 .addState(
                         State.Up, new Image[]{
                                 Sprite.playerUp,
@@ -126,7 +126,7 @@ public class Animation {
     }
 
     public static Animation getBalloomAnimation() {
-        Animation enemyAnimation = new Animation(Duration.of(20))
+        Animation enemyAnimation = new Animation(Duration.of(10))
                 .addState(
                         State.Left, new Image[]{
                                 Sprite.balloomLeft1,

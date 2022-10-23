@@ -13,8 +13,8 @@ import java.util.*;
  * Handle game logic.
  */
 public class BomanEngine implements Engine {
-    public double tileHeight = 20;
-    public double tileWidth = 20;
+    public double tileHeight = 30;
+    public double tileWidth = 30;
     // Danh sách các Entity cần phải cập nhật. Gọi add để thêm Entity vào danh sách cần cập nhật.
     // Dùng cho các Entity cần phải truyền thời gian vào để cập nhật, xử lí trong hàm update
     // (animation, logic,...).

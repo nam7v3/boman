@@ -15,9 +15,9 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     private EventHandlerListener eventHandlerListener;
     private BomanEngine engine;
-    private BomanRenderer renderer;
+    public BomanRenderer renderer;
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

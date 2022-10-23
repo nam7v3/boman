@@ -111,8 +111,8 @@ public class Oneal extends Enemy {
                 animation.getImage(),
                 pos.getX(),
                 pos.getY(),
-                ENEMY_WIDTH,
-                ENEMY_HEIGHT
+                enemyWidth,
+                enemyHeight
         );
     }
 

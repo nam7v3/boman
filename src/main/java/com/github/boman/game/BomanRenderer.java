@@ -15,6 +15,7 @@ public class BomanRenderer {
     public BomanRenderer(Canvas canvas) {
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
+        this.gc.setImageSmoothing(false);
     }
 
     public void render(TileEntity[][] map, List<Entity> entities) {
@@ -31,5 +32,12 @@ public class BomanRenderer {
         for (Entity entity : entities) {
             entity.render(gc);
         }
+    }
+
+    public void resizeWidth(double v){
+        canvas.setWidth(v);
+    }
+    public void resizeHeight(double v){
+        canvas.setHeight(v);
     }
 }

@@ -96,7 +96,7 @@ public class MoveableEntity extends Entity {
                 for (int i = left; i <= right; ++i) {
                     for (int j = lower; j <= upper; ++j) {
                         if (engine.getTile(i, j).block()) {
-                            futurePos.setY(engine.getTileHeight() * j - pos.getW());
+                            futurePos.setY(engine.getTileHeight() * j - pos.getH());
                             break loop;
                         }
                     }
@@ -124,7 +124,7 @@ public class MoveableEntity extends Entity {
             case Right -> {
                 futurePos.setX(futurePos.getX() + speed);
                 int lower = (int) (pos.getY() / engine.getTileHeight());
-                int upper = (int) Math.ceil((pos.getY() + pos.getW()) / engine.getTileHeight()) - 1;
+                int upper = (int) Math.ceil((pos.getY() + pos.getH()) / engine.getTileHeight()) - 1;
                 int left = (int) Math.ceil((pos.getX() + pos.getW()) / engine.getTileWidth());
                 int right = (int) ((futurePos.getX() + futurePos.getW()) / engine.getTileWidth());
 
