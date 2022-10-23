@@ -2,6 +2,7 @@ package com.github.boman.game;
 
 import com.github.boman.entity.*;
 import com.github.boman.event.EventHandlerListener;
+import com.github.boman.util.Box;
 
 import java.util.*;
 
@@ -59,11 +60,9 @@ public class BomanEngine implements Engine {
         for (Entity entity : updateableEntity) {
             //Entity entity = updateableEntity.get(i);
             entity.update();
-            if (entity instanceof Bomber player) {
-                this.player = player;
-            }
         }
 
+        // Va chạm giữa các thực thể.
         for (Entity e : entities) {
             for (Entity other : entities) {
                 if (e != other) {
@@ -216,6 +215,7 @@ public class BomanEngine implements Engine {
         handler.addListener(bomber);
         addEntity(bomber);
         addUpdateEntity(bomber);
+        this.player = bomber;
     }
 
     @Override
@@ -232,6 +232,11 @@ public class BomanEngine implements Engine {
     @Override
     public void removeEntity(Entity e) {
         entities.remove(e);
+    }
+
+    public boolean validTile(int x, int y) {
+        return x >= 0 && x <= mapWidth
+                && y >= 0 && y <= mapHeight;
     }
 
     public List<Entity> getEntity() {
@@ -255,6 +260,10 @@ public class BomanEngine implements Engine {
     @Override
     public TileEntity getTile(int x, int y) {
         return board[y][x];
+    }
+
+    public Box getBoxAtTile(int x, int y) {
+        return new Box(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
     }
 
     @Override

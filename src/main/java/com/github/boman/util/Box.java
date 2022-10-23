@@ -27,6 +27,11 @@ public class Box {
                 this.y + this.h > other.y;
     }
 
+    public boolean inside(Box other) {
+        return this.x >= other.x && this.x + this.w <= other.x + other.w &&
+                this.y >= other.y && this.y + this.h <= other.y + other.h;
+    }
+
     public double getX() {
         return x;
     }

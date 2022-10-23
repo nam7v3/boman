@@ -1,6 +1,7 @@
 package com.github.boman.game;
 
 import com.github.boman.entity.*;
+import com.github.boman.util.Box;
 
 import java.util.List;
 
@@ -36,11 +37,18 @@ public interface Engine {
     void removeEntity(Entity e);
 
     Bomber getPlayer();
+
     void setPlayer(Bomber player);
 
     int getMapHeight();
+
     void setMapHeight(int mapHeight);
 
     int getMapWidth();
+
     void setMapWidth(int mapWidth);
+
+    boolean validTile(int x, int y);
+
+    Box getBoxAtTile(int x, int y);
 }
