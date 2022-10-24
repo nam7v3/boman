@@ -45,7 +45,7 @@ public class HUD {
         bombLabel.setTextFill(Color.WHITE);
         bombLabel.setFont(font);
 
-        hud.setBackground(Background.fill(Color.BLACK));
+        hud.setBackground(Background.fill(Color.GRAY));
         hud.setPrefHeight(100);
         hud.setMinHeight(30);
         hud.setPadding(new Insets(5, 5, 5, 5));

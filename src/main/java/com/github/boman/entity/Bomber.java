@@ -34,7 +34,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     public Bomber(Engine engine, int x, int y) {
         //super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         super(engine,
-                new Box(x , y , BOMBER_WIDTH, BOMBER_HEIGHT),
+                new Box(x, y, BOMBER_WIDTH, BOMBER_HEIGHT),
                 BOMBER_SPEED);
     }
 
@@ -45,7 +45,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     @Override
     public void render(GraphicsContext gc, double x, double y, double scale) {
         if (bomberState == Atrribute.Invincible) {
-            gc.setGlobalAlpha(0.7);
+            gc.setGlobalAlpha(0.2);
         }
         gc.drawImage(
                 animation.getImage(),
@@ -54,6 +54,7 @@ public class Bomber extends MoveableEntity implements EventListener {
                 SPRITE_WIDTH * scale,
                 SPRITE_HEIGHT * scale
         );
+
         if (bomberState == Atrribute.Invincible) {
             gc.setGlobalAlpha(1);
         }
