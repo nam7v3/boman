@@ -105,16 +105,6 @@ public class Oneal extends Enemy {
         super.update();
     }
 
-    @Override
-    public void render(GraphicsContext gc) {
-        gc.drawImage(
-                animation.getImage(),
-                pos.getX(),
-                pos.getY(),
-                ENEMY_WIDTH,
-                ENEMY_HEIGHT
-        );
-    }
 
     @Override
     public void render(GraphicsContext gc, double x, double y, double scale) {

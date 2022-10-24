@@ -19,26 +19,15 @@ public class Balloom extends Enemy {
     @Override
     public void update() {
         super.update();
-        if (super.state == State.Left && engine.getTile((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
+        if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
             moveRight();
             animation.setState(State.Right);
         }
 
-        if (super.state == State.Right && engine.getTile((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
+        if (super.state == State.Right && engine.getTile((int) pos.getX() + 1, getTileY()).block()) {
             moveLeft();
             animation.setState(State.Left);
         }
-    }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        gc.drawImage(
-                animation.getImage(),
-                pos.getX(),
-                pos.getY(),
-                ENEMY_WIDTH,
-                ENEMY_HEIGHT
-        );
     }
 
     @Override

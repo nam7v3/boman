@@ -25,7 +25,7 @@ public class Controller implements Initializable {
         this.engine = new BomanEngine(eventHandlerListener);
         this.renderer = new BomanRenderer(this.canvas);
 
-        engine.loadMap("test.txt");
+        engine.loadMap("level1.txt");
 
         GameLoop loop = new GameLoop() {
             @Override

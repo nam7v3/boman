@@ -22,10 +22,6 @@ public interface Engine {
 
     void spawnEnemy(Enemy enemy);
 
-    double getTileHeight();
-
-    double getTileWidth();
-
     void removeUpdateEntity(Entity e);
 
     TileEntity getTile(int x, int y);

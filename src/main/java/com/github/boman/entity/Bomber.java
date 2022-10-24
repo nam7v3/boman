@@ -14,7 +14,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     private static final double BOMBER_HEIGHT = 0.8;
     private static final double SPRITE_WIDTH = 1;
     private static final double SPRITE_HEIGHT = 1;
-    private static final double BOMBER_SPEED = 0.5;
+    private static final double BOMBER_SPEED = 0.08;
     private static final int INVINCIBLE_FRAME = 120;
     private Duration invincibleTime = Duration.of(INVINCIBLE_FRAME);
     private int lives = 3;
@@ -34,29 +34,12 @@ public class Bomber extends MoveableEntity implements EventListener {
     public Bomber(Engine engine, int x, int y) {
         //super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         super(engine,
-                new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT),
-                (engine.getTileWidth() + engine.getTileHeight()) / 25);
+                new Box(x , y , BOMBER_WIDTH, BOMBER_HEIGHT),
+                BOMBER_SPEED);
     }
 
     public Bomber(Engine engine, double x, double y, double w, double h) {
         super(engine, new Box(x, y, w, h), BOMBER_SPEED);
-    }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        if (bomberState == Atrribute.Invincible) {
-            gc.setGlobalAlpha(0.7);
-        }
-        gc.drawImage(
-                animation.getImage(),
-                pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2,
-                pos.getY() - (SPRITE_HEIGHT - pos.getH()),
-                SPRITE_WIDTH,
-                SPRITE_HEIGHT
-        );
-        if (bomberState == Atrribute.Invincible) {
-            gc.setGlobalAlpha(1);
-        }
     }
 
     @Override

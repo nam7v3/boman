@@ -18,13 +18,6 @@ public abstract class Entity {
     public void update() {
     }
 
-    /**
-     * Render
-     *
-     * @param gc GraphicContext
-     */
-    public void render(GraphicsContext gc) {
-    }
 
     /**
      * Xử lý va chạm các đồ vật khác.
@@ -34,5 +27,13 @@ public abstract class Entity {
     public void interactWith(Entity other) {
 
     }
+
+    /**
+     * Render hình theo tọa độ x, y màn hình.
+     * @param gc
+     * @param x
+     * @param y
+     * @param scale
+     */
     public abstract void render(GraphicsContext gc, double x, double y, double scale);
 }

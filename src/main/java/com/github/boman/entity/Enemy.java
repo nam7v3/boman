@@ -3,7 +3,6 @@ package com.github.boman.entity;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
-import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Enemy extends MoveableEntity {
     public static double ENEMY_SPEED = 0.05;
@@ -35,10 +34,6 @@ public abstract class Enemy extends MoveableEntity {
         super.update();
     }
 
-    @Override
-    public void render(GraphicsContext gc) {
-        super.render(gc);
-    }
 
     @Override
     public void interactWith(Entity other) {

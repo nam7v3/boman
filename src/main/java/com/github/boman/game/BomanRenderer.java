@@ -52,7 +52,7 @@ public class BomanRenderer {
 
 
         for (int i = (int) Math.floor(viewportStartY);
-             i < Math.ceil(viewportEndY / engine.getTileHeight()); ++i) {
+             i < Math.ceil(viewportEndY); ++i) {
             for (int j = (int) Math.floor(viewportStartX);
                  j < Math.ceil(viewportEndX); ++j) {
 
