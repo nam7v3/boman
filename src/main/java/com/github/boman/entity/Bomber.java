@@ -203,4 +203,12 @@ public class Bomber extends MoveableEntity implements EventListener {
     public void setPower(int power) {
         this.power = power;
     }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
 }

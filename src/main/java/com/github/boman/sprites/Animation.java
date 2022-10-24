@@ -21,11 +21,6 @@ public class Animation {
     private Object defaultState;
     private final Duration waitTime;
     private Duration curWait;
-    private static Animation playerAnimation;
-    private static Animation enemyAnimation;
-    private static Animation bombAnimation;
-
-    public static Animation fireAnimation;
 
 
     public Animation(Duration waitTime) {
@@ -69,6 +64,10 @@ public class Animation {
 
     public boolean animationDone(){
         return index == curImages.length - 1;
+    }
+
+    public Image getCurImage(){
+        return curImages[index];
     }
 
     public Duration getCurWait() {
@@ -198,10 +197,7 @@ public class Animation {
     }
 
     public static Animation getBombAnimation() {
-        if (bombAnimation != null) {
-            return bombAnimation;
-        }
-        bombAnimation = new Animation(Duration.of(5))
+        Animation bombAnimation = new Animation(Duration.of(5))
                 .addState(Bomb.Attribute.Pending, new Image[]{
                         Sprite.bomb,
                         Sprite.bomb1,
@@ -212,7 +208,7 @@ public class Animation {
                         Sprite.bombExploded1,
                         Sprite.bombExploded2
                 });
-        bombAnimation.setDefaultState(Bomb.Attribute.Pending);
+        bombAnimation.setState(Bomb.Attribute.Pending);
         bombAnimation.setDefaultState(Bomb.Attribute.Pending);
         return bombAnimation;
     }

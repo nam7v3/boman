@@ -85,7 +85,7 @@ public class BomanRenderer {
     }
 
     private void resize() {
-        this.scale = Math.min(canvas.getWidth() / maxTileX, canvas.getHeight() / maxTileY);
+        this.scale = Math.max(canvas.getWidth() / maxTileX, canvas.getHeight()* 0.8 / maxTileY);
         curTileX = Math.ceil(canvas.getWidth() / scale);
         curTileY = Math.ceil(canvas.getHeight() / scale);
     }
