@@ -18,7 +18,6 @@ public class Balloom extends Enemy {
 
     @Override
     public void update() {
-        super.update();
         if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
             moveRight();
             animation.setState(State.Right);
@@ -28,6 +27,14 @@ public class Balloom extends Enemy {
             moveLeft();
             animation.setState(State.Left);
         }
+        if(attribute == Attribute.Dead){
+            animation.setState(Attribute.Dead);
+            stop();
+            if(animation.animationDone()){
+                engine.removeEntity(this);
+            }
+        }
+        super.update();
     }
 
     @Override
@@ -44,8 +51,7 @@ public class Balloom extends Enemy {
     @Override
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
-            animation.setState(Attribute.Dead);
-            engine.removeEntity(this);
+            attribute = Attribute.Dead;
         }
     }
 }

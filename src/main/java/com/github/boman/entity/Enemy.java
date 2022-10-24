@@ -14,18 +14,20 @@ public abstract class Enemy extends MoveableEntity {
         Alive,
         Dead,
     }
-
+    protected Attribute attribute;
     public Enemy(Engine engine, int x, int y) {
         super(engine, new Box(x,
                         y,
                         ENEMY_WIDTH,
                         ENEMY_HEIGHT),
                 ENEMY_SPEED);
+        attribute = Attribute.Alive;
         moveLeft();
     }
 
     public Enemy(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
+        attribute = Attribute.Alive;
         moveLeft();
     }
 

@@ -31,6 +31,15 @@ public class Oneal extends Enemy {
 
     @Override
     public void update() {
+        if(attribute == Attribute.Dead){
+            animation.setState(Attribute.Dead);
+            stop();
+            if(animation.animationDone()){
+                engine.removeEntity(this);
+            }
+            super.update();
+            return;
+        }
         if (detectedBomber && !pos.inside(dest)) {
             super.update();
             return;
@@ -102,9 +111,9 @@ public class Oneal extends Enemy {
             }
             state = dir;
         }
+
         super.update();
     }
-
 
     @Override
     public void render(GraphicsContext gc, double x, double y, double scale) {
@@ -120,8 +129,7 @@ public class Oneal extends Enemy {
     @Override
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
-            animation.setState(Attribute.Dead);
-            engine.removeEntity(this);
+            attribute = Attribute.Dead;
         }
     }
 }

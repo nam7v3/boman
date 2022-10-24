@@ -21,6 +21,7 @@ public class Animation {
     private Object defaultState;
     private final Duration waitTime;
     private Duration curWait;
+    private boolean animationDone = false;
 
 
     public Animation(Duration waitTime) {
@@ -43,6 +44,7 @@ public class Animation {
             curState = key;
         }
         curImages = state.get(curState);
+        animationDone = false;
         index = 0;
     }
 
@@ -57,13 +59,14 @@ public class Animation {
             index++;
             if (index >= curImages.length) {
                 index = 0;
+                animationDone = true;
             }
         }
         return curImages[index];
     }
 
     public boolean animationDone(){
-        return index == curImages.length - 1;
+        return animationDone;
     }
 
     public Image getCurImage(){
@@ -125,7 +128,7 @@ public class Animation {
     }
 
     public static Animation getBalloomAnimation() {
-        Animation enemyAnimation = new Animation(Duration.of(10))
+        Animation enemyAnimation = new Animation(Duration.of(20))
                 .addState(
                         State.Left, new Image[]{
                                 Sprite.balloomLeft1,
