@@ -13,8 +13,8 @@ import java.util.*;
  * Handle game logic.
  */
 public class BomanEngine implements Engine {
-    public double tileHeight = 30;
-    public double tileWidth = 30;
+    public double tileHeight = 1;
+    public double tileWidth = 1;
     // Danh sách các Entity cần phải cập nhật. Gọi add để thêm Entity vào danh sách cần cập nhật.
     // Dùng cho các Entity cần phải truyền thời gian vào để cập nhật, xử lí trong hàm update
     // (animation, logic,...).
@@ -28,7 +28,7 @@ public class BomanEngine implements Engine {
     // Bảng chơi của game.
     private TileEntity[][] board;
     // Những thực thể ở trên bảng chơi.
-    private List<Entity> entities;
+    private List<MoveableEntity> entities;
     // Truyền input cho các Object đã được thêm vào.
     private EventHandlerListener handler;
     private Bomber player;
@@ -225,12 +225,12 @@ public class BomanEngine implements Engine {
     }
 
     @Override
-    public void addEntity(Entity e) {
+    public void addEntity(MoveableEntity e) {
         entities.add(e);
     }
 
     @Override
-    public void removeEntity(Entity e) {
+    public void removeEntity(MoveableEntity e) {
         entities.remove(e);
     }
 
@@ -239,7 +239,7 @@ public class BomanEngine implements Engine {
                 && y >= 0 && y <= mapHeight;
     }
 
-    public List<Entity> getEntity() {
+    public List<MoveableEntity> getEntity() {
         return entities;
     }
 
@@ -301,5 +301,10 @@ public class BomanEngine implements Engine {
 
     public void setMapHeight(int mapHeight) {
         this.mapHeight = mapHeight;
+    }
+
+    @Override
+    public List<MoveableEntity> getEntities() {
+        return entities;
     }
 }

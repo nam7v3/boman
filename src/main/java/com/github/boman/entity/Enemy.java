@@ -5,10 +5,10 @@ import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Enemy extends MoveableEntity {
-    protected double enemyWidth;
-    protected double enemyHeight;
-    public static double ENEMY_SPEED = 1;
+public abstract class Enemy extends MoveableEntity {
+    public static double ENEMY_SPEED = 0.05;
+    public static double ENEMY_HEIGHT = 0.9;
+    public static double ENEMY_WIDTH = 0.9;
     protected Animation animation;
 
     public enum Attribute {
@@ -17,9 +17,11 @@ public class Enemy extends MoveableEntity {
     }
 
     public Enemy(Engine engine, int x, int y) {
-        super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), engine.getTileWidth() * 0.9, engine.getTileHeight() * 0.9), ENEMY_SPEED);
-        enemyWidth = engine.getTileWidth() * 0.9;
-        enemyHeight = engine.getTileHeight() * 0.9;
+        super(engine, new Box(x,
+                        y,
+                        ENEMY_WIDTH,
+                        ENEMY_HEIGHT),
+                ENEMY_SPEED);
         moveLeft();
     }
 

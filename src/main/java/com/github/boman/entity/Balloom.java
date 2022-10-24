@@ -36,8 +36,19 @@ public class Balloom extends Enemy {
                 animation.getImage(),
                 pos.getX(),
                 pos.getY(),
-                enemyWidth,
-                enemyHeight
+                ENEMY_WIDTH,
+                ENEMY_HEIGHT
+        );
+    }
+
+    @Override
+    public void render(GraphicsContext gc, double x, double y, double scale) {
+        gc.drawImage(
+                animation.getImage(),
+                x * scale,
+                y * scale,
+                ENEMY_WIDTH * scale,
+                ENEMY_HEIGHT * scale
         );
     }
 

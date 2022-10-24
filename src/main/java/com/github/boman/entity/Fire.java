@@ -51,6 +51,12 @@ public class Fire extends TileEntity {
         super.render(gc, x, y);
     }
 
+    @Override
+    public void render(GraphicsContext gc, double x, double y, double scale) {
+        super.img = animation.getImage();
+        super.render(gc, x, y, scale);
+    }
+
     public Duration getTimeLeft() {
         return timeLeft;
     }

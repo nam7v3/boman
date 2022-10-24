@@ -40,4 +40,14 @@ public abstract class TileEntity extends Entity {
      * @return
      */
     public abstract boolean block();
+
+    @Override
+    public void render(GraphicsContext gc, double x, double y, double scale) {
+        gc.drawImage(img,
+                x * scale,
+                y * scale,
+                scale,
+                scale);
+
+    }
 }

@@ -88,6 +88,12 @@ public class Bomb extends TileEntity {
     }
 
     @Override
+    public void render(GraphicsContext gc, double x, double y, double scale) {
+        super.img = animation.getImage();
+        super.render(gc, x, y, scale);
+    }
+
+    @Override
     public boolean block() {
         return true;
     }

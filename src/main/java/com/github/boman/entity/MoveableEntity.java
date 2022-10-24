@@ -4,8 +4,7 @@ import com.github.boman.game.Engine;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
-public class MoveableEntity extends Entity {
-    public static final double BASE_SPEED = 0.5;
+public abstract class MoveableEntity extends Entity {
     protected Box pos;
     protected State state;
     private final Box futurePos;
@@ -179,6 +178,9 @@ public class MoveableEntity extends Entity {
     public void setPos(Box pos) {
         this.pos = pos;
     }
+
+    @Override
+    public abstract void render(GraphicsContext gc, double x, double y, double scale);
 
     public enum State {
         Up,

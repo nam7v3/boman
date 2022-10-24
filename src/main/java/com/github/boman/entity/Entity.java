@@ -34,4 +34,5 @@ public abstract class Entity {
     public void interactWith(Entity other) {
 
     }
+    public abstract void render(GraphicsContext gc, double x, double y, double scale);
 }

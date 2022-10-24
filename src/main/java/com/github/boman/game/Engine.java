@@ -32,9 +32,9 @@ public interface Engine {
 
     void setTile(TileEntity e, int x, int y);
 
-    void addEntity(Entity e);
+    void addEntity(MoveableEntity e);
 
-    void removeEntity(Entity e);
+    void removeEntity(MoveableEntity e);
 
     Bomber getPlayer();
 
@@ -51,4 +51,5 @@ public interface Engine {
     boolean validTile(int x, int y);
 
     Box getBoxAtTile(int x, int y);
+    List<MoveableEntity> getEntities();
 }

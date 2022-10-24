@@ -10,9 +10,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
 public class Bomber extends MoveableEntity implements EventListener {
-    private double spriteWidth;
-    private double spriteHeight;
-    private static final double BOMBER_SPEED = 1.5;
+    private static final double BOMBER_WIDTH = 0.55;
+    private static final double BOMBER_HEIGHT = 0.8;
+    private static final double SPRITE_WIDTH = 1;
+    private static final double SPRITE_HEIGHT = 1;
+    private static final double BOMBER_SPEED = 0.5;
     private static final int INVINCIBLE_FRAME = 120;
     private Duration invincibleTime = Duration.of(INVINCIBLE_FRAME);
     private int lives = 3;
@@ -32,10 +34,8 @@ public class Bomber extends MoveableEntity implements EventListener {
     public Bomber(Engine engine, int x, int y) {
         //super(engine, new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT), BOMBER_SPEED);
         super(engine,
-                new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), engine.getTileWidth() * 0.55, engine.getTileHeight() * 0.8),
+                new Box(x * engine.getTileWidth(), y * engine.getTileHeight(), BOMBER_WIDTH, BOMBER_HEIGHT),
                 (engine.getTileWidth() + engine.getTileHeight()) / 25);
-        spriteWidth = engine.getTileWidth();
-        spriteHeight = engine.getTileHeight();
     }
 
     public Bomber(Engine engine, double x, double y, double w, double h) {
@@ -49,10 +49,27 @@ public class Bomber extends MoveableEntity implements EventListener {
         }
         gc.drawImage(
                 animation.getImage(),
-                pos.getX() - (spriteWidth - pos.getW()) / 2,
-                pos.getY() - (spriteHeight - pos.getH()),
-                spriteWidth,
-                spriteHeight
+                pos.getX() - (SPRITE_WIDTH - pos.getW()) / 2,
+                pos.getY() - (SPRITE_HEIGHT - pos.getH()),
+                SPRITE_WIDTH,
+                SPRITE_HEIGHT
+        );
+        if (bomberState == Atrribute.Invincible) {
+            gc.setGlobalAlpha(1);
+        }
+    }
+
+    @Override
+    public void render(GraphicsContext gc, double x, double y, double scale) {
+        if (bomberState == Atrribute.Invincible) {
+            gc.setGlobalAlpha(0.7);
+        }
+        gc.drawImage(
+                animation.getImage(),
+                (x - (SPRITE_WIDTH - BOMBER_WIDTH) / 2) * scale,
+                (y - (SPRITE_HEIGHT - BOMBER_HEIGHT) / 2) * scale,
+                SPRITE_WIDTH * scale,
+                SPRITE_HEIGHT * scale
         );
         if (bomberState == Atrribute.Invincible) {
             gc.setGlobalAlpha(1);
