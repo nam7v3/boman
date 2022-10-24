@@ -64,6 +64,7 @@ public abstract class MoveableEntity extends Entity {
     @Override
     public void update() {
         interactWith(engine.getTile(getTileX(), getTileY()));
+        engine.getTile(getTileX(), getTileY()).interactWith(this);
         switch (state) {
             // Xử lý va chạm khi đi lên
             case Up -> {

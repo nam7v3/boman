@@ -30,9 +30,19 @@ public class BomanEngine implements Engine {
     // Truyền input cho các Object đã được thêm vào.
     private EventHandlerListener handler;
     private Bomber player;
+    private int enemyCount;
     private int mapWidth;
     private int mapHeight;
     private boolean started;
+
+    private boolean winGame =false;
+
+    private int currentLevel = 0;
+
+    private String[] levels = new String[]{
+            "level1.txt",
+            "level2.txt"
+    };
 
     public BomanEngine(EventHandlerListener handler) {
         this.updateableEntity = new LinkedList<>();
@@ -227,6 +237,7 @@ public class BomanEngine implements Engine {
     public void spawnEnemy(Enemy enemy) {
         addEntity(enemy);
         addUpdateEntity(enemy);
+        enemyCount++;
     }
 
     @Override
@@ -258,7 +269,7 @@ public class BomanEngine implements Engine {
     }
 
     public Box getBoxAtTile(int x, int y) {
-        return new Box(x , y, 1, 1);
+        return new Box(x, y, 1, 1);
     }
 
     @Override
@@ -301,5 +312,49 @@ public class BomanEngine implements Engine {
     @Override
     public List<MoveableEntity> getEntities() {
         return entities;
+    }
+
+    @Override
+    public boolean winLevel() {
+        return enemyCount <= 0;
+    }
+
+    @Override
+    public void reset() {
+        this.enemyCount = 0;
+        this.player = null;
+        this.entities.clear();
+        this.board = null;
+        this.updateableEntity.clear();
+        this.scheduleAddEntity.clear();
+        this.scheduleRemoveEntity.clear();
+        this.started = false;
+    }
+
+    @Override
+    public void nextLevel() {
+        reset();
+        currentLevel++;
+        if(currentLevel >= levels.length){
+            winGame = true;
+            return;
+        }
+        loadMap(levels[currentLevel]);
+    }
+
+    public boolean isWinGame() {
+        return winGame;
+    }
+
+    public void setWinGame(boolean winGame) {
+        this.winGame = winGame;
+    }
+
+    public int getEnemyCount() {
+        return enemyCount;
+    }
+
+    public void setEnemyCount(int enemyCount) {
+        this.enemyCount = enemyCount;
     }
 }

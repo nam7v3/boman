@@ -32,6 +32,7 @@ public class Balloom extends Enemy {
             stop();
             if(animation.animationDone()){
                 engine.removeEntity(this);
+                engine.setEnemyCount(engine.getEnemyCount() - 1);
             }
         }
         super.update();

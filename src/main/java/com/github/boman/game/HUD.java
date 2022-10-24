@@ -1,7 +1,7 @@
 package com.github.boman.game;
 
 import com.github.boman.sprites.Animation;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -23,37 +23,35 @@ public class HUD {
         Font font = Font.loadFont(getClass().getResource("pixeloidMono.ttf").toString(), 20);
         this.engine = engine;
         this.hud = hud;
+
         player = new ImageView();
-        player.fitHeightProperty().bind(hud.heightProperty());
         player.setPreserveRatio(true);
         player.setSmooth(false);
 
         lives = new Label();
         lives.setText(":" + engine.getPlayer().getLives());
-        lives.prefHeightProperty().bind(hud.heightProperty());
         lives.setTextFill(Color.WHITE);
         lives.setFont(font);
 
+
         bomb = new ImageView();
-        bomb.fitHeightProperty().bind(hud.heightProperty());
         bomb.setPreserveRatio(true);
         bomb.setSmooth(false);
 
+
         bombLabel = new Label();
         bombLabel.setText(":" + engine.getPlayer().getMaxBomb());
-        bombLabel.prefHeightProperty().bind(hud.heightProperty());
         bombLabel.setTextFill(Color.WHITE);
         bombLabel.setFont(font);
 
+
+        hud.setAlignment(Pos.CENTER_LEFT);
         hud.setBackground(Background.fill(Color.GRAY));
-        hud.setPrefHeight(100);
-        hud.setMinHeight(30);
-        hud.setPadding(new Insets(5, 5, 5, 5));
-        hud.setSpacing(10);
-        hud.getChildren().add(player);
-        hud.getChildren().add(lives);
-        hud.getChildren().add(bomb);
-        hud.getChildren().add(bombLabel);
+        hud.setScaleShape(true);
+        hud.setFillHeight(true);
+
+        hud.getChildren().addAll(player, lives, bomb, bombLabel);
+
     }
 
     public void update() {
@@ -63,5 +61,9 @@ public class HUD {
         lives.setText(":" + engine.getPlayer().getLives());
         bombLabel.setText(":" + engine.getPlayer().getMaxBomb());
         bomb.setImage(bombAnimation.getImage());
+    }
+
+    public void resizeWidth(double t) {
+        hud.setMinWidth(t);
     }
 }

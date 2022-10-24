@@ -36,6 +36,7 @@ public class Oneal extends Enemy {
             stop();
             if(animation.animationDone()){
                 engine.removeEntity(this);
+                engine.setEnemyCount(engine.getEnemyCount() - 1);
             }
             super.update();
             return;
