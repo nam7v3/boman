@@ -4,6 +4,7 @@ import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Animation;
 import com.github.boman.sprites.Sprite;
+import com.github.boman.util.SoundEffects;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Bomb extends TileEntity {
@@ -69,6 +70,7 @@ public class Bomb extends TileEntity {
                 break;
             }
         }
+        SoundEffects.instance.playSound(SoundEffects.SoundIndex.BOMB_EXPLODED);
     }
 
     @Override

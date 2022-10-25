@@ -4,14 +4,15 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 
 import java.io.File;
+import java.util.Objects;
 
 public class Sound {
-    private File file;
-    private boolean infiniteLoop;
-    Media media;
-    AudioClip audioClip;
-    public Sound(File file, boolean infiniteLoop) {
-        this.file = file;
+    protected File file;
+    protected boolean infiniteLoop;
+    protected Media media;
+    protected AudioClip audioClip;
+    public Sound(String fileName, boolean infiniteLoop) {
+        File file = new File(Objects.requireNonNull(Sound.class.getResource(fileName)).getFile());
         this.infiniteLoop = infiniteLoop;
         media = new Media(file.toURI().toString());
         audioClip = new AudioClip(media.getSource());
@@ -19,23 +20,4 @@ public class Sound {
             audioClip.setCycleCount(AudioClip.INDEFINITE);
         }
     }
-
-    public void playSound() {
-        audioClip.play();
-    }
-
-    public void stopSound() {
-        audioClip.stop();
-    }
-
-    public void setVolumeSound(double volume) {
-        audioClip.setVolume(volume);
-    }
-    public static Sound bgm = new Sound(SoundEffects.bgm, true);
-    public static Sound bomberDied = new Sound(SoundEffects.bomberDied, false);
-    public static Sound  = new Sound(SoundEffects.bgm, true);
-    public static Sound bgm = new Sound(SoundEffects.bgm, true);
-    public static Sound bgm = new Sound(SoundEffects.bgm, true);
-    public static Sound bgm = new Sound(SoundEffects.bgm, true);
-    public static Sound bgm = new Sound(SoundEffects.bgm, true);
 }

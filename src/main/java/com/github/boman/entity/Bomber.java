@@ -5,6 +5,7 @@ import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
+import com.github.boman.util.SoundEffects;
 import javafx.event.Event;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +17,7 @@ public class Bomber extends MoveableEntity implements EventListener {
     private static final double SPRITE_HEIGHT = 1;
     private static final double BOMBER_SPEED = 0.08;
     private static final int INVINCIBLE_FRAME = 120;
-    private Duration invincibleTime = Duration.of(INVINCIBLE_FRAME);
+    private Duration invincibleTime = null;
     private int lives = 3;
     private int maxBomb = 1;
     private int power = 1;
@@ -128,6 +129,7 @@ public class Bomber extends MoveableEntity implements EventListener {
         }
         if (other instanceof PowerupTile powerupTile) {
             powerupTile.apply(this);
+            SoundEffects.instance.playSound(SoundEffects.SoundIndex.ITEM_PICKED);
         }
         if (other instanceof Enemy) {
             if (collision((MoveableEntity) other)) {
@@ -154,6 +156,7 @@ public class Bomber extends MoveableEntity implements EventListener {
                 if (invincibleTime == null) {
                     invincibleTime = Duration.of(INVINCIBLE_FRAME);
                     super.update();
+                    SoundEffects.instance.playSound(SoundEffects.SoundIndex.BOMBER_DIED);
                     return;
                 }
                 invincibleTime.minus();
@@ -168,6 +171,8 @@ public class Bomber extends MoveableEntity implements EventListener {
                 if (animation.animationDone()) {
                     engine.removeUpdateEntity(this);
                     engine.removeEntity(this);
+                    SoundEffects.instance.stopSound(SoundEffects.SoundIndex.BGM);
+                    SoundEffects.instance.playSound(SoundEffects.SoundIndex.GAME_OVER);
                 }
             }
         }

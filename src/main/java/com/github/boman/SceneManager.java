@@ -1,6 +1,6 @@
 package com.github.boman;
 
-import com.github.boman.util.Sound;
+import com.github.boman.util.SoundEffects;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
@@ -32,6 +32,7 @@ public class SceneManager {
         } else {
             mainController.setScene(scenes.get("menu"));
         }
+        SoundEffects.instance.playSound(SoundEffects.SoundIndex.MAIN_MENU);
     }
 
     public static void startNewGame(){
@@ -51,6 +52,8 @@ public class SceneManager {
             );
             mainController.setScene(node);
             scenes.put("game", node);
+            SoundEffects.instance.stopSound(SoundEffects.SoundIndex.MAIN_MENU);
+            SoundEffects.instance.playSound(SoundEffects.SoundIndex.BGM);
         } catch (IOException e) {
             e.printStackTrace();
         }

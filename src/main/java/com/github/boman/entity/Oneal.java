@@ -127,7 +127,7 @@ public class Oneal extends Enemy {
                     }
                 }
             }
-            if (Math.abs(pos.getX() - bomber.pos.getX()) + Math.abs(pos.getY() - bomber.pos.getY()) <= 20) {
+            if (Math.abs(pos.getX() - bomber.pos.getX()) + Math.abs(pos.getY() - bomber.pos.getY()) <= 10) {
                 speed = ENEMY_SPEEDUP;
             } else {
                 speed = ENEMY_SPEED;

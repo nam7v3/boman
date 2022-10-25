@@ -3,6 +3,7 @@ package com.github.boman.game;
 import com.github.boman.entity.*;
 import com.github.boman.event.EventHandlerListener;
 import com.github.boman.util.Box;
+import com.github.boman.util.SoundEffects;
 
 import java.util.*;
 
@@ -184,6 +185,7 @@ public class BomanEngine implements Engine {
         Bomb bomb = new Bomb(this, player, x, y, power);
         addUpdateEntity(bomb);
         setTile(bomb, x, y);
+        SoundEffects.instance.playSound(SoundEffects.SoundIndex.BOMB_PLANTED);
         return true;
     }
 
