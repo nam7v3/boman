@@ -36,16 +36,17 @@ public class GameController implements Initializable {
         this.engine = new BomanEngine(eventHandlerListener);
         this.renderer = new BomanRenderer(this.canvas);
 
+
         menu.prefWidthProperty().bind(gameScene.widthProperty());
         menu.minWidthProperty().bind(gameScene.widthProperty());
         menu.maxWidthProperty().bind(gameScene.widthProperty());
 
-        canvas.setFocusTraversable(true);
-        canvas.addEventHandler(Event.ANY, this::onEvent);
+
         engine.loadMap("level1.txt");
 
-
         this.hud = new HUD(engine, menu);
+        gameScene.setFocusTraversable(true);
+        gameScene.addEventHandler(Event.ANY, this::onEvent);
 
         GameLoop loop = new GameLoop() {
             @Override

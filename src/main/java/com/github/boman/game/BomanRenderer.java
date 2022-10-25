@@ -6,6 +6,7 @@ import com.github.boman.entity.TileEntity;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.paint.Color;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class BomanRenderer {
         TileEntity[][] map = engine.getBoard();
         List<MoveableEntity> entities = engine.getEntities();
         Bomber player = engine.getPlayer();
+        if(engine.isPaused()){
+            gc.setEffect(new GaussianBlur());
+        }else {
+            gc.setEffect(null);
+        }
 
         viewportStartX = Math.max(player.getPos().getX() - maxTileX / 2.0, 0);
         viewportStartY = Math.max(player.getPos().getY() - maxTileY / 2.0, 0);

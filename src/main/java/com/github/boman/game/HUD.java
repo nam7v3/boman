@@ -3,6 +3,7 @@ package com.github.boman.game;
 import com.github.boman.sprites.Animation;
 import com.github.boman.sprites.Sprite;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -28,6 +29,13 @@ public class HUD {
         Font font = Font.loadFont(getClass().getResource("pixeloidMono.ttf").toString(), 20);
         this.engine = engine;
         this.hud = hud;
+
+        Button pauseButton = new Button();
+        pauseButton.setText("Pause");
+        pauseButton.setFocusTraversable(false);
+        pauseButton.setOnMousePressed(actionEvent -> {
+            engine.togglePause();
+        });
 
         player = new ImageView();
         player.setPreserveRatio(true);
@@ -72,7 +80,7 @@ public class HUD {
         hud.setScaleShape(true);
         hud.setFillHeight(true);
 
-        hud.getChildren().addAll(player, lives, bomb, bombLabel, balloom, balloomLabel, oneal, onealLabel);
+        hud.getChildren().addAll(pauseButton, player, lives, bomb, bombLabel, balloom, balloomLabel, oneal, onealLabel);
 
     }
 

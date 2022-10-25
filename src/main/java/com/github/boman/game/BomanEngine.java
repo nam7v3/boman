@@ -39,6 +39,8 @@ public class BomanEngine implements Engine {
 
     private boolean winGame = false;
 
+    private boolean paused;
+
     private int currentLevel = 0;
 
     private String[] levels = new String[]{
@@ -58,6 +60,9 @@ public class BomanEngine implements Engine {
      * Cập nhật danh sách các Entity đang đợi được update.
      */
     public void update() {
+        if (paused) {
+            return;
+        }
         // Xóa các Entity
         for (Entity entity : scheduleRemoveEntity) {
             updateableEntity.remove(entity);
@@ -388,5 +393,11 @@ public class BomanEngine implements Engine {
         return balloomCount;
     }
 
+    public void togglePause() {
+        paused = !paused;
+    }
 
+    public boolean isPaused() {
+        return paused;
+    }
 }

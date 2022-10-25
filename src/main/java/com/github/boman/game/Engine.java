@@ -63,4 +63,8 @@ public interface Engine {
     int getBalloomCount();
 
     void killEnemy(Enemy enemy);
+
+    void togglePause();
+
+    boolean isPaused();
 }
