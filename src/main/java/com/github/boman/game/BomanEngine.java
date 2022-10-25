@@ -31,11 +31,13 @@ public class BomanEngine implements Engine {
     private EventHandlerListener handler;
     private Bomber player;
     private int enemyCount;
+    private int balloomCount;
+    private int onealCount;
     private int mapWidth;
     private int mapHeight;
     private boolean started;
 
-    private boolean winGame =false;
+    private boolean winGame = false;
 
     private int currentLevel = 0;
 
@@ -238,6 +240,12 @@ public class BomanEngine implements Engine {
         addEntity(enemy);
         addUpdateEntity(enemy);
         enemyCount++;
+        if (enemy instanceof Balloom) {
+            balloomCount++;
+        }
+        if (enemy instanceof Oneal) {
+            onealCount++;
+        }
     }
 
     @Override
@@ -322,6 +330,8 @@ public class BomanEngine implements Engine {
     @Override
     public void reset() {
         this.enemyCount = 0;
+        this.onealCount = 0;
+        this.balloomCount = 0;
         this.player = null;
         this.entities.clear();
         this.board = null;
@@ -335,11 +345,23 @@ public class BomanEngine implements Engine {
     public void nextLevel() {
         reset();
         currentLevel++;
-        if(currentLevel >= levels.length){
+        if (currentLevel >= levels.length) {
             winGame = true;
             return;
         }
         loadMap(levels[currentLevel]);
+    }
+
+    public void killEnemy(Enemy e) {
+        if (e instanceof Balloom) {
+            balloomCount--;
+        }
+        if (e instanceof Oneal) {
+            onealCount--;
+        }
+        enemyCount--;
+        removeEntity(e);
+        removeUpdateEntity(e);
     }
 
     public boolean isWinGame() {
@@ -354,7 +376,11 @@ public class BomanEngine implements Engine {
         return enemyCount;
     }
 
-    public void setEnemyCount(int enemyCount) {
-        this.enemyCount = enemyCount;
+    public int getOnealCount() {
+        return onealCount;
+    }
+
+    public int getBalloomCount() {
+        return balloomCount;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.boman.game;
 
 import com.github.boman.sprites.Animation;
+import com.github.boman.sprites.Sprite;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,10 @@ public class HUD {
     private ImageView bomb;
     private Label bombLabel;
     private Animation bombAnimation = Animation.getBombAnimation();
+
+    private Label onealLabel;
+
+    private Label balloomLabel;
 
     public HUD(Engine engine, HBox hud) {
         Font font = Font.loadFont(getClass().getResource("pixeloidMono.ttf").toString(), 20);
@@ -44,13 +49,30 @@ public class HUD {
         bombLabel.setTextFill(Color.WHITE);
         bombLabel.setFont(font);
 
+        ImageView balloom = new ImageView();
+        balloom.setImage(Sprite.balloomLeft1);
+        balloom.setPreserveRatio(true);
+        balloom.setSmooth(false);
+
+        balloomLabel = new Label();
+        balloomLabel.setTextFill(Color.WHITE);
+        balloomLabel.setFont(font);
+
+        ImageView oneal = new ImageView();
+        oneal.setImage(Sprite.onealLeft1);
+        oneal.setPreserveRatio(true);
+        oneal.setSmooth(false);
+
+        onealLabel = new Label();
+        onealLabel.setFont(font);
+        onealLabel.setTextFill(Color.WHITE);
 
         hud.setAlignment(Pos.CENTER_LEFT);
         hud.setBackground(Background.fill(Color.GRAY));
         hud.setScaleShape(true);
         hud.setFillHeight(true);
 
-        hud.getChildren().addAll(player, lives, bomb, bombLabel);
+        hud.getChildren().addAll(player, lives, bomb, bombLabel, balloom, balloomLabel, oneal, onealLabel);
 
     }
 
@@ -60,6 +82,8 @@ public class HUD {
         );
         lives.setText(":" + engine.getPlayer().getLives());
         bombLabel.setText(":" + engine.getPlayer().getMaxBomb());
+        balloomLabel.setText(":" + engine.getBalloomCount());
+        onealLabel.setText(":" + engine.getOnealCount());
         bomb.setImage(bombAnimation.getImage());
     }
 

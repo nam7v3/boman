@@ -47,14 +47,20 @@ public interface Engine {
     boolean validTile(int x, int y);
 
     Box getBoxAtTile(int x, int y);
+
     List<MoveableEntity> getEntities();
 
     boolean winLevel();
 
     void reset();
+
     void nextLevel();
 
     int getEnemyCount();
 
-    void setEnemyCount(int c);
+    int getOnealCount();
+
+    int getBalloomCount();
+
+    void killEnemy(Enemy enemy);
 }
