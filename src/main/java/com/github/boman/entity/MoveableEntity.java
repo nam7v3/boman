@@ -8,7 +8,7 @@ public abstract class MoveableEntity extends Entity {
     protected Box pos;
     protected State state;
     private final Box futurePos;
-    private double speed;
+    protected double speed;
 
     public MoveableEntity(Engine engine, Box curPos, double speed) {
         super(engine);

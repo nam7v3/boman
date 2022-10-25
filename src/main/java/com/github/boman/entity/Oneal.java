@@ -85,6 +85,7 @@ public class Oneal extends Enemy {
         y = bomber.getTileY();
         State dir = State.Standing;
         if (trace[x][y] == null) {
+            speed = ENEMY_SPEED;
             detectedBomber = false;
             if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
                 moveRight();
@@ -125,6 +126,11 @@ public class Oneal extends Enemy {
                         dir = State.Right;
                     }
                 }
+            }
+            if (Math.abs(pos.getX() - bomber.pos.getX()) + Math.abs(pos.getY() - bomber.pos.getY()) <= 20) {
+                speed = ENEMY_SPEEDUP;
+            } else {
+                speed = ENEMY_SPEED;
             }
             state = dir;
         }
