@@ -31,10 +31,10 @@ public class Oneal extends Enemy {
 
     @Override
     public void update() {
-        if(attribute == Attribute.Dead){
+        if (attribute == Attribute.Dead) {
             animation.setState(Attribute.Dead);
             stop();
-            if(animation.animationDone()){
+            if (animation.animationDone()) {
                 engine.killEnemy(this);
             }
             super.update();
@@ -86,7 +86,24 @@ public class Oneal extends Enemy {
         State dir = State.Standing;
         if (trace[x][y] == null) {
             detectedBomber = false;
+            if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
+                moveRight();
+                dest = engine.getBoxAtTile((int) (pos.getX() + pos.getW()) - 1, getTileY());
+                animation.setState(State.Right);
+            }
 
+            if (super.state == State.Right && engine.getTile((int) pos.getX() + 1, getTileY()).block()) {
+                moveLeft();
+                dest = engine.getBoxAtTile((int) pos.getX(), getTileY());
+                animation.setState(State.Left);
+            }
+            if (attribute == Attribute.Dead) {
+                animation.setState(Attribute.Dead);
+                stop();
+                if (animation.animationDone()) {
+                    engine.killEnemy(this);
+                }
+            }
         } else {
             while (x != getTileX() || y != getTileY()) {
                 dest = engine.getBoxAtTile(x, y);

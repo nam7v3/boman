@@ -346,6 +346,7 @@ public class BomanEngine implements Engine {
         this.enemyCount = 0;
         this.onealCount = 0;
         this.balloomCount = 0;
+        handler.removeListener(this.player);
         this.player = null;
         this.entities.clear();
         this.board = null;

@@ -1,7 +1,10 @@
 package com.github.boman;
 
 import com.github.boman.event.EventHandlerListener;
-import com.github.boman.game.*;
+import com.github.boman.game.BomanEngine;
+import com.github.boman.game.BomanRenderer;
+import com.github.boman.game.GameLoop;
+import com.github.boman.game.HUD;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,12 +64,6 @@ public class GameController implements Initializable {
             }
         };
         loop.start();
-    }
-
-    public static void which(Engine engine) {
-        if (engine.winGame()) {
-            SceneManager.loadMainMenu();
-        }
     }
 
     @FXML
