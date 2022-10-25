@@ -33,27 +33,31 @@ public class SceneManager {
         }
     }
 
+    public static void startNewGame(){
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("game.fxml"));
+            Node node = loader.load();
+            GameController gameController = loader.getController();
+            mainController.mainRoot.widthProperty().addListener(
+                    ((observableValue, number, t1) -> {
+                        gameController.renderer.resizeWidth((Double) t1);
+                    })
+            );
+            mainController.mainRoot.heightProperty().addListener(
+                    ((observableValue, number, t1) -> {
+                        gameController.renderer.resizeHeight((Double) t1);
+                    })
+            );
+            mainController.setScene(node);
+            scenes.put("game", node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void loadGame() {
         if (scenes.get("game") == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("game.fxml"));
-                Node node = loader.load();
-                GameController gameController = loader.getController();
-                mainController.mainRoot.widthProperty().addListener(
-                        ((observableValue, number, t1) -> {
-                            gameController.renderer.resizeWidth((Double) t1);
-                        })
-                );
-                mainController.mainRoot.heightProperty().addListener(
-                        ((observableValue, number, t1) -> {
-                            gameController.renderer.resizeHeight((Double) t1);
-                        })
-                );
-                mainController.setScene(node);
-                scenes.put("game", node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            startNewGame();
         } else {
             mainController.setScene(scenes.get("game"));
         }

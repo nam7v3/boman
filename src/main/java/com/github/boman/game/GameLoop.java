@@ -6,6 +6,13 @@ public abstract class GameLoop extends AnimationTimer {
     private static final long nsPerFrame = 1_000_000_000 / 60;
     private long lastTime;
     private boolean init = true;
+    private boolean stopped = false;
+
+    @Override
+    public void stop() {
+        stopped = true;
+        super.stop();
+    }
 
     @Override
     public void handle(long l) {
@@ -17,6 +24,9 @@ public abstract class GameLoop extends AnimationTimer {
         if (elapsed > nsPerFrame) {
             for (int i = 0; i < (int) (elapsed / nsPerFrame); ++i) {
                 tick();
+                if (stopped) {
+                    return;
+                }
             }
             lastTime = l;
         }

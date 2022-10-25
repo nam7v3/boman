@@ -51,7 +51,7 @@ public interface Engine {
     List<MoveableEntity> getEntities();
 
     boolean winLevel();
-
+    boolean winGame();
     void reset();
 
     void nextLevel();

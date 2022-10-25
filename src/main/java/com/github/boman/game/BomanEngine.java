@@ -115,15 +115,15 @@ public class BomanEngine implements Engine {
         int level = scanner.nextInt();
         int height = scanner.nextInt();
         int width = scanner.nextInt();
-        mapWidth = width;
-        mapHeight = height;
+        mapWidth = width + 1;
+        mapHeight = height + 1;
 
-        board = new TileEntity[height][width];
+        board = new TileEntity[height + 2][width + 2];
         scanner.nextLine();
-        for (int i = 0; i < height; i++) {
+        for (int i = 1; i <= height; i++) {
             String line = scanner.nextLine();
-            for (int j = 0; j < width; j++) {
-                switch (line.charAt(j)) {
+            for (int j = 1; j <= width; j++) {
+                switch (line.charAt(j - 1)) {
                     case '#' -> board[i][j] = new Wall(this);
                     case 'p' -> {
                         board[i][j] = new Grass(this);
@@ -149,6 +149,14 @@ public class BomanEngine implements Engine {
                     default -> board[i][j] = new Grass(this);
                 }
             }
+        }
+        for (int i = 0; i <= height + 1; ++i) {
+            board[i][0] = new Barrier(this);
+            board[i][width + 1] = new Barrier(this);
+        }
+        for (int i = 0; i <= width + 1; ++i) {
+            board[0][i] = new Barrier(this);
+            board[height + 1][i] = new Barrier(this);
         }
     }
 
@@ -364,12 +372,8 @@ public class BomanEngine implements Engine {
         removeUpdateEntity(e);
     }
 
-    public boolean isWinGame() {
+    public boolean winGame() {
         return winGame;
-    }
-
-    public void setWinGame(boolean winGame) {
-        this.winGame = winGame;
     }
 
     public int getEnemyCount() {
@@ -383,4 +387,6 @@ public class BomanEngine implements Engine {
     public int getBalloomCount() {
         return balloomCount;
     }
+
+
 }

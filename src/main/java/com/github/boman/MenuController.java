@@ -11,7 +11,7 @@ public class MenuController {
 
     @FXML
     public void startGame() {
-        SceneManager.loadGame();
+        SceneManager.startNewGame();
     }
 
     @FXML

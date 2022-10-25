@@ -1,10 +1,7 @@
 package com.github.boman;
 
 import com.github.boman.event.EventHandlerListener;
-import com.github.boman.game.BomanEngine;
-import com.github.boman.game.BomanRenderer;
-import com.github.boman.game.GameLoop;
-import com.github.boman.game.HUD;
+import com.github.boman.game.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +24,12 @@ public class GameController implements Initializable {
     @FXML
     public HBox menu;
 
+    public enum GameState {
+        Win,
+        Playing,
+        Lose,
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.eventHandlerListener = new EventHandlerListener();
@@ -48,11 +51,22 @@ public class GameController implements Initializable {
             @Override
             public void tick() {
                 engine.update();
+                if (engine.winGame()) {
+                    SceneManager.loadMainMenu();
+                    stop();
+                    return;
+                }
                 hud.update();
                 renderer.render(engine);
             }
         };
         loop.start();
+    }
+
+    public static void which(Engine engine) {
+        if (engine.winGame()) {
+            SceneManager.loadMainMenu();
+        }
     }
 
     @FXML
