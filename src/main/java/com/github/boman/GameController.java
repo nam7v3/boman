@@ -41,8 +41,7 @@ public class GameController implements Initializable {
         menu.minWidthProperty().bind(gameScene.widthProperty());
         menu.maxWidthProperty().bind(gameScene.widthProperty());
 
-
-        engine.loadMap("level1.txt");
+        engine.nextLevel();
 
         this.hud = new HUD(engine, menu);
         gameScene.setFocusTraversable(true);

@@ -41,11 +41,12 @@ public class BomanEngine implements Engine {
 
     private boolean paused;
 
-    private int currentLevel = 0;
+    private int currentLevel = -1;
 
     private String[] levels = new String[]{
             "level1.txt",
-            "level2.txt"
+            "level2.txt",
+            "level3.txt"
     };
 
     public BomanEngine(EventHandlerListener handler) {
