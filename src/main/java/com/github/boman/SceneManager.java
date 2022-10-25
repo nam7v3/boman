@@ -1,5 +1,6 @@
 package com.github.boman;
 
+import com.github.boman.util.Sound;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 
