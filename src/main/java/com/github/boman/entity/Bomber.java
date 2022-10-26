@@ -142,6 +142,7 @@ public class Bomber extends MoveableEntity implements EventListener {
         if (bomberState == Atrribute.Normal && lives > 0) {
             bomberState = Atrribute.Invincible;
             lives--;
+            SoundEffects.instance.playSound(SoundEffects.SoundIndex.BOMBER_DIED);
         }
         if (lives <= 0) {
             bomberState = Atrribute.Dead;
@@ -156,7 +157,6 @@ public class Bomber extends MoveableEntity implements EventListener {
                 if (invincibleTime == null) {
                     invincibleTime = Duration.of(INVINCIBLE_FRAME);
                     super.update();
-                    SoundEffects.instance.playSound(SoundEffects.SoundIndex.BOMBER_DIED);
                     return;
                 }
                 invincibleTime.minus();
@@ -171,8 +171,6 @@ public class Bomber extends MoveableEntity implements EventListener {
                 if (animation.animationDone()) {
                     engine.removeUpdateEntity(this);
                     engine.removeEntity(this);
-                    SoundEffects.instance.stopSound(SoundEffects.SoundIndex.BGM);
-                    SoundEffects.instance.playSound(SoundEffects.SoundIndex.GAME_OVER);
                 }
             }
         }

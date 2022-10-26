@@ -1,10 +1,7 @@
 package com.github.boman;
 
 import com.github.boman.event.EventHandlerListener;
-import com.github.boman.game.BomanEngine;
-import com.github.boman.game.BomanRenderer;
-import com.github.boman.game.GameLoop;
-import com.github.boman.game.HUD;
+import com.github.boman.game.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +17,7 @@ public class GameController implements Initializable {
     private BomanEngine engine;
     public BomanRenderer renderer;
     public HUD hud;
+    public Duration delay = Duration.of(120);
     @FXML
     public VBox gameScene;
     @FXML
@@ -55,9 +53,18 @@ public class GameController implements Initializable {
             public void tick() {
                 engine.update();
                 if (engine.winGame()) {
-                    SceneManager.loadMainMenu();
+                    SceneManager.loadWinScreen();
                     stop();
                     return;
+                }
+                if (engine.loseGame()) {
+                    if (delay.isNegative()) {
+                        SceneManager.loadLoseScreen();
+                        stop();
+                        return;
+                    } else {
+                        delay.minus();
+                    }
                 }
                 hud.update();
                 renderer.render(engine);

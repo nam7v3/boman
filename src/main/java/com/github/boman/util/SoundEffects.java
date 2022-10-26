@@ -63,4 +63,10 @@ public class SoundEffects {
             audioClip.setVolume(volume);
         }
     }
+
+    public void stopAllSound() {
+        for (AudioClip audioClip: sounds) {
+            audioClip.stop();
+        }
+    }
 }

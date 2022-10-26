@@ -87,7 +87,6 @@ public class BomanRenderer {
 
     public void resizeHeight(double v) {
         canvas.setHeight(v);
-
         resize();
     }
 

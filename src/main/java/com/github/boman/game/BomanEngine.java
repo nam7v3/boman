@@ -384,6 +384,9 @@ public class BomanEngine implements Engine {
     public boolean winGame() {
         return winGame;
     }
+    public boolean loseGame() {
+        return player.getLives() <= 0;
+    }
 
     public int getEnemyCount() {
         return enemyCount;
