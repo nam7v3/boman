@@ -156,6 +156,35 @@ public class Animation {
         return enemyAnimation;
     }
 
+    public static Animation getKondoriaAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Up, new Image[]{
+                                Sprite.kondoriaLeft1,
+                                Sprite.kondoriaLeft2,
+                                Sprite.kondoriaLeft3
+                        }
+                )
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.kondoriaLeft1
+                        }
+                )
+                .addState(
+                        State.Down, new Image[]{
+                                Sprite.kondoriaRight1,
+                                Sprite.kondoriaRight2,
+                                Sprite.kondoriaRight3
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.kondoriaDead,
+                });
+        enemyAnimation.setDefaultState(State.Up);
+        enemyAnimation.setState(State.Up);
+        return enemyAnimation;
+    }
+
     public static Animation getOnealAnimation() {
         Animation enemyAnimation = new Animation(Duration.of(20))
                 .addState(
@@ -196,6 +225,23 @@ public class Animation {
                 });
         enemyAnimation.setDefaultState(State.Left);
         enemyAnimation.setState(State.Left);
+        return enemyAnimation;
+    }
+
+    public static Animation getMinvoAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.minvoLeft1,
+                                Sprite.minvoLeft2,
+                                Sprite.minvoLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.minvoDead,
+                });
+        enemyAnimation.setDefaultState(State.Standing);
+        enemyAnimation.setState(State.Standing);
         return enemyAnimation;
     }
 
