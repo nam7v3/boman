@@ -9,6 +9,7 @@ public abstract class MoveableEntity extends Entity {
     protected State state;
     private final Box futurePos;
     protected double speed;
+    protected boolean softPass = false;
 
     public MoveableEntity(Engine engine, Box curPos, double speed) {
         super(engine);
@@ -77,7 +78,7 @@ public abstract class MoveableEntity extends Entity {
                 loop:
                 for (int i = left; i <= right; ++i) {
                     for (int j = upper; j >= lower; --j) {
-                        if (engine.getTile(i, j).block()) {
+                        if (engine.getTile(i, j).block() && !softPass) {
                             futurePos.setY(j + 1);
                             break loop;
                         }
@@ -95,7 +96,7 @@ public abstract class MoveableEntity extends Entity {
                 loop:
                 for (int i = left; i <= right; ++i) {
                     for (int j = lower; j <= upper; ++j) {
-                        if (engine.getTile(i, j).block()) {
+                        if (engine.getTile(i, j).block() && !softPass) {
                             futurePos.setY(j - pos.getH());
                             break loop;
                         }
@@ -113,7 +114,7 @@ public abstract class MoveableEntity extends Entity {
                 loop:
                 for (int j = lower; j <= upper; ++j) {
                     for (int i = right; i >= left; --i) {
-                        if (engine.getTile(i, j).block()) {
+                        if (engine.getTile(i, j).block() && !softPass) {
                             futurePos.setX(i + 1);
                             break loop;
                         }
@@ -131,7 +132,7 @@ public abstract class MoveableEntity extends Entity {
                 loop:
                 for (int j = lower; j <= upper; ++j) {
                     for (int i = left; i <= right; ++i) {
-                        if (engine.getTile(i, j).block()) {
+                        if (engine.getTile(i, j).block() && !softPass) {
                             futurePos.setX(i - pos.getW());
                             break loop;
                         }
