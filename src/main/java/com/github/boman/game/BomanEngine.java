@@ -34,6 +34,8 @@ public class BomanEngine implements Engine {
     private int enemyCount;
     private int balloomCount;
     private int onealCount;
+    private int kondoriaCount;
+    private int minvoCount;
     private int mapWidth;
     private int mapHeight;
     private boolean started;
@@ -148,6 +150,10 @@ public class BomanEngine implements Engine {
                     case '3' -> {
                         board[i][j] = new Grass(this);
                         spawnEnemy(new Kondoria(this, j, i));
+                    }
+                    case '4' -> {
+                        board[i][j] = new Grass(this);
+                        spawnEnemy(new Minvo(this, j, i));
                     }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
@@ -266,6 +272,12 @@ public class BomanEngine implements Engine {
         if (enemy instanceof Oneal) {
             onealCount++;
         }
+        if (enemy instanceof Kondoria) {
+            kondoriaCount++;
+        }
+        if (enemy instanceof Minvo) {
+            minvoCount++;
+        }
     }
 
     @Override
@@ -352,6 +364,8 @@ public class BomanEngine implements Engine {
         this.enemyCount = 0;
         this.onealCount = 0;
         this.balloomCount = 0;
+        this.kondoriaCount = 0;
+        this.minvoCount = 0;
         handler.removeListener(this.player);
         this.player = null;
         this.entities.clear();
@@ -379,6 +393,12 @@ public class BomanEngine implements Engine {
         }
         if (e instanceof Oneal) {
             onealCount--;
+        }
+        if (e instanceof Kondoria) {
+            kondoriaCount--;
+        }
+        if (e instanceof Minvo) {
+            minvoCount--;
         }
         enemyCount--;
         removeEntity(e);

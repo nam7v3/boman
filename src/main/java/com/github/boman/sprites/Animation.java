@@ -180,8 +180,8 @@ public class Animation {
                 .addState(Enemy.Attribute.Dead, new Image[]{
                         Sprite.kondoriaDead,
                 });
-        enemyAnimation.setDefaultState(State.Left);
-        enemyAnimation.setState(State.Left);
+        enemyAnimation.setDefaultState(State.Up);
+        enemyAnimation.setState(State.Up);
         return enemyAnimation;
     }
 
@@ -225,6 +225,23 @@ public class Animation {
                 });
         enemyAnimation.setDefaultState(State.Left);
         enemyAnimation.setState(State.Left);
+        return enemyAnimation;
+    }
+
+    public static Animation getMinvoAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.minvoLeft1,
+                                Sprite.minvoLeft2,
+                                Sprite.minvoLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.minvoDead,
+                });
+        enemyAnimation.setDefaultState(State.Standing);
+        enemyAnimation.setState(State.Standing);
         return enemyAnimation;
     }
 

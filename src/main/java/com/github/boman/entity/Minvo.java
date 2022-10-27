@@ -1,37 +1,42 @@
 package com.github.boman.entity;
 
+import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Kondoria extends Enemy {
-    public Kondoria(Engine engine, int x, int y) {
+public class Minvo extends Enemy {
+    private Duration teleportTimer = Duration.of(-1);
+    private int nextX;
+    private int nextY;
+    public Minvo(Engine engine, int x, int y) {
         super(engine, x, y);
-        softPass = true;
-        animation = Animation.getKondoriaAnimation();
-        moveUp();
+        nextX = x;
+        nextY = y;
+        animation = Animation.getMinvoAnimation();
+        state = State.Standing;
     }
 
-    public Kondoria(Engine engine, Box curPos, double speed) {
+    public Minvo(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
-        softPass = true;
-        animation = Animation.getKondoriaAnimation();
-        moveUp();
+        nextX = (int) curPos.getX();
+        nextY = (int) curPos.getY();
+        animation = Animation.getMinvoAnimation();
+        state = State.Standing;
     }
 
     @Override
     public void update() {
-        if (super.state == State.Up && engine.getTile(getTileX(), (int) (pos.getY() + pos.getH()) - 1) instanceof Wall) {
-            moveDown();
-            animation.setState(State.Down);
+        if (teleportTimer.isNegative()) {
+            pos = new Box(nextX, nextY, 1, 1);
+            nextX = engine.getPlayer().getTileX();
+            nextY = engine.getPlayer().getTileY();
+            teleportTimer = Duration.of(180);
+        } else {
+            teleportTimer.minus();
         }
-
-        if (super.state == State.Down && engine.getTile(getTileX(), (int) (pos.getY()) + 1) instanceof Wall) {
-            moveUp();
-            animation.setState(State.Up);
-        }
-        if(attribute == Attribute.Dead){
+        if (attribute == Attribute.Dead){
             animation.setState(Attribute.Dead);
             stop();
             if(animation.animationDone()){
