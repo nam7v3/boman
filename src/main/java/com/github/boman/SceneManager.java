@@ -27,6 +27,8 @@ public class SceneManager {
                 Node node = loader.load();
                 MenuController menuController = loader.getController();
                 mainController.setScene(node);
+                menuController.resizeHeight(mainController.mainRoot.getHeight());
+                menuController.resizeWidth(mainController.mainRoot.getWidth());
                 mainController.mainRoot.widthProperty().addListener(
                         ((observableValue, number, t1) -> menuController.resizeWidth((double) t1))
                 );
@@ -47,11 +49,13 @@ public class SceneManager {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("game.fxml"));
             Node node = loader.load();
             GameController gameController = loader.getController();
+            gameController.resizeWidth(mainController.mainRoot.getWidth());
+            gameController.resizeHeight(mainController.mainRoot.getHeight());
             mainController.mainRoot.widthProperty().addListener(
-                    ((observableValue, number, t1) -> gameController.renderer.resizeWidth((Double) t1))
+                    ((observableValue, number, t1) -> gameController.resizeWidth((Double) t1))
             );
             mainController.mainRoot.heightProperty().addListener(
-                    ((observableValue, number, t1) -> gameController.renderer.resizeHeight((Double) t1))
+                    ((observableValue, number, t1) -> gameController.resizeHeight((Double) t1))
             );
             mainController.setScene(node);
             scenes.put("game", node);
@@ -69,6 +73,8 @@ public class SceneManager {
                 Node node = loader.load();
                 WinLoseController winController = loader.getController();
                 mainController.setScene(node);
+                winController.resizeHeight(mainController.mainRoot.getHeight());
+                winController.resizeWidth(mainController.mainRoot.getWidth());
                 mainController.mainRoot.widthProperty().addListener(
                         ((observableValue, number, t1) -> winController.resizeWidth((double) t1))
                 );
@@ -92,6 +98,8 @@ public class SceneManager {
                 Node node = loader.load();
                 WinLoseController loseController = loader.getController();
                 mainController.setScene(node);
+                loseController.resizeHeight(mainController.mainRoot.getHeight());
+                loseController.resizeWidth(mainController.mainRoot.getWidth());
                 mainController.mainRoot.widthProperty().addListener(
                         ((observableValue, number, t1) -> loseController.resizeWidth((double) t1))
                 );

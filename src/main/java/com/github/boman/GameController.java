@@ -6,8 +6,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,17 +19,12 @@ public class GameController implements Initializable {
     public HUD hud;
     public Duration delay = Duration.of(120);
     @FXML
-    public VBox gameScene;
-    @FXML
     public Canvas canvas;
     @FXML
     public HBox menu;
 
-    public enum GameState {
-        Win,
-        Playing,
-        Lose,
-    }
+    @FXML
+    public BorderPane gameScene;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,6 +42,8 @@ public class GameController implements Initializable {
         this.hud = new HUD(engine, menu);
         gameScene.setFocusTraversable(true);
         gameScene.addEventHandler(Event.ANY, this::onEvent);
+        gameScene.setMaxWidth(Double.MAX_VALUE);
+        gameScene.setMaxHeight(Double.MAX_VALUE);
 
         GameLoop loop = new GameLoop() {
             @Override
@@ -76,5 +73,13 @@ public class GameController implements Initializable {
     @FXML
     protected void onEvent(Event event) {
         this.eventHandlerListener.handle(event);
+    }
+
+    public void resizeWidth(double w) {
+        renderer.resizeWidth(w);
+    }
+
+    public void resizeHeight(double h) {
+        renderer.resizeHeight(h);
     }
 }

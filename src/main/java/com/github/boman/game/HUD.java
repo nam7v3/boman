@@ -76,7 +76,7 @@ public class HUD {
         onealLabel.setTextFill(Color.WHITE);
 
         hud.setAlignment(Pos.CENTER_LEFT);
-        hud.setBackground(Background.fill(Color.GRAY));
+        hud.setBackground(Background.fill(Color.GREEN));
         hud.setScaleShape(true);
         hud.setFillHeight(true);
 
