@@ -14,10 +14,8 @@ import java.util.List;
 public class BomanRenderer {
     private final Canvas canvas;
     private final GraphicsContext gc;
-
     private final int maxTileX = 25;
-    private final int maxTileY = 20;
-
+    private final int maxTileY = 15;
     private double scale = 1;
     private double curTileX, curTileY;
 
@@ -35,16 +33,16 @@ public class BomanRenderer {
         TileEntity[][] map = engine.getBoard();
         List<MoveableEntity> entities = engine.getEntities();
         Bomber player = engine.getPlayer();
-        if(engine.isPaused()){
+        if (engine.isPaused()) {
             gc.setEffect(new GaussianBlur());
-        }else {
+        } else {
             gc.setEffect(null);
         }
 
         viewportStartX = Math.max(player.getPos().getX() - maxTileX / 2.0, 0);
         viewportStartY = Math.max(player.getPos().getY() - maxTileY / 2.0, 0);
-        viewportEndX = Math.min(viewportStartX + curTileX, engine.getMapWidth());
-        viewportEndY = Math.min(viewportStartY + curTileY, engine.getMapHeight());
+        viewportEndX = viewportStartX + curTileX;
+        viewportEndY = viewportStartY + curTileY;
 
         viewport = new Box(
                 viewportStartX,
@@ -61,11 +59,12 @@ public class BomanRenderer {
              i < Math.ceil(viewportEndY); ++i) {
             for (int j = (int) Math.floor(viewportStartX);
                  j < Math.ceil(viewportEndX); ++j) {
-
-                map[i][j].render(gc,
-                        j - viewportStartX,
-                        i - viewportStartY,
-                        scale);
+                if(engine.validTile(j, i)){
+                    map[i][j].render(gc,
+                            j - viewportStartX,
+                            i - viewportStartY,
+                            scale);
+                }
             }
         }
 
