@@ -1,13 +1,21 @@
 package com.github.boman;
 
 import com.github.boman.event.EventHandlerListener;
-import com.github.boman.game.*;
+import com.github.boman.game.BomanEngine;
+import com.github.boman.game.BomanRenderer;
+import com.github.boman.game.Duration;
+import com.github.boman.game.GameLoop;
+import com.github.boman.sprites.Animation;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,15 +24,37 @@ public class GameController implements Initializable {
     private EventHandlerListener eventHandlerListener;
     private BomanEngine engine;
     public BomanRenderer renderer;
-    public HUD hud;
     public Duration delay = Duration.of(120);
     @FXML
     public Canvas canvas;
     @FXML
     public HBox menu;
-
     @FXML
     public BorderPane gameScene;
+    @FXML
+    public Button pauseButton;
+    @FXML
+    public ImageView playerImage;
+    @FXML
+    public Label liveCount;
+    @FXML
+    public ImageView bombImage;
+    @FXML
+    public Label bombCount;
+    @FXML
+    public ImageView onealImage;
+    @FXML
+    public Label onealCount;
+    @FXML
+    public ImageView balloomImage;
+    @FXML
+    public Label balloomCount;
+
+    private Animation playerAnimation = Animation.getPlayerAnimation();
+    private Animation bombAnimation = Animation.getBombAnimation();
+    private Animation onealAnimation = Animation.getOnealAnimation();
+    private Animation balloomAnimation = Animation.getBalloomAnimation();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +69,18 @@ public class GameController implements Initializable {
 
         engine.nextLevel();
 
-        this.hud = new HUD(engine, menu);
+        Font font = Font.loadFont(GameController.class.getResource("pixeloidMono.ttf").toString(), 13);
+        pauseButton.setFont(font);
+        liveCount.setFont(font);
+        balloomCount.setFont(font);
+        bombCount.setFont(font);
+        onealCount.setFont(font);
+
+        balloomImage.setSmooth(false);
+        playerImage.setSmooth(false);
+        bombImage.setSmooth(false);
+        onealImage.setSmooth(false);
+
         gameScene.setFocusTraversable(true);
         gameScene.addEventHandler(Event.ANY, this::onEvent);
         gameScene.setMaxWidth(Double.MAX_VALUE);
@@ -63,11 +104,27 @@ public class GameController implements Initializable {
                         delay.minus();
                     }
                 }
-                hud.update();
+                hudUpdate();
                 renderer.render(engine);
             }
         };
         loop.start();
+    }
+
+    public void pauseGame() {
+        engine.togglePause();
+    }
+
+    public void hudUpdate() {
+        onealCount.setText(":" + engine.getOnealCount());
+        balloomCount.setText(":" + engine.getOnealCount());
+        bombCount.setText(":" + engine.getPlayer().getMaxBomb());
+        liveCount.setText(":" + engine.getPlayer().getLives());
+
+        playerImage.setImage(engine.getPlayer().getAnimation().getCurImage());
+        bombImage.setImage(bombAnimation.getImage());
+        balloomImage.setImage(balloomAnimation.getImage());
+        onealImage.setImage(onealAnimation.getImage());
     }
 
     @FXML
@@ -82,4 +139,5 @@ public class GameController implements Initializable {
     public void resizeHeight(double h) {
         renderer.resizeHeight(h);
     }
+
 }

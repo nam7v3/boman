@@ -58,7 +58,7 @@ public class SoundEffects {
         sounds.get(index.value).stop();
     }
 
-    public void setVolumeSound(double volume) {
+    public void setGlobalVolume(double volume) {
         for (AudioClip audioClip : sounds) {
             audioClip.setVolume(volume);
         }
