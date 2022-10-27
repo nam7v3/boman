@@ -38,6 +38,7 @@ public class SoundEffects {
         sounds.add(loadAudioClip("itemPicked.wav", false));
         sounds.add(loadAudioClip("win.wav", false));
         sounds.add(loadAudioClip("mainMenu.wav", true));
+        setGlobalVolume(0.5);
     }
 
     public AudioClip loadAudioClip(String filename, boolean infinite) {

@@ -8,24 +8,20 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Oneal extends Enemy {
+public class Doll extends Enemy {
     private State[][] trace;
     private Queue<Integer> queue = new LinkedList<>();
     private Box dest;
     private boolean detectedBomber = false;
 
-
-    public Oneal(Engine engine, int x, int y) {
+    public Doll(Engine engine, int x, int y) {
         super(engine, x, y);
-        animation = Animation.getOnealAnimation();
-        this.trace = new State[engine.getMapWidth()][engine.getMapHeight()];
-        this.dest = engine.getBoxAtTile(x, y);
+        animation = Animation.getDollAnimation();
     }
 
-    public Oneal(Engine engine, Box curPos, double speed) {
+    public Doll(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
-        animation = Animation.getOnealAnimation();
-        this.trace = new State[engine.getMapWidth()][engine.getMapHeight()];
+        animation = Animation.getDollAnimation();
     }
 
     @Override
@@ -35,6 +31,8 @@ public class Oneal extends Enemy {
             stop();
             if (animation.animationDone()) {
                 engine.killEnemy(this);
+                engine.spawnEnemy(new Oneal(engine, 2, 2));
+                engine.spawnEnemy(new Minvo(engine, 2, 2));
             }
             super.update();
             return;
@@ -84,7 +82,6 @@ public class Oneal extends Enemy {
         y = bomber.getTileY();
         State dir = State.Standing;
         if (trace[x][y] == null) {
-            speed = ENEMY_SPEED;
             detectedBomber = false;
             if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
                 moveRight();
@@ -125,11 +122,6 @@ public class Oneal extends Enemy {
                         dir = State.Right;
                     }
                 }
-            }
-            if (Math.abs(pos.getX() - bomber.pos.getX()) + Math.abs(pos.getY() - bomber.pos.getY()) <= 10) {
-                speed = ENEMY_SPEEDUP;
-            } else {
-                speed = ENEMY_SPEED;
             }
             state = dir;
         }

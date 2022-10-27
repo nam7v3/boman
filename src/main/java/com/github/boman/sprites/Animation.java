@@ -245,6 +245,49 @@ public class Animation {
         return enemyAnimation;
     }
 
+    public static Animation getDollAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Left, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.dollLeft1
+                        }
+                )
+                .addState(
+                        State.Right, new Image[]{
+                                Sprite.dollRight1,
+                                Sprite.dollRight2,
+                                Sprite.dollRight3,
+                        }
+                )
+                .addState(
+                        State.Up, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(
+                        State.Down, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.dollDead,
+                });
+        enemyAnimation.setDefaultState(State.Left);
+        enemyAnimation.setState(State.Left);
+        return enemyAnimation;
+    }
+
     public static Animation getBombAnimation() {
         Animation bombAnimation = new Animation(Duration.of(5))
                 .addState(Bomb.Attribute.Pending, new Image[]{
