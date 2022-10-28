@@ -1,5 +1,6 @@
 package com.github.boman.entity;
 
+import com.github.boman.game.Duration;
 import com.github.boman.game.Engine;
 import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
@@ -13,6 +14,7 @@ public class Doll extends Enemy {
     private Queue<Integer> queue = new LinkedList<>();
     private Box dest;
     private boolean detectedBomber = false;
+    private Duration timeLeft = null;
 
     public Doll(Engine engine, int x, int y) {
         super(engine, x, y);
@@ -31,10 +33,14 @@ public class Doll extends Enemy {
         if (attribute == Attribute.Dead) {
             animation.setState(Attribute.Dead);
             stop();
-            if (animation.animationDone()) {
-                engine.killEnemy(this);
-                engine.spawnEnemy(new Oneal(engine, 2, 2));
-                engine.spawnEnemy(new Minvo(engine, 2, 2));
+            if (timeLeft != null) {
+                if (timeLeft.isNegative() && animation.animationDone()) {
+                    engine.killEnemy(this);
+                    engine.spawnEnemy(new Oneal(engine, getTileX(), getTileY()));
+                    engine.spawnEnemy(new Minvo(engine, getTileX(), getTileY()));
+                } else {
+                    timeLeft.minus();
+                }
             }
             super.update();
             return;
@@ -124,8 +130,9 @@ public class Doll extends Enemy {
 
     @Override
     public void interactWith(Entity other) {
-        if (other instanceof Fire) {
+        if (other instanceof Fire fire) {
             attribute = Attribute.Dead;
+            timeLeft = Duration.of(fire.getTimeLeft());
         }
     }
 }

@@ -7,7 +7,7 @@ import com.github.boman.util.Box;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Minvo extends Enemy {
-    private Duration teleportTimer = Duration.of(-1);
+    private Duration teleportTimer = null;
     private int nextX;
     private int nextY;
     public Minvo(Engine engine, int x, int y) {
@@ -28,6 +28,14 @@ public class Minvo extends Enemy {
 
     @Override
     public void update() {
+        if (teleportTimer == null) {
+            if (inRange()) {
+                teleportTimer = Duration.of(180);
+            } else {
+                super.update();
+                return;
+            }
+        }
         if (teleportTimer.isNegative()) {
             pos = new Box(nextX, nextY, 1, 1);
             nextX = engine.getPlayer().getTileX();
