@@ -18,34 +18,40 @@ public class Balloom extends Enemy {
 
     @Override
     public void update() {
-        super.update();
-        if (super.state == State.Left && engine.getTile((int) ((pos.getX() + pos.getW()) / engine.getTileWidth()) - 1, getTileY()).block()) {
+        if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
             moveRight();
             animation.setState(State.Right);
         }
 
-        if (super.state == State.Right && engine.getTile((int) (pos.getX() / engine.getTileWidth()) + 1, getTileY()).block()) {
+        if (super.state == State.Right && engine.getTile((int) pos.getX() + 1, getTileY()).block()) {
             moveLeft();
             animation.setState(State.Left);
         }
+        if(attribute == Attribute.Dead){
+            animation.setState(Attribute.Dead);
+            stop();
+            if(animation.animationDone()){
+                engine.killEnemy(this);
+            }
+        }
+        super.update();
     }
 
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, double x, double y, double scale) {
         gc.drawImage(
                 animation.getImage(),
-                pos.getX(),
-                pos.getY(),
-                ENEMY_WIDTH,
-                ENEMY_HEIGHT
+                x * scale,
+                y * scale,
+                ENEMY_WIDTH * scale,
+                ENEMY_HEIGHT * scale
         );
     }
 
     @Override
     public void interactWith(Entity other) {
         if (other instanceof Fire) {
-            animation.setState(Attribute.Dead);
-            engine.removeEntity(this);
+            attribute = Attribute.Dead;
         }
     }
 }

@@ -21,11 +21,7 @@ public class Animation {
     private Object defaultState;
     private final Duration waitTime;
     private Duration curWait;
-    private static Animation playerAnimation;
-    private static Animation enemyAnimation;
-    private static Animation bombAnimation;
-
-    public static Animation fireAnimation;
+    private boolean animationDone = false;
 
 
     public Animation(Duration waitTime) {
@@ -48,6 +44,7 @@ public class Animation {
             curState = key;
         }
         curImages = state.get(curState);
+        animationDone = false;
         index = 0;
     }
 
@@ -62,13 +59,18 @@ public class Animation {
             index++;
             if (index >= curImages.length) {
                 index = 0;
+                animationDone = true;
             }
         }
         return curImages[index];
     }
 
     public boolean animationDone(){
-        return index == curImages.length - 1;
+        return animationDone;
+    }
+
+    public Image getCurImage(){
+        return curImages[index];
     }
 
     public Duration getCurWait() {
@@ -80,7 +82,7 @@ public class Animation {
     }
 
     public static Animation getPlayerAnimation() {
-        Animation playerAnimation = new Animation(Duration.of(5))
+        Animation playerAnimation = new Animation(Duration.of(3))
                 .addState(
                         State.Up, new Image[]{
                                 Sprite.playerUp,
@@ -154,6 +156,35 @@ public class Animation {
         return enemyAnimation;
     }
 
+    public static Animation getKondoriaAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Up, new Image[]{
+                                Sprite.kondoriaLeft1,
+                                Sprite.kondoriaLeft2,
+                                Sprite.kondoriaLeft3
+                        }
+                )
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.kondoriaLeft1
+                        }
+                )
+                .addState(
+                        State.Down, new Image[]{
+                                Sprite.kondoriaRight1,
+                                Sprite.kondoriaRight2,
+                                Sprite.kondoriaRight3
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.kondoriaDead,
+                });
+        enemyAnimation.setDefaultState(State.Up);
+        enemyAnimation.setState(State.Up);
+        return enemyAnimation;
+    }
+
     public static Animation getOnealAnimation() {
         Animation enemyAnimation = new Animation(Duration.of(20))
                 .addState(
@@ -197,11 +228,83 @@ public class Animation {
         return enemyAnimation;
     }
 
+    public static Animation getMinvoAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.minvoLeft1,
+                                Sprite.minvoLeft2,
+                                Sprite.minvoLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.minvoDead,
+                });
+        enemyAnimation.setDefaultState(State.Standing);
+        enemyAnimation.setState(State.Standing);
+        return enemyAnimation;
+    }
+
+    public static Animation getDollAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Left, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.dollLeft1
+                        }
+                )
+                .addState(
+                        State.Right, new Image[]{
+                                Sprite.dollRight1,
+                                Sprite.dollRight2,
+                                Sprite.dollRight3,
+                        }
+                )
+                .addState(
+                        State.Up, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(
+                        State.Down, new Image[]{
+                                Sprite.dollLeft1,
+                                Sprite.dollLeft2,
+                                Sprite.dollLeft3,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.dollDead,
+                });
+        enemyAnimation.setDefaultState(State.Left);
+        enemyAnimation.setState(State.Left);
+        return enemyAnimation;
+    }
+
+    public static Animation getThwimpAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.thwimp,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.mobDead1,
+                });
+        enemyAnimation.setDefaultState(State.Standing);
+        enemyAnimation.setState(State.Standing);
+        return enemyAnimation;
+    }
+
     public static Animation getBombAnimation() {
-        if (bombAnimation != null) {
-            return bombAnimation;
-        }
-        bombAnimation = new Animation(Duration.of(5))
+        Animation bombAnimation = new Animation(Duration.of(5))
                 .addState(Bomb.Attribute.Pending, new Image[]{
                         Sprite.bomb,
                         Sprite.bomb1,
@@ -212,7 +315,7 @@ public class Animation {
                         Sprite.bombExploded1,
                         Sprite.bombExploded2
                 });
-        bombAnimation.setDefaultState(Bomb.Attribute.Pending);
+        bombAnimation.setState(Bomb.Attribute.Pending);
         bombAnimation.setDefaultState(Bomb.Attribute.Pending);
         return bombAnimation;
     }

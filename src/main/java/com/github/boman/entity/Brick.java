@@ -13,6 +13,7 @@ public class Brick extends TileEntity {
     private Animation animation = Animation.getBrickAnimation();
     private int x;
     private int y;
+    private boolean containsPortal = false;
 
     public enum Attribute {
         Normal,
@@ -47,6 +48,14 @@ public class Brick extends TileEntity {
         this.y = y;
     }
 
+    public boolean isContainsPortal() {
+        return containsPortal;
+    }
+
+    public void setContainsPortal(boolean containsPortal) {
+        this.containsPortal = containsPortal;
+    }
+
     public Duration getTimeLeft() {
         return timeLeft;
     }
@@ -78,7 +87,10 @@ public class Brick extends TileEntity {
         if (timeLeft.isNegative()) {
             Random rand = new Random();
             int key = rand.nextInt(100);
-            if (key < 10) {
+            if (containsPortal) {
+                engine.setTile(new Portal(engine), x, y);
+            }
+            else if (key < 10) {
                 engine.setTile(new BombPowerup(engine), x, y);
             } else if (key < 20) {
                 engine.setTile(new FlamePowerup(engine), x, y);
@@ -92,9 +104,9 @@ public class Brick extends TileEntity {
     }
 
     @Override
-    public void render(GraphicsContext gc, int x, int y) {
+    public void render(GraphicsContext gc, double x, double y, double scale) {
         super.img = animation.getImage();
-        super.render(gc, x, y);
+        super.render(gc, x, y, scale);
     }
 
     @Override
