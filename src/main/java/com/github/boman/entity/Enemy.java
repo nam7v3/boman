@@ -9,6 +9,7 @@ public abstract class Enemy extends MoveableEntity {
     public static double ENEMY_HEIGHT = 0.9;
     public static double ENEMY_WIDTH = 0.9;
     public static double ENEMY_SPEEDUP = 0.1;
+    protected static final double VISION = 10;
     protected Animation animation;
 
     public enum Attribute {
@@ -30,6 +31,11 @@ public abstract class Enemy extends MoveableEntity {
         super(engine, curPos, speed);
         attribute = Attribute.Alive;
         moveLeft();
+    }
+
+    public boolean inRange() {
+        return Math.abs(getTileX() - engine.getPlayer().getTileX())
+                + Math.abs(getTileY() - engine.getPlayer().getTileY()) <= Enemy.VISION;
     }
 
     @Override
