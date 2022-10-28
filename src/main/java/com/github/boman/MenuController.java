@@ -15,12 +15,15 @@ public class MenuController implements Initializable {
     @FXML
     public Button quit;
     @FXML
+    public Button help;
+    @FXML
     public VBox vBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Font font = Font.loadFont(GameController.class.getResource("pixeloidMono.ttf").toString(), 18);
         play.setFont(font);
+        help.setFont(font);
         quit.setFont(font);
     }
 
@@ -32,6 +35,11 @@ public class MenuController implements Initializable {
     @FXML
     public void quitGame() {
         System.exit(0);
+    }
+
+    @FXML
+    public void helpScene(){
+        SceneManager.loadHelpScreen();
     }
     public void resizeWidth(double v) {
         vBox.setMinWidth(v);

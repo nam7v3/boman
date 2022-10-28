@@ -117,6 +117,29 @@ public class SceneManager {
         SoundEffects.instance.playSound(SoundEffects.SoundIndex.GAME_OVER);
     }
 
+    public static void loadHelpScreen() {
+        if (scenes.get("help") == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("help.fxml"));
+                Node node = loader.load();
+                HelpController helpController = loader.getController();
+                mainController.setScene(node);
+                helpController.resizeHeight(mainController.mainRoot.getHeight());
+                helpController.resizeWidth(mainController.mainRoot.getWidth());
+                mainController.mainRoot.widthProperty().addListener(
+                        ((observableValue, number, t1) -> helpController.resizeWidth((double) t1))
+                );
+                mainController.mainRoot.heightProperty().addListener(
+                        ((observableValue, number, t1) -> helpController.resizeHeight((double) t1))
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mainController.setScene(scenes.get("lose"));
+        }
+    }
+
     public static void loadGame() {
         if (scenes.get("game") == null) {
             startNewGame();
