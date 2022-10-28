@@ -1,16 +1,28 @@
 package com.github.boman;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
-public class MenuController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MenuController implements Initializable {
     @FXML
     public Button play;
     @FXML
     public Button quit;
     @FXML
     public VBox vBox;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Font font = Font.loadFont(GameController.class.getResource("pixeloidMono.ttf").toString(), 18);
+        play.setFont(font);
+        quit.setFont(font);
+    }
 
     @FXML
     public void startGame() {

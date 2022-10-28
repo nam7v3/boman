@@ -8,7 +8,7 @@ public abstract class Enemy extends MoveableEntity {
     public static double ENEMY_SPEED = 0.05;
     public static double ENEMY_HEIGHT = 0.9;
     public static double ENEMY_WIDTH = 0.9;
-    public static double ENEMY_SPEEDUP = 0.1;
+    public static double ENEMY_SPEEDUP = 0.05;
     protected Animation animation;
 
     public enum Attribute {
