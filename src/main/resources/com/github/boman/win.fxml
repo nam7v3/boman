@@ -7,36 +7,40 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-
-<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.boman.WinLoseController">
-   <children>
-      <ImageView fitHeight="243.0" fitWidth="501.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-         <image>
-            <Image url="@game/win.jpg" />
-         </image>
-         <StackPane.margin>
-            <Insets bottom="65.0" />
-         </StackPane.margin>
-      </ImageView>
-      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
-         <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#returnToMainmenu" style="-fx-pref-width: 100; -fx-pref-height: 50;" text="Return" textAlignment="CENTER">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font name="Comic Sans MS Bold" size="20.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#quitGame" style="-fx-pref-width: 100; -fx-pref-height: 50;" text="Quit">
-               <font>
-                  <Font name="Comic Sans MS Bold" size="20.0" />
-               </font>
-            </Button>
-         </children>
-         <padding>
-            <Insets bottom="40.0" />
-         </padding>
-      </HBox>
-   </children>
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;"
+           xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.github.boman.WinLoseController">
+    <children>
+        <ImageView fitHeight="243.0" fitWidth="501.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+            <image>
+                <Image url="@game/win.jpg"/>
+            </image>
+            <StackPane.margin>
+                <Insets bottom="65.0"/>
+            </StackPane.margin>
+        </ImageView>
+        <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
+            <children>
+                <Button fx:id="returnButton" alignment="CENTER" mnemonicParsing="false" onAction="#returnToMainmenu"
+                        style="-fx-pref-width: 100; -fx-pref-height: 50;" text="Return" textAlignment="CENTER">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="20.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quitGame"
+                        style="-fx-pref-width: 100; -fx-pref-height: 50;" text="Quit">
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="20.0"/>
+                    </font>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="40.0"/>
+            </padding>
+        </HBox>
+    </children>
 </StackPane>
