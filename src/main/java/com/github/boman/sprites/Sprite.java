@@ -95,5 +95,6 @@ public class Sprite {
     public static Image powerupFlames = new Image(Objects.requireNonNull(Sprite.class.getResource("powerup_flames.png")).toString());
     public static Image powerupSpeed = new Image(Objects.requireNonNull(Sprite.class.getResource("powerup_speed.png")).toString());
     public static Image powerupWallpass = new Image(Objects.requireNonNull(Sprite.class.getResource("powerup_wallpass.png")).toString());
+    public static Image thwimp = new Image(Objects.requireNonNull(Sprite.class.getResource("thwimp.png")).toString());
     public static Image wall = new Image(Objects.requireNonNull(Sprite.class.getResource("wall.png")).toString());
 }

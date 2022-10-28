@@ -37,6 +37,7 @@ public class BomanEngine implements Engine {
     private int kondoriaCount;
     private int minvoCount;
     private int dollCount;
+    private List<Thwimp> thwimps;
     private int mapWidth;
     private int mapHeight;
     private boolean started;
@@ -160,6 +161,10 @@ public class BomanEngine implements Engine {
                         board[i][j] = new Grass(this);
                         spawnEnemy(new Doll(this, j, i));
                     }
+                    case '6' -> {
+                        board[i][j] = new Grass(this);
+                        spawnEnemy(new Thwimp(this, j, i));
+                    }
                     case '*' -> {
                         Brick brick = new Brick(this, j, i);
                         board[i][j] = brick;
@@ -207,6 +212,11 @@ public class BomanEngine implements Engine {
     public boolean spawnFire(Bomb bomb, int x, int y, Fire.State state) {
         if (getTile(x, y) instanceof Wall || getTile(x, y) instanceof Portal) {
             return false;
+        }
+        for (Thwimp thwimp: thwimps) {
+            if ((int) thwimp.getPos().getX() == x && (int) thwimp.getPos().getY() == y) {
+                return false;
+            }
         }
         if (getTile(x, y) instanceof Bomb otherBomb) {
             if (bomb != otherBomb) {
@@ -285,6 +295,9 @@ public class BomanEngine implements Engine {
         }
         if (enemy instanceof Doll) {
             dollCount++;
+        }
+        if (enemy instanceof Thwimp thwimp) {
+            thwimps.add(thwimp);
         }
     }
 
@@ -375,6 +388,7 @@ public class BomanEngine implements Engine {
         this.kondoriaCount = 0;
         this.minvoCount = 0;
         this.dollCount = 0;
+        this.thwimps = new ArrayList<>();
         handler.removeListener(this.player);
         this.player = null;
         this.entities.clear();
@@ -412,6 +426,9 @@ public class BomanEngine implements Engine {
         if (e instanceof Doll) {
             dollCount--;
         }
+        if (e instanceof Thwimp thwimp) {
+            thwimps.remove(thwimp);
+        }
         enemyCount--;
         removeEntity(e);
         removeUpdateEntity(e);
@@ -446,6 +463,10 @@ public class BomanEngine implements Engine {
 
     public int getDollCount() {
         return dollCount;
+    }
+
+    public int getThwimpCount() {
+        return thwimps.size();
     }
 
     public void togglePause() {

@@ -62,6 +62,14 @@ public interface Engine {
 
     int getBalloomCount();
 
+    int getKondoriaCount();
+
+    int getMinvoCount();
+
+    int getDollCount();
+
+    int getThwimpCount();
+
     void killEnemy(Enemy enemy);
 
     void togglePause();

@@ -288,6 +288,21 @@ public class Animation {
         return enemyAnimation;
     }
 
+    public static Animation getThwimpAnimation() {
+        Animation enemyAnimation = new Animation(Duration.of(20))
+                .addState(
+                        State.Standing, new Image[]{
+                                Sprite.thwimp,
+                        }
+                )
+                .addState(Enemy.Attribute.Dead, new Image[]{
+                        Sprite.mobDead1,
+                });
+        enemyAnimation.setDefaultState(State.Standing);
+        enemyAnimation.setState(State.Standing);
+        return enemyAnimation;
+    }
+
     public static Animation getBombAnimation() {
         Animation bombAnimation = new Animation(Duration.of(5))
                 .addState(Bomb.Attribute.Pending, new Image[]{
