@@ -17,11 +17,13 @@ public class Doll extends Enemy {
     public Doll(Engine engine, int x, int y) {
         super(engine, x, y);
         animation = Animation.getDollAnimation();
+        dest = engine.getBoxAtTile(x, y);
     }
 
     public Doll(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
         animation = Animation.getDollAnimation();
+        dest = engine.getBoxAtTile((int) curPos.getX(), (int) curPos.getY());
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Doll extends Enemy {
             super.update();
             return;
         }
-        if (detectedBomber && !pos.inside(dest)) {
+        if (!pos.inside(dest)) {
             super.update();
             return;
         }
@@ -81,27 +83,7 @@ public class Doll extends Enemy {
         x = bomber.getTileX();
         y = bomber.getTileY();
         State dir = State.Standing;
-        if (trace[x][y] == null) {
-            detectedBomber = false;
-            if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
-                moveRight();
-                dest = engine.getBoxAtTile((int) (pos.getX() + pos.getW()) - 1, getTileY());
-                animation.setState(State.Right);
-            }
-
-            if (super.state == State.Right && engine.getTile((int) pos.getX() + 1, getTileY()).block()) {
-                moveLeft();
-                dest = engine.getBoxAtTile((int) pos.getX(), getTileY());
-                animation.setState(State.Left);
-            }
-            if (attribute == Attribute.Dead) {
-                animation.setState(Attribute.Dead);
-                stop();
-                if (animation.animationDone()) {
-                    engine.killEnemy(this);
-                }
-            }
-        } else {
+        if (trace[x][y] != null) {
             while (x != getTileX() || y != getTileY()) {
                 dest = engine.getBoxAtTile(x, y);
                 switch (trace[x][y]) {
@@ -123,9 +105,9 @@ public class Doll extends Enemy {
                     }
                 }
             }
-            state = dir;
         }
 
+        state = dir;
         super.update();
     }
 

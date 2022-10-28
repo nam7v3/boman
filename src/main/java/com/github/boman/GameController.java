@@ -49,11 +49,31 @@ public class GameController implements Initializable {
     public ImageView balloomImage;
     @FXML
     public Label balloomCount;
+    @FXML
+    public ImageView kondoriaImage;
+    @FXML
+    public Label kondoriaCount;
+    @FXML
+    public ImageView minvoImage;
+    @FXML
+    public Label minvoCount;
+    @FXML
+    public ImageView dollImage;
+    @FXML
+    public Label dollCount;
+    @FXML
+    public ImageView thwimpImage;
+    @FXML
+    public Label thwimpCount;
 
     private Animation playerAnimation = Animation.getPlayerAnimation();
     private Animation bombAnimation = Animation.getBombAnimation();
     private Animation onealAnimation = Animation.getOnealAnimation();
     private Animation balloomAnimation = Animation.getBalloomAnimation();
+    private Animation kondoriaAnimation = Animation.getKondoriaAnimation();
+    private Animation minvoAnimation = Animation.getMinvoAnimation();
+    private Animation dollAnimation = Animation.getDollAnimation();
+    private Animation thwimpAnimation = Animation.getThwimpAnimation();
 
 
     @Override
@@ -75,11 +95,19 @@ public class GameController implements Initializable {
         balloomCount.setFont(font);
         bombCount.setFont(font);
         onealCount.setFont(font);
+        kondoriaCount.setFont(font);
+        minvoCount.setFont(font);
+        dollCount.setFont(font);
+        thwimpCount.setFont(font);
 
         balloomImage.setSmooth(false);
         playerImage.setSmooth(false);
         bombImage.setSmooth(false);
         onealImage.setSmooth(false);
+        kondoriaImage.setSmooth(false);
+        minvoImage.setSmooth(false);
+        dollImage.setSmooth(false);
+        thwimpImage.setSmooth(false);
 
         gameScene.setFocusTraversable(true);
         gameScene.addEventHandler(Event.ANY, this::onEvent);
@@ -120,11 +148,19 @@ public class GameController implements Initializable {
         balloomCount.setText(":" + engine.getOnealCount());
         bombCount.setText(":" + engine.getPlayer().getMaxBomb());
         liveCount.setText(":" + engine.getPlayer().getLives());
+        kondoriaCount.setText(":" + engine.getKondoriaCount());
+        minvoCount.setText(":" + engine.getMinvoCount());
+        dollCount.setText(":" + engine.getDollCount());
+        thwimpCount.setText(":" + engine.getThwimpCount());
 
         playerImage.setImage(engine.getPlayer().getAnimation().getCurImage());
         bombImage.setImage(bombAnimation.getImage());
         balloomImage.setImage(balloomAnimation.getImage());
         onealImage.setImage(onealAnimation.getImage());
+        kondoriaImage.setImage(kondoriaAnimation.getImage());
+        minvoImage.setImage(minvoAnimation.getImage());
+        dollImage.setImage(dollAnimation.getImage());
+        thwimpImage.setImage(thwimpAnimation.getImage());
     }
 
     @FXML

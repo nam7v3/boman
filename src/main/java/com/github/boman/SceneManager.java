@@ -41,6 +41,7 @@ public class SceneManager {
         } else {
             mainController.setScene(scenes.get("menu"));
         }
+        SoundEffects.instance.stopAllSound();
         SoundEffects.instance.playSound(SoundEffects.SoundIndex.MAIN_MENU);
     }
 

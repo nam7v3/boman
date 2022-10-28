@@ -2,38 +2,41 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<BorderPane fx:id="gameScene" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.boman.GameController">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="gameScene" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.boman.GameController">
     <top>
-        <HBox fx:id="menu" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-              minWidth="-Infinity" spacing="10.0" style="-fx-background-color: green;" BorderPane.alignment="TOP_LEFT">
+        <HBox fx:id="menu" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0" style="-fx-background-color: green;" BorderPane.alignment="TOP_LEFT">
             <children>
-                <Button fx:id="pauseButton" focusTraversable="false" mnemonicParsing="false" onAction="#pauseGame"
-                        style="-fx-max-height: 4;" text="Pause" HBox.hgrow="NEVER"/>
-                <ImageView fx:id="playerImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <Button fx:id="pauseButton" focusTraversable="false" mnemonicParsing="false" onAction="#pauseGame" style="-fx-max-height: 4;" text="Pause" HBox.hgrow="NEVER" />
+                <ImageView fx:id="playerImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <HBox.margin>
-                        <Insets left="70.0"/>
+                        <Insets left="70.0" />
                     </HBox.margin>
                 </ImageView>
-                <Label fx:id="liveCount" text="Label" textFill="WHITE"/>
-                <ImageView fx:id="bombImage" fitHeight="20.0" fitWidth="20.0" layoutX="82.0" layoutY="10.0"
-                           pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="bombCount" layoutX="132.0" layoutY="22.0" text="Label" textFill="WHITE"/>
-                <ImageView fx:id="balloomImage" fitHeight="20.0" fitWidth="20.0" layoutX="178.0" layoutY="10.0"
-                           pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="balloomCount" layoutX="228.0" layoutY="22.0" text="Label" textFill="WHITE"/>
-                <ImageView fx:id="onealImage" fitHeight="20.0" fitWidth="20.0" layoutX="274.0" layoutY="10.0"
-                           pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="onealCount" layoutX="324.0" layoutY="22.0" text="Label" textFill="WHITE"/>
+                <Label fx:id="liveCount" text="Label" textFill="WHITE" />
+                <ImageView fx:id="bombImage" fitHeight="20.0" fitWidth="20.0" layoutX="82.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="bombCount" layoutX="132.0" layoutY="22.0" text="Label" textFill="WHITE" />
+                <ImageView fx:id="balloomImage" fitHeight="20.0" fitWidth="20.0" layoutX="178.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="balloomCount" layoutX="228.0" layoutY="22.0" text="Label" textFill="WHITE" />
+                <ImageView fx:id="onealImage" fitHeight="20.0" fitWidth="20.0" layoutX="274.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="onealCount" layoutX="324.0" layoutY="22.0" text="Label" textFill="WHITE" />
+            <ImageView fx:id="kondoriaImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="kondoriaCount" text="Label" textFill="WHITE" />
+            <ImageView fx:id="minvoImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="minvoCount" text="Label" textFill="WHITE" />
+            <ImageView fx:id="dollImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="dollCount" text="Label" textFill="WHITE" />
+            <ImageView fx:id="thwimpImage" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="thwimpCount" text="Label" textFill="WHITE" />
             </children>
         </HBox>
     </top>
     <center>
-        <Canvas fx:id="canvas" height="500.0" onKeyPressed="#onEvent" onKeyReleased="#onEvent" onKeyTyped="#onEvent"
-                width="750.0" BorderPane.alignment="TOP_LEFT"/>
+        <Canvas fx:id="canvas" height="500.0" onKeyPressed="#onEvent" onKeyReleased="#onEvent" onKeyTyped="#onEvent" width="750.0" BorderPane.alignment="TOP_LEFT" />
     </center>
 </BorderPane>

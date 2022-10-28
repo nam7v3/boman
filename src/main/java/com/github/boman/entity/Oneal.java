@@ -18,14 +18,13 @@ public class Oneal extends Enemy {
     public Oneal(Engine engine, int x, int y) {
         super(engine, x, y);
         animation = Animation.getOnealAnimation();
-        this.trace = new State[engine.getMapWidth()][engine.getMapHeight()];
         this.dest = engine.getBoxAtTile(x, y);
+        setSpeed(ENEMY_SPEEDUP);
     }
 
     public Oneal(Engine engine, Box curPos, double speed) {
         super(engine, curPos, speed);
         animation = Animation.getOnealAnimation();
-        this.trace = new State[engine.getMapWidth()][engine.getMapHeight()];
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Oneal extends Enemy {
             super.update();
             return;
         }
-        if (detectedBomber && !pos.inside(dest)) {
+        if (!pos.inside(dest)) {
             super.update();
             return;
         }
@@ -83,28 +82,7 @@ public class Oneal extends Enemy {
         x = bomber.getTileX();
         y = bomber.getTileY();
         State dir = State.Standing;
-        if (trace[x][y] == null) {
-            speed = ENEMY_SPEED;
-            detectedBomber = false;
-            if (super.state == State.Left && engine.getTile((int) (pos.getX() + pos.getW()) - 1, getTileY()).block()) {
-                moveRight();
-                dest = engine.getBoxAtTile((int) (pos.getX() + pos.getW()) - 1, getTileY());
-                animation.setState(State.Right);
-            }
-
-            if (super.state == State.Right && engine.getTile((int) pos.getX() + 1, getTileY()).block()) {
-                moveLeft();
-                dest = engine.getBoxAtTile((int) pos.getX(), getTileY());
-                animation.setState(State.Left);
-            }
-            if (attribute == Attribute.Dead) {
-                animation.setState(Attribute.Dead);
-                stop();
-                if (animation.animationDone()) {
-                    engine.killEnemy(this);
-                }
-            }
-        } else {
+        if (trace[x][y] != null) {
             while (x != getTileX() || y != getTileY()) {
                 dest = engine.getBoxAtTile(x, y);
                 switch (trace[x][y]) {
@@ -126,14 +104,9 @@ public class Oneal extends Enemy {
                     }
                 }
             }
-            if (Math.abs(pos.getX() - bomber.pos.getX()) + Math.abs(pos.getY() - bomber.pos.getY()) <= 10) {
-                speed = ENEMY_SPEEDUP;
-            } else {
-                speed = ENEMY_SPEED;
-            }
-            state = dir;
         }
 
+        state = dir;
         super.update();
     }
 
