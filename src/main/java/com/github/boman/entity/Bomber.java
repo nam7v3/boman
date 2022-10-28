@@ -12,9 +12,9 @@ import javafx.scene.input.KeyEvent;
 
 public class Bomber extends MoveableEntity implements EventListener {
     private static final double BOMBER_WIDTH = 0.55;
-    private static final double BOMBER_HEIGHT = 0.9;
-    private static final double SPRITE_WIDTH = 1;
-    private static final double SPRITE_HEIGHT = 1;
+    private static final double BOMBER_HEIGHT = 0.8;
+    private static final double SPRITE_WIDTH = 0.9;
+    private static final double SPRITE_HEIGHT = 0.8;
     private static final double BOMBER_SPEED = 0.08;
     private static final int INVINCIBLE_FRAME = 120;
     private Duration invincibleTime = null;
@@ -50,7 +50,7 @@ public class Bomber extends MoveableEntity implements EventListener {
         }
         gc.drawImage(
                 animation.getImage(),
-                (x - (SPRITE_WIDTH - BOMBER_WIDTH) / 2) * scale,
+                (x - (SPRITE_WIDTH - BOMBER_WIDTH) / 2 + 0.1) * scale,
                 (y - (SPRITE_HEIGHT - BOMBER_HEIGHT) / 2) * scale,
                 SPRITE_WIDTH * scale,
                 SPRITE_HEIGHT * scale
