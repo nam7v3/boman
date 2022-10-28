@@ -134,6 +134,10 @@ public class BomanEngine implements Engine {
         for (int i = 1; i <= height; i++) {
             String line = scanner.nextLine();
             for (int j = 1; j <= width; j++) {
+                if(j - 1 >= line.length()){
+                    board[i][j] = new Barrier(this);
+                    continue;
+                }
                 switch (line.charAt(j - 1)) {
                     case '#' -> board[i][j] = new Wall(this);
                     case 'p' -> {

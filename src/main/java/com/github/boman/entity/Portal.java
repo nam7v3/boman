@@ -34,10 +34,10 @@ public class Portal extends TileEntity {
     public void render(GraphicsContext gc, double x, double y, double scale) {
         if (open) {
             gc.setFill(Color.BLACK);
-            gc.fillRect(x * scale,
-                    y * scale,
-                    scale,
-                    scale);
+            gc.fillRect((x + 0.1 ) * scale,
+                    (y + 0.1 ) * scale,
+                    scale * 0.8,
+                    scale * 0.8);
         } else {
             super.render(gc, x, y, scale);
         }
