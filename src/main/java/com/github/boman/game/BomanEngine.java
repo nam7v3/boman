@@ -49,6 +49,7 @@ public class BomanEngine implements Engine {
     private int currentLevel = -1;
 
     private String[] levels = new String[]{
+            "levelDemo.txt",
             "level1.txt",
             "level2.txt",
             "level3.txt"
@@ -174,8 +175,9 @@ public class BomanEngine implements Engine {
                         board[i][j] = brick;
                     }
                     case 'x' -> {
-                        Portal portal = new Portal(this);
-                        board[i][j] = portal;
+                        Brick brick = new Brick(this, j, i);
+                        brick.setContainsPortal(true);
+                        board[i][j] = brick;
                     }
                     default -> board[i][j] = new Grass(this);
                 }

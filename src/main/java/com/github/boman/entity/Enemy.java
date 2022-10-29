@@ -5,10 +5,10 @@ import com.github.boman.sprites.Animation;
 import com.github.boman.util.Box;
 
 public abstract class Enemy extends MoveableEntity {
-    public static double ENEMY_SPEED = 0.05;
+    public static double ENEMY_SPEED = 0.06;
     public static double ENEMY_HEIGHT = 0.9;
     public static double ENEMY_WIDTH = 0.9;
-    public static double ENEMY_SPEEDUP = 0.05;
+    public static double ENEMY_SPEEDUP = 0.12;
     protected static final double VISION = 10;
     protected Animation animation;
 
